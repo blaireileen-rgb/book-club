@@ -579,6 +579,10 @@
               <svg class="mdl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <span id="meeting-time">7:00 – 9:00 PM</span>
             </div>
+            <div class="mdl-item" id="meeting-location-row" style="display:none;">
+              <svg class="mdl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="meeting-location"></span>
+            </div>
           </div>
           <div class="rsvp-mini" id="rsvp-row"></div>
         </div>
@@ -1466,7 +1470,7 @@ async function savePollConfig() {
 // ════════════════════════════════════════════════════════════════
 //  PASSWORDS  (change these!)
 // ════════════════════════════════════════════════════════════════
-const MEMBER_PW = "bookclub";   // shared with all members — change this!
+const MEMBER_PW = "booksrule";   // shared with all members — change this!
 const ADMIN_PW  = "organizer";  // just for you, the organizer — change this!
 
 // ════════════════════════════════════════════════════════════════
@@ -1526,10 +1530,12 @@ function hasMeetingDate() {
 
 function renderHero() {
   const m = DATA.meeting;
-  document.getElementById('meeting-book-title').textContent = m.book;
-  document.getElementById('meeting-book-author').textContent = 'by ' + m.author;
+  document.getElementById('meeting-book-title').textContent = m.book || 'Book to be announced';
+  document.getElementById('meeting-book-author').textContent = m.author ? 'by ' + m.author : '';
   document.getElementById('meeting-date').textContent = m.date;
   document.getElementById('meeting-time').textContent = m.time;
+  document.getElementById('meeting-location').textContent = m.location || '';
+  document.getElementById('meeting-location-row').style.display = m.location ? '' : 'none';
 
   const imgEl = document.getElementById('cover-img');
   const fbEl  = document.getElementById('cover-fb');
