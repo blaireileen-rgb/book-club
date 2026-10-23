@@ -617,6 +617,166 @@
     .up-cover-tbd strong { font-size:2.8rem; font-weight:500; }
     footer { background:var(--sky); color:var(--muted); }
     footer strong { color:var(--dark); font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:500; }
+
+    /* ════ MEMBER AREA (app-style: Home · Score · Picks · People) ════ */
+    body.mx-unlocked #members .section-head { display:none; }
+    body.mx-unlocked #members .section { padding-top:40px; }
+    #mx-app, #mx-who { scroll-margin-top:62px; }
+    .mx-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--dark); color:#fff; padding:18px 20px; }
+    .mx-hello { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:2rem; line-height:1.05; color:#fff; }
+    .mx-bar-sub { font-size:0.62rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-top:5px; }
+    .mx-me { background:none; border:none; padding:0; cursor:pointer; }
+    .mx-av { position:relative; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:0.7rem; font-weight:700; overflow:hidden; flex-shrink:0; border:2px solid #fff; font-family:'Inter',sans-serif; }
+    .mx-av img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .mx-av.xs { width:20px; height:20px; font-size:0.45rem; border-width:1px; }
+    .mx-av.lg { width:60px; height:60px; font-size:1rem; border-width:3px; }
+    .mx-tabs { display:flex; background:#fff; border:1px solid var(--border); border-top:none; position:sticky; top:59px; z-index:50; }
+    .mx-tabs button { flex:1; background:none; border:none; border-bottom:2px solid transparent; padding:15px 6px; font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); cursor:pointer; }
+    .mx-tabs button i { font-style:normal; margin-right:7px; }
+    .mx-tabs button.on { color:var(--dark); border-bottom-color:var(--coral); }
+    .mx-dot { display:none; width:7px; height:7px; border-radius:50%; background:var(--coral); margin-left:5px; vertical-align:2px; }
+    .mx-dot.on { display:inline-block; }
+    .mx-panel { display:none; padding:22px 0 8px; }
+    .mx-panel.on { display:block; }
+    .mx-label { display:block; background:var(--dark); color:#fff; font-size:0.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:10px 14px; margin-bottom:14px; }
+    .mx-label-row { display:flex; justify-content:space-between; gap:10px; }
+    .mx-label-row span:last-child { color:rgba(255,255,255,.7); }
+    .mx-card { background:#fff; border:1px solid var(--border); padding:18px; margin-bottom:16px; }
+    .mx-card > .mx-label:first-child { margin:-18px -18px 16px; }
+    .mx-home { display:grid; grid-template-columns:1.15fr 1fr; gap:28px; align-items:start; }
+    .mx-meet { display:flex; gap:16px; align-items:flex-start; }
+    .mx-meet h4 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:1.5rem; color:var(--dark); line-height:1.12; }
+    .mx-meet p { font-size:0.82rem; color:var(--muted); line-height:1.6; margin-top:5px; }
+    .mx-meet p b { color:var(--dark); }
+    .mx-cover { position:relative; flex-shrink:0; width:88px; aspect-ratio:2/3; background:#CFDAE6 center/cover no-repeat; box-shadow:3px 5px 14px rgba(19,32,58,.2); }
+    .mx-cover-blank { display:flex; align-items:center; justify-content:center; padding:8px; text-align:center; background:linear-gradient(165deg,#BFD4EA 0%,#DCE9F5 55%,#F1D9C8 100%); }
+    .mx-cover-blank span { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.9rem; color:var(--dark); line-height:1.15; }
+    .mx-ribbon { position:absolute; top:6px; left:6px; z-index:1; background:var(--coral); color:#fff; font-family:'Inter',sans-serif; font-style:normal; font-size:0.5rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:3px 6px; }
+    .mx-seg { display:grid; grid-template-columns:repeat(3,1fr); margin-top:18px; border:1px solid var(--border); }
+    .mx-seg button { background:#fff; border:none; border-right:1px solid var(--border); padding:14px 4px; font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--dark); cursor:pointer; transition:background .15s; }
+    .mx-seg button:last-child { border-right:none; }
+    .mx-seg button:hover { background:var(--blush); }
+    .mx-seg .on-g, .mx-seg .on-g:hover { background:#1E7A4A; color:#fff; }
+    .mx-seg .on-m, .mx-seg .on-m:hover { background:var(--coral); color:#fff; }
+    .mx-seg .on-d, .mx-seg .on-d:hover { background:var(--dark); color:#fff; }
+    .mx-stack { display:flex; align-items:center; margin-top:14px; }
+    .mx-stack .mx-av { width:30px; height:30px; font-size:0.55rem; margin-left:-9px; }
+    .mx-stack .mx-av:first-child { margin-left:0; }
+    .mx-stack small { font-size:0.8rem; color:var(--muted); margin-left:10px; }
+    .mx-todo { padding:4px 18px; }
+    .mx-todo-row { display:flex; align-items:center; gap:12px; width:100%; padding:14px 0; background:none; border:none; border-bottom:1px solid var(--border); font-family:'Inter',sans-serif; font-size:0.9rem; color:var(--text); text-align:left; cursor:pointer; }
+    .mx-todo-row:last-child { border-bottom:none; }
+    .mx-chk { width:22px; height:22px; border-radius:50%; border:1.5px solid #C5D1DD; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; }
+    .mx-todo-row.done .mx-chk { background:#1E7A4A; border-color:#1E7A4A; color:#fff; }
+    .mx-todo-row.done .t { color:var(--muted); }
+    .mx-go { margin-left:auto; color:var(--coral); font-weight:700; font-size:0.74rem; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+    .mx-mini-shelf { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+    .mx-cell { display:flex; flex-direction:column; align-items:center; background:none; border:none; padding:0; cursor:pointer; font-family:'Inter',sans-serif; text-align:center; -webkit-tap-highlight-color:transparent; }
+    .mx-cell .mx-cover { width:100%; transition:transform .15s; }
+    .mx-cell:hover .mx-cover { transform:translateY(-3px); }
+    .mx-tap { font-size:0.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); margin-top:8px; }
+    .mx-mini-stars { font-size:1rem; letter-spacing:1px; margin-top:7px; }
+    .mx-dnf-tag { font-size:0.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+    .mx-cell-avg { font-size:0.68rem; font-weight:600; color:var(--dark); margin-top:3px; }
+    .mx-cell-title { font-size:0.7rem; color:var(--muted); line-height:1.3; margin-top:4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .mx-shelf { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:24px 18px; }
+    .mx-progress { height:4px; background:var(--border); margin:-6px 0 16px; }
+    .mx-progress b { display:block; height:100%; width:0; background:var(--coral); transition:width .4s; }
+    .mx-chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+    .mx-chips button { background:#fff; border:1px solid var(--border); padding:9px 15px; font-family:'Inter',sans-serif; font-size:0.64rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--dark); cursor:pointer; }
+    .mx-chips button.on { background:var(--dark); border-color:var(--dark); color:#fff; }
+    .mx-hint { font-size:0.8rem; color:var(--muted); margin-top:18px; }
+    .mx-empty { grid-column:1/-1; background:#fff; border:1px solid var(--border); padding:22px; text-align:center; font-size:0.9rem; color:var(--text); }
+    .mx-link { background:none; border:none; padding:4px 0; color:var(--coral); font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+    .mx-picks { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
+    .mx-pick { display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid var(--border); padding:14px; box-shadow:0 2px 10px rgba(19,32,58,.05); }
+    #mx-home-picks .mx-pick { margin-bottom:12px; }
+    .mx-pick .mx-cover { width:62px; }
+    .mx-pick-body { flex:1; min-width:0; }
+    .mx-pick h5 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:1.25rem; color:var(--dark); line-height:1.15; }
+    .mx-pick p { font-size:0.78rem; color:var(--muted); margin-top:2px; }
+    .mx-by { display:inline-flex; align-items:center; gap:6px; font-size:0.72rem; color:var(--muted); margin-top:8px; }
+    .mx-pick q { display:block; font-size:0.84rem; font-style:italic; color:var(--text); line-height:1.5; margin-top:8px; }
+    .mx-vote { flex-shrink:0; width:52px; padding:9px 0; background:#fff; border:1px solid var(--border); cursor:pointer; text-align:center; font-family:'Inter',sans-serif; transition:all .15s; }
+    .mx-vote i { display:block; font-style:normal; font-size:1.05rem; color:var(--coral); }
+    .mx-vote b { font-size:0.85rem; color:var(--dark); }
+    .mx-vote.on { background:var(--coral); border-color:var(--coral); }
+    .mx-vote.on i, .mx-vote.on b { color:#fff; }
+    .mx-fab { display:none; position:fixed; right:22px; bottom:26px; z-index:60; background:var(--coral); color:#fff; border:none; padding:16px 22px; font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 10px 26px rgba(201,138,98,.45); cursor:pointer; }
+    body.mx-on.mx-tab-picks .mx-fab { display:block; }
+    .mx-legend { display:flex; flex-wrap:wrap; gap:16px; font-size:0.78rem; color:var(--muted); margin-bottom:18px; }
+    .mx-legend b, .mx-badge { display:inline-block; }
+    .mx-legend b { width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+    .b-g { background:#1E7A4A; } .b-m { background:var(--coral); } .b-d { background:var(--dark); } .b-p { background:#B9C3CF; }
+    .mx-people { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:22px 10px; }
+    .mx-person { background:none; border:none; cursor:pointer; text-align:center; font-family:'Inter',sans-serif; }
+    .mx-person-av { position:relative; display:inline-block; }
+    .mx-badge { position:absolute; right:-3px; bottom:-1px; width:22px; height:22px; border-radius:50%; border:2px solid var(--cream); color:#fff; font-size:0.62rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+    .mx-person small { display:block; font-size:0.82rem; color:var(--text); margin-top:7px; }
+    .mx-who-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; margin-top:16px; }
+    .mx-who-grid button { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--border); padding:12px 14px; font-family:'Inter',sans-serif; font-size:0.92rem; color:var(--dark); text-align:left; cursor:pointer; }
+    .mx-who-grid button:hover { border-color:var(--dark); }
+    /* bottom sheets */
+    .mx-sheet-wrap { position:fixed; inset:0; z-index:400; display:none; align-items:flex-end; justify-content:center; background:rgba(19,32,58,.45); }
+    .mx-sheet-wrap.open { display:flex; }
+    .mx-sheet { width:100%; max-width:520px; max-height:90vh; overflow-y:auto; background:#fff; padding:12px 22px 28px; border-radius:18px 18px 0 0; animation:mxUp .22s ease-out; }
+    @keyframes mxUp { from { transform:translateY(40px); } to { transform:none; } }
+    .mx-grab { width:40px; height:4px; border-radius:3px; background:var(--border); margin:0 auto 18px; }
+    .mx-sheet .mx-cover { width:76px; }
+    .mx-bigstars { position:relative; display:block; width:max-content; margin:24px auto 8px; font-size:3.1rem; letter-spacing:6px; line-height:1; cursor:pointer; user-select:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+    .mx-ss-num { text-align:center; font-size:0.92rem; color:var(--muted); min-height:1.5em; }
+    .mx-ss-num b { color:var(--dark); font-size:1.15rem; }
+    .mx-btn { display:block; width:100%; margin-top:18px; padding:16px; background:var(--dark); color:#fff; border:none; font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+    .mx-textbtn { display:block; margin:12px auto 0; background:none; border:none; color:var(--muted); text-decoration:underline; font-family:'Inter',sans-serif; font-size:0.82rem; cursor:pointer; }
+    .mx-sheet .fi, .mx-sheet .fta { width:100%; }
+    @media (min-width:761px) { .mx-sheet-wrap { align-items:center; } .mx-sheet { border-radius:4px; } }
+    @media (max-width:760px) {
+      body.mx-on { padding-bottom:78px; }
+      .mx-home { grid-template-columns:1fr; gap:8px; }
+      .mx-tabs { position:fixed; left:0; right:0; bottom:0; top:auto; z-index:300; border:none; border-top:1px solid var(--border); padding-bottom:env(safe-area-inset-bottom); box-shadow:0 -6px 20px rgba(19,32,58,.07); }
+      .mx-tabs button { padding:9px 2px 11px; font-size:0.56rem; letter-spacing:.08em; border-bottom:none; border-top:2px solid transparent; }
+      .mx-tabs button.on { border-top-color:var(--coral); }
+      .mx-tabs button i { display:block; margin:0 0 3px; font-size:1.2rem; }
+      .mx-hello { font-size:1.75rem; }
+      .mx-cover { width:76px; }
+      .mx-shelf { grid-template-columns:repeat(3,1fr); gap:18px 12px; }
+      .mx-picks { grid-template-columns:1fr; }
+      .mx-people { grid-template-columns:repeat(4,1fr); }
+      .mx-av.lg { width:56px; height:56px; }
+      .mx-fab { bottom:92px; right:16px; }
+      .mx-seg button { padding:15px 2px; font-size:0.62rem; }
+    }
+
+    /* ════ ORGANIZER — opens from the footer as a full-screen panel ════ */
+    #admin-area { position:fixed; inset:0; z-index:500; overflow-y:auto; display:none; }
+    #admin-area.open { display:block; }
+    .admin-inner { padding:28px 28px 60px; }
+    .admin-header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:26px; }
+    .admin-title { font-size:1.8rem; margin-bottom:0; }
+    .org-close { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#fff; font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; padding:9px 14px; cursor:pointer; }
+    .org-link { color:inherit; text-decoration:underline; }
+    .org-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+    .org-kpi { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); padding:16px; }
+    .org-kpi b { display:block; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:2rem; color:#fff; line-height:1; }
+    .org-kpi span { font-size:0.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+    .org-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.08); color:rgba(255,255,255,.85); font-size:0.88rem; }
+    .org-row:last-child { border-bottom:none; }
+    .org-row > span { flex:1; min-width:180px; }
+    .org-row b { color:#fff; }
+    .org-row a.btn-act { text-decoration:none; }
+    @media (min-width:900px) {
+      #admin-content { display:grid; grid-template-columns:190px 1fr; gap:28px; align-items:start; }
+      .admin-tabs { flex-direction:column; flex-wrap:nowrap; gap:0; border-bottom:none; border-right:1px solid rgba(255,255,255,.1); margin-bottom:0; position:sticky; top:20px; }
+      .admin-tab { text-align:left; border-bottom:none; border-left:2px solid transparent; margin-bottom:0; padding:11px 16px; }
+      .admin-tab.active { border-left-color:var(--coral); background:rgba(255,255,255,.06); }
+    }
+    @media (max-width:899px) {
+      .admin-tabs { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:22px; }
+      .admin-tab { white-space:nowrap; flex-shrink:0; }
+      .org-kpis { grid-template-columns:1fr 1fr 1fr; gap:8px; }
+      .org-kpi { padding:12px; } .org-kpi b { font-size:1.5rem; }
+      .admin-inner { padding:20px 16px 60px; }
+    }
   </style>
 </head>
 <body>
@@ -630,8 +790,6 @@
       <li><a href="#upcoming">Upcoming</a></li>
       <li><a href="#members">Members</a></li>
       <li><a href="#books">Our Books</a></li>
-      <li><a href="#members" onclick="setTimeout(()=>{const r=document.getElementById('acc-recs');if(r&&r.offsetParent)r.scrollIntoView({behavior:'smooth'});},50)">Recommend</a></li>
-      <li><a href="#admin-area" style="color:var(--coral);">Organizer</a></li>
     </ul>
   </div>
 </nav>
@@ -720,180 +878,166 @@
         </div>
       </div>
       <div id="members-content">
-        <!-- ── ACCORDION: RSVP (shown when a meeting date is set) ── -->
-        <div class="accordion-wrap open" id="acc-rsvp" style="display:none;">
-          <button class="accordion-header" onclick="toggleAccordion('acc-rsvp')">
-            <span class="acc-icon">✋</span>
-            <span class="acc-title">Are You Coming?</span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <div class="rsvp-meeting" id="rsvp-meeting-line"></div>
-              <label class="fl">Your Name</label>
-              <select class="fi" id="rsvp-email" onchange="onRsvpMemberSelect()" style="max-width:320px;"></select>
-              <div class="rsvp-btns">
-                <button class="rsvp-btn" data-st="g" onclick="submitRsvp('g')">✓ Going</button>
-                <button class="rsvp-btn" data-st="m" onclick="submitRsvp('m')">Maybe</button>
-                <button class="rsvp-btn" data-st="d" onclick="submitRsvp('d')">Can't make it</button>
-              </div>
-              <div class="rsvp-note" id="rsvp-note"></div>
-            </div>
-          </div>
+        <!-- ── WHO ARE YOU? (first visit on this device) ── -->
+        <div class="mx-who" id="mx-who" style="display:none;">
+          <div class="mx-bar"><div><div class="mx-hello">Who are you?</div><div class="mx-bar-sub">Tap your name — this device will remember you</div></div></div>
+          <div class="mx-who-grid" id="mx-who-grid"></div>
         </div>
 
-        <!-- ── ACCORDION: SCORE OUR BOOKS (anytime; always visible, open by default) ── -->
-        <div class="accordion-wrap open" id="acc-anyscore">
-          <button class="accordion-header" onclick="toggleAccordion('acc-anyscore')">
-            <span class="acc-icon">⭐</span>
-            <span class="acc-title">Score Our Books</span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:14px;">Pick your name, then <strong>tap the stars</strong> to score any book — it saves instantly. Tap the left half of a star for a half point. Tap again anytime to change it.</p>
-              <label class="fl">Your Name</label>
-              <select class="fi" id="as-email" onchange="onAnyScoreName()" style="max-width:320px;"></select>
-              <div class="sc-progress" id="as-progress"></div>
-              <div class="sc-list" id="as-list"></div>
-              <div class="score-guide" style="margin-top:14px;">
-                <span>5 — Best book you've ever read</span>
-                <span>4 — Great book</span>
-                <span>3 — Good book</span>
-                <span>2 — Not great</span>
-                <span>1 — Terrible</span>
-              </div>
-            </div>
+        <!-- ── MEMBER APP ── -->
+        <div class="mx-app" id="mx-app" style="display:none;">
+          <div class="mx-bar">
+            <div><div class="mx-hello" id="mx-hello">Hi!</div><div class="mx-bar-sub">Member area</div></div>
+            <button class="mx-me" id="mx-me" onclick="mxSwitchMember()" title="Not you? Tap to switch"></button>
           </div>
-        </div>
+          <nav class="mx-tabs" id="mx-tabs">
+            <button data-tab="home" class="on" onclick="mxTab('home')"><i>🏠</i>Home</button>
+            <button data-tab="score" onclick="mxTab('score')"><i>⭐</i>Score<span class="mx-dot" id="mx-dot-score"></span></button>
+            <button data-tab="picks" onclick="mxTab('picks')"><i>📚</i>Picks</button>
+            <button data-tab="people" onclick="mxTab('people')"><i>👥</i>People</button>
+          </nav>
 
-        <!-- ── ACCORDION: DATE POLL (shown when poll active) ── -->
-        <div class="accordion-wrap" id="acc-poll" style="display:none;">
-          <button class="accordion-header" onclick="toggleAccordion('acc-poll')">
-            <span class="acc-icon">📅</span>
-            <span class="acc-title" id="poll-acc-title">When's Everyone Free?</span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <div id="poll-section">
-                <h3 id="poll-public-title" style="display:none;"></h3>
-                <p class="form-sub" style="margin-bottom:16px;">Pick every date that works for you.</p>
-                <div id="poll-vote-form">
-                  <div class="poll-form-row" style="margin-bottom:16px;">
-                    <div class="poll-name-wrap">
-                      <label class="fl">Your Name</label>
-                      <select class="fi" id="poll-voter-email" onchange="onPollMemberSelect()"></select>
-                    </div>
-                  </div>
-                  <div class="poll-dates-list" id="poll-dates-grid"></div>
-                  <button class="btn btn-pink" onclick="submitPollVote()" style="height:42px; margin-top:8px;">Submit Availability</button>
-                </div>
-                <div class="poll-submitted" id="poll-submitted-msg">
-                  <h4>✓ Vote recorded!</h4>
-                  <p>Your availability is saved. The organizer will confirm the date once everyone has voted.</p>
-                  <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="document.getElementById('poll-submitted-msg').style.display='none';document.getElementById('poll-vote-form').style.display='block';onPollMemberSelect();">Change my vote</button>
-                </div>
-                <div id="poll-public-results" style="display:none; margin-top:24px;">
-                  <div style="font-size:0.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Current Standings</div>
-                  <div class="poll-results-grid" id="poll-results-public"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── ACCORDION: RECOMMENDATIONS (always visible, tap to open) ── -->
-        <div class="accordion-wrap" id="acc-recs">
-          <button class="accordion-header" onclick="toggleAccordion('acc-recs')">
-            <span class="acc-icon">📚</span>
-            <span class="acc-title">Recommend a Book</span>
-            <span class="acc-count" id="recs-count-badge" style="display:none;"></span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Have a book you'd love us to read? Add it below — and see what everyone else is suggesting.</p>
-              <div style="margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border);">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Your Recommendation</div>
-                <form id="rec-form" onsubmit="postRec(event)">
-                  <div class="form-row">
-                    <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
-                    <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="rec-author" placeholder="e.g. Matt Haig" /></div>
-                  </div>
-                  <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="rec-name" placeholder="Who's recommending?" /></div>
-                  <div class="fg"><label class="fl">Your Pitch</label><textarea class="fta" id="rec-why" placeholder="Why should we read it?"></textarea></div>
-                  <button type="submit" class="btn btn-pink">Post Recommendation ✚</button>
-                </form>
-              </div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:12px;">What Members Are Suggesting</div>
-              <div class="recs-list" id="recs-list">
-                <div class="recs-empty">No recommendations yet — be the first!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="members-grid" id="members-grid"></div>
-
-        <!-- ── ACCORDION: BOOK SCORING (shown when session active) ── -->
-        <div class="accordion-wrap" id="acc-scoring" style="display:none;">
-          <button class="accordion-header" onclick="toggleAccordion('acc-scoring')">
-            <span class="acc-icon">⭐</span>
-            <span class="acc-title" id="scoring-acc-title">Rate Tonight's Book</span>
-            <span class="acc-badge live">🔴 Live</span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <div id="scoring-section">
-                <div id="scoring-form">
-                  <div class="fg" id="scoring-score-fg">
-                    <label class="fl">Your Score (1–5, decimals OK)</label>
-                    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px;">
-                      <input type="number" class="fi" id="score-voter-score" min="1" max="5" step="0.01"
-                             placeholder="e.g. 3.75" style="max-width:130px;"
-                             oninput="updateScoreVisual(this.value)" />
-                      <div class="stars-outer" id="score-stars-visual" style="font-size:2rem;">
-                        <span class="stars-bg">★★★★★</span>
-                        <span class="stars-fg" id="score-fill-bar" style="width:0%">★★★★★</span>
+          <!-- HOME -->
+          <div class="mx-panel on" id="mx-panel-home">
+            <div class="mx-home">
+              <div class="mx-col">
+                <div class="mx-card" id="mx-meeting"></div>
+                <div class="mx-card mx-todo" id="mx-todo"></div>
+                <!-- ── ACCORDION: DATE POLL (shown when poll active) ── -->
+                <div class="accordion-wrap" id="acc-poll" style="display:none;">
+                  <button class="accordion-header" onclick="toggleAccordion('acc-poll')">
+                    <span class="acc-icon">📅</span>
+                    <span class="acc-title" id="poll-acc-title">When's Everyone Free?</span>
+                    <span class="acc-chevron">▾</span>
+                  </button>
+                  <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                      <div id="poll-section">
+                        <h3 id="poll-public-title" style="display:none;"></h3>
+                        <p class="form-sub" style="margin-bottom:16px;">Pick every date that works for you.</p>
+                        <div id="poll-vote-form">
+                          <div class="poll-form-row" style="margin-bottom:16px;">
+                            <div class="poll-name-wrap">
+                              <label class="fl">Your Name</label>
+                              <select class="fi" id="poll-voter-email" onchange="onPollMemberSelect()"></select>
+                            </div>
+                          </div>
+                          <div class="poll-dates-list" id="poll-dates-grid"></div>
+                          <button class="btn btn-pink" onclick="submitPollVote()" style="height:42px; margin-top:8px;">Submit Availability</button>
+                        </div>
+                        <div class="poll-submitted" id="poll-submitted-msg">
+                          <h4>✓ Vote recorded!</h4>
+                          <p>Your availability is saved. The organizer will confirm the date once everyone has voted.</p>
+                          <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="document.getElementById('poll-submitted-msg').style.display='none';document.getElementById('poll-vote-form').style.display='block';onPollMemberSelect();">Change my vote</button>
+                        </div>
+                        <div id="poll-public-results" style="display:none; margin-top:24px;">
+                          <div style="font-size:0.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Current Standings</div>
+                          <div class="poll-results-grid" id="poll-results-public"></div>
+                        </div>
                       </div>
                     </div>
-                    <div class="score-guide">
-                      <span>5 — Best book you've ever read</span>
-                      <span>4 — Great book</span>
-                      <span>3 — Good book</span>
-                      <span>2 — Not great</span>
-                      <span>1 — Terrible</span>
+                  </div>
+                </div>
+                <!-- ── ACCORDION: BOOK SCORING (shown when session active) ── -->
+                <div class="accordion-wrap" id="acc-scoring" style="display:none;">
+                  <button class="accordion-header" onclick="toggleAccordion('acc-scoring')">
+                    <span class="acc-icon">⭐</span>
+                    <span class="acc-title" id="scoring-acc-title">Rate Tonight's Book</span>
+                    <span class="acc-badge live">🔴 Live</span>
+                    <span class="acc-chevron">▾</span>
+                  </button>
+                  <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                      <div id="scoring-section">
+                        <div id="scoring-form">
+                          <div class="fg" id="scoring-score-fg">
+                            <label class="fl">Your Score (1–5, decimals OK)</label>
+                            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px;">
+                              <input type="number" class="fi" id="score-voter-score" min="1" max="5" step="0.01"
+                                     placeholder="e.g. 3.75" style="max-width:130px;"
+                                     oninput="updateScoreVisual(this.value)" />
+                              <div class="stars-outer" id="score-stars-visual" style="font-size:2rem;">
+                                <span class="stars-bg">★★★★★</span>
+                                <span class="stars-fg" id="score-fill-bar" style="width:0%">★★★★★</span>
+                              </div>
+                            </div>
+                            <div class="score-guide">
+                              <span>5 — Best book you've ever read</span>
+                              <span>4 — Great book</span>
+                              <span>3 — Good book</span>
+                              <span>2 — Not great</span>
+                              <span>1 — Terrible</span>
+                            </div>
+                          </div>
+                          <div class="score-abandon-row">
+                            <input type="checkbox" id="score-abandoned-check" onchange="onScoreAbandonToggle(this.checked)" />
+                            <label for="score-abandoned-check">I purposefully abandoned this book — didn't finish, didn't want to</label>
+                          </div>
+                          <div class="fg" style="margin-top:12px;">
+                            <label class="fl">Who are you?</label>
+                            <select class="fi" id="score-voter-email" onchange="onScoreMemberSelect()">
+                              <option value="">— Select your name —</option>
+                            </select>
+                          </div>
+                          <button class="btn btn-pink" onclick="submitMemberScore()" style="margin-top:4px;">Submit My Score</button>
+                        </div>
+                        <div class="scoring-submitted" id="scoring-submitted-msg">
+                          <h4>✓ Score recorded!</h4>
+                          <p id="scoring-submitted-text">Thanks! Your score has been saved.</p>
+                          <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="showScoringForm()">Change my score</button>
+                        </div>
+                        <div id="scoring-results-pub" style="display:none; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+                          <div class="score-who-label">Scores so far</div>
+                          <div class="score-voter-list" id="scoring-voter-list-pub"></div>
+                          <div id="scoring-avg-pub"></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="score-abandon-row">
-                    <input type="checkbox" id="score-abandoned-check" onchange="onScoreAbandonToggle(this.checked)" />
-                    <label for="score-abandoned-check">I purposefully abandoned this book — didn't finish, didn't want to</label>
-                  </div>
-                  <div class="fg" style="margin-top:12px;">
-                    <label class="fl">Who are you?</label>
-                    <select class="fi" id="score-voter-email" onchange="onScoreMemberSelect()">
-                      <option value="">— Select your name —</option>
-                    </select>
-                  </div>
-                  <button class="btn btn-pink" onclick="submitMemberScore()" style="margin-top:4px;">Submit My Score</button>
                 </div>
-                <div class="scoring-submitted" id="scoring-submitted-msg">
-                  <h4>✓ Score recorded!</h4>
-                  <p id="scoring-submitted-text">Thanks! Your score has been saved.</p>
-                  <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="showScoringForm()">Change my score</button>
-                </div>
-                <div id="scoring-results-pub" style="display:none; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
-                  <div class="score-who-label">Scores so far</div>
-                  <div class="score-voter-list" id="scoring-voter-list-pub"></div>
-                  <div id="scoring-avg-pub"></div>
-                </div>
+              </div>
+              <div class="mx-col">
+                <div class="mx-label">Still to score</div>
+                <div class="mx-mini-shelf" id="mx-home-shelf"></div>
+                <div class="mx-label" id="mx-home-picks-label">Member picks</div>
+                <div id="mx-home-picks"></div>
+                <button class="mx-link" onclick="mxTab('picks')">See all picks →</button>
               </div>
             </div>
           </div>
-        </div>
 
+          <!-- SCORE -->
+          <div class="mx-panel" id="mx-panel-score">
+            <div class="mx-label mx-label-row"><span>Our shelf</span><span id="mx-score-count"></span></div>
+            <div class="mx-progress"><b id="mx-progress-bar"></b></div>
+            <div class="mx-chips" id="mx-score-chips">
+              <button data-f="todo" class="on" onclick="mxScoreFilter('todo')">To score</button>
+              <button data-f="all" onclick="mxScoreFilter('all')">All</button>
+              <button data-f="top" onclick="mxScoreFilter('top')">Top rated</button>
+            </div>
+            <div class="mx-shelf" id="mx-shelf"></div>
+            <p class="mx-hint">Tap a cover to score it — tap the left half of a star for a half point.</p>
+          </div>
+
+          <!-- PICKS -->
+          <div class="mx-panel" id="mx-panel-picks">
+            <div class="mx-label mx-label-row"><span>What should we read next?</span><span id="mx-picks-count"></span></div>
+            <div class="mx-chips" id="mx-pick-chips">
+              <button data-s="votes" class="on" onclick="mxPickSort('votes')">Most wanted</button>
+              <button data-s="new" onclick="mxPickSort('new')">Newest</button>
+            </div>
+            <div class="mx-picks" id="mx-picks-list"></div>
+          </div>
+
+          <!-- PEOPLE -->
+          <div class="mx-panel" id="mx-panel-people">
+            <div class="mx-label mx-label-row"><span>Our members</span><span id="mx-people-count"></span></div>
+            <div class="mx-legend"><span><b class="b-g"></b>Going</span><span><b class="b-m"></b>Maybe</span><span><b class="b-d"></b>Can't make it</span><span><b class="b-p"></b>No reply</span></div>
+            <div class="mx-people" id="mx-people"></div>
+            <p class="mx-hint">Tap anyone to see their profile and the scores they've given.</p>
+          </div>
+        </div>
+        <div id="members-grid" style="display:none;"></div>
       </div>
     </div>
   </div>
@@ -925,9 +1069,9 @@
 <div id="admin-area">
   <div class="admin-inner">
     <div class="admin-header">
-      <div class="admin-badge">⚙ Organizer Panel</div>
-      <div class="admin-title">Manage the Readers</div>
-      <div class="admin-sub">Add members, send emails, update meetings, log books, and send calendar invites.</div>
+      <div><div class="admin-badge">⚙ Organizer</div>
+      <div class="admin-title">Manage the Readers</div></div>
+      <button class="org-close" onclick="closeOrganizer()">✕ Close</button>
     </div>
 
     <!-- Admin Gate -->
@@ -947,7 +1091,8 @@
     <!-- Admin Content -->
     <div id="admin-content">
       <div class="admin-tabs">
-        <button class="admin-tab active" onclick="showTab('tab-members',this)">👥 Members</button>
+        <button class="admin-tab active" onclick="showTab('tab-overview',this)">✨ Overview</button>
+        <button class="admin-tab" onclick="showTab('tab-members',this)">👥 Members</button>
         <button class="admin-tab" onclick="showTab('tab-email',this)">✉️ Email Group</button>
         <button class="admin-tab" onclick="showTab('tab-meeting',this)">📅 Next Meeting</button>
         <button class="admin-tab" onclick="showTab('tab-books',this)">📚 Add Book</button>
@@ -957,7 +1102,12 @@
       </div>
 
       <!-- TAB: MEMBERS -->
-      <div id="tab-members" class="admin-panel active">
+      <div id="tab-overview" class="admin-panel active">
+        <div class="org-kpis" id="org-kpis"></div>
+        <div class="admin-card" style="padding:8px 22px;" id="org-actions"></div>
+      </div>
+
+      <div id="tab-members" class="admin-panel">
         <div class="admin-card">
           <h4>Add New Member</h4>
           <p class="admin-card-sub">They'll appear in the members list and be included in group emails and calendar invites.</p>
@@ -1290,10 +1440,38 @@
   </div>
 </div>
 
+<!-- ── MEMBER SHEETS ── -->
+<button class="mx-fab" id="mx-fab" onclick="mxOpenSuggest()">+ Suggest a book</button>
+<div class="mx-sheet-wrap" id="mx-sheet-score" onclick="if(event.target===this) mxCloseSheets()">
+  <div class="mx-sheet">
+    <div class="mx-grab"></div>
+    <div class="mx-sheet-book" id="mx-ss-book"></div>
+    <div class="mx-bigstars" id="mx-ss-stars" role="slider" aria-label="Your score" onclick="mxTapBigStars(event)" onmousemove="mxHoverBig(event)" onmouseleave="mxHoverBig(null)">
+      <span class="stars-bg">★★★★★</span><span class="stars-fg" id="mx-ss-fill" style="width:0%">★★★★★</span>
+    </div>
+    <div class="mx-ss-num" id="mx-ss-num"></div>
+    <button class="mx-btn" id="mx-ss-next" onclick="mxNextToScore()">Next book to score →</button>
+    <button class="mx-textbtn" onclick="mxDidntFinish()">I didn't finish this one</button>
+  </div>
+</div>
+<div class="mx-sheet-wrap" id="mx-sheet-suggest" onclick="if(event.target===this) mxCloseSheets()">
+  <div class="mx-sheet">
+    <div class="mx-grab"></div>
+    <div class="mx-label">Suggest a book</div>
+    <form onsubmit="mxSubmitSuggest(event)">
+      <div class="fg"><label class="fl">Book title *</label><input class="fi" type="text" id="mx-sg-title" required placeholder="e.g. James" /></div>
+      <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="mx-sg-author" placeholder="e.g. Percival Everett" /></div>
+      <div class="fg"><label class="fl">Why should we read it? (optional)</label><textarea class="fta" id="mx-sg-pitch" placeholder="A sentence or two"></textarea></div>
+      <button type="submit" class="mx-btn" style="margin-top:6px;">Post suggestion</button>
+    </form>
+    <button class="mx-textbtn" onclick="mxCloseSheets()">Cancel</button>
+  </div>
+</div>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div><strong>The Huntington Village Readers</strong></div>
-  <div>Huntington Village · Long Island</div>
+  <div>Huntington Village · Long Island · <a href="#" class="org-link" onclick="openOrganizer(event)">Organizer</a></div>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -1386,9 +1564,7 @@ async function loadRsvpFromSupabase() {
     if (data && data.rsvp) {
       DATA.rsvp = Object.assign({}, data.rsvp, _siteRsvps);
       renderHero();
-      // Re-render member grid if already unlocked
-      const grid = document.getElementById('members-grid');
-      if (grid && grid.children.length > 0) renderPublicMembers();
+      mxRender();
     }
   } catch(e) {
     // Table doesn't exist yet — silently fall back to empty RSVP
@@ -1396,11 +1572,14 @@ async function loadRsvpFromSupabase() {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  RSVP ON THE SITE (members pick their name + Going / Maybe / Can't make it)
-//  Stored per meeting in member_rsvps; these answers override calendar-synced ones.
+//  MEMBER AREA — "who are you" once, then Home · Score · Picks · People
+//  RSVPs live in member_rsvps (per meeting), scores in books.scores,
+//  picks in recommendations (+ ♥ votes in rec_votes).
 // ════════════════════════════════════════════════════════════════
-const RSVP_NAME_KEY = 'hvr-rsvp-email';
+const RSVP_NAME_KEY = 'hvr-rsvp-email';   // the member this device belongs to
 let _siteRsvps = {};
+const norm = t => (t || '').trim().toLowerCase();
+const MX = { tab:'home', scoreFilter:'todo', pickSort:'votes', recs:[], votes:[], votesReady:true, sheetKey:null };
 
 function currentMeetingKey() {
   const iso = (DATA.meeting && DATA.meeting.dateISO) || '';
@@ -1417,163 +1596,284 @@ async function loadSiteRsvps() {
     (data || []).forEach(r => { _siteRsvps[r.email.toLowerCase()] = r.status; });
     DATA.rsvp = Object.assign({}, DATA.rsvp || {}, _siteRsvps);
     renderHero();
-    const grid = document.getElementById('members-grid');
-    if (grid && grid.children.length > 0) renderPublicMembers();
-    renderRsvpSection();
+    mxRender();
   } catch(e) {
     console.warn('RSVP table not ready (run member-rsvps.sql):', e.message);
   }
 }
 
-function renderRsvpSection() {
-  const wrap = document.getElementById('acc-rsvp');
-  if (!wrap) return;
-  const key = currentMeetingKey();
-  wrap.style.display = key ? '' : 'none';
-  if (!key) return;
-  const m = DATA.meeting;
-  document.getElementById('rsvp-meeting-line').innerHTML =
-    `<strong>${escHtml(m.date)}</strong>${m.time ? ' · ' + escHtml(m.time) : ''}${m.location ? ' · ' + escHtml(m.location) : ''}` +
-    (m.book ? `<br><em>${escHtml(m.book)}</em>${m.author ? ' by ' + escHtml(m.author) : ''}` : '');
-  const dd = document.getElementById('rsvp-email');
-  let current = dd.value;
-  if (!current) { try { current = localStorage.getItem(RSVP_NAME_KEY) || ''; } catch(e) {} }
-  const sorted = [...(DATA.members || [])].sort((a,b) => a.name.localeCompare(b.name));
-  dd.innerHTML = '<option value="">— Select your name —</option>' +
-    sorted.map(mm => `<option value="${escHtml(mm.email)}">${escHtml(mm.name)}</option>`).join('');
-  if (current && sorted.some(mm => mm.email === current)) dd.value = current;
-  onRsvpMemberSelect();
+// Legacy hooks other code still calls
+function renderRsvpSection() { mxRender(); }
+function renderAnyScore()    { mxRender(); }
+function renderScoreList()   { mxRender(); }
+
+// ── Who am I? ────────────────────────────────────────────────────
+function memberUnlocked() { return document.getElementById('members-content').style.display === 'block'; }
+function mxEmail() { try { return norm(localStorage.getItem(RSVP_NAME_KEY) || ''); } catch(e) { return ''; } }
+function mxMe() { const e = mxEmail(); return e ? (DATA.members || []).find(m => norm(m.email) === e) || null : null; }
+function mxFirst(m) { return m && m.name ? m.name.split(' ')[0] : ''; }
+function mxInitials(name) { return (name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(); }
+function mxAvatar(m, cls = '') {
+  const i = Math.max(0, (DATA.members || []).indexOf(m));
+  const pal = PALETTES[i % PALETTES.length];
+  const photo = m && m.profile && m.profile.photo;
+  return `<span class="mx-av ${cls}" style="background:linear-gradient(135deg,${pal[0]},${pal[1]})">${escHtml(mxInitials(m && m.name))}${photo ? `<img src="${escHtml(photo)}" alt="" onerror="this.remove()">` : ''}</span>`;
 }
 
-function onRsvpMemberSelect() {
-  const email = document.getElementById('rsvp-email').value;
-  const st = email ? getRsvp(email) : 'p';
-  document.querySelectorAll('#acc-rsvp .rsvp-btn').forEach(b => {
-    b.disabled = !email;
-    b.className = 'rsvp-btn' + (b.dataset.st === st ? ' on-' + st : '');
-  });
-  const lbl = { g:"You're going — see you there!", m:"You're a maybe.", d:"You can't make it this time." };
-  document.getElementById('rsvp-note').textContent = !email ? 'Pick your name first.' : (lbl[st] || "You haven't answered yet.");
-}
-
-async function submitRsvp(status) {
-  const dd = document.getElementById('rsvp-email');
-  const email = dd.value;
-  const key = currentMeetingKey();
-  if (!email || !key) return;
-  const member = (DATA.members || []).find(mm => mm.email === email);
-  const { error } = await db.from('member_rsvps').upsert(
-    { meeting_key: key, email: email.toLowerCase(), name: member ? member.name : null, status, updated_at: new Date().toISOString() },
-    { onConflict: 'meeting_key,email' });
-  if (error) { toast('Could not save your RSVP — please try again.'); console.warn(error.message); return; }
+function mxPickMember(email) {
   try { localStorage.setItem(RSVP_NAME_KEY, email); } catch(e) {}
-  toast('✓ RSVP saved');
-  await loadSiteRsvps();
+  const me = mxMe();
+  mxRender();
+  if (me) toast(`Welcome, ${mxFirst(me)}! 👋`);
+  document.getElementById('members').scrollIntoView({ behavior:'smooth' });
+}
+function mxSwitchMember() {
+  if (!confirm('Switch to a different member on this device?')) return;
+  try { localStorage.removeItem(RSVP_NAME_KEY); } catch(e) {}
+  mxRender();
+}
+function mxRenderWho() {
+  const list = [...(DATA.members || [])].sort((a, b) => a.name.localeCompare(b.name));
+  document.getElementById('mx-who-grid').innerHTML = list.map(m =>
+    `<button onclick="mxPickMember('${escHtml(m.email)}')">${mxAvatar(m)}<span>${escHtml(m.name)}</span></button>`).join('');
 }
 
-// ════════════════════════════════════════════════════════════════
-//  SCORE OUR BOOKS (members score past books + the current read, anytime)
-// ════════════════════════════════════════════════════════════════
-const norm = t => (t || '').trim().toLowerCase();
+// ── Covers (Open Library), cached on this device ────────────────
+// Authors for books we've read, so the right cover is found (the books table only stores titles)
+const BOOK_AUTHORS = {
+  'the witches of cambridge':'Alice Hoffman', 'crying in h mart':'Michelle Zauner', 'villa coco':'Andrew Sean Greer',
+  'this story might save your life':'Tiffany Crum', 'heartwood':'Amity Gaige', 'homeschooled':'', 'theo of golden':'Allen Levi',
+  'the strange case of jane o.':'Karen Thompson Walker', 'my friends':'Fredrik Backman', 'book lovers':'Emily Henry',
+  'the blue sisters':'Coco Mellors', 'my brilliant friend':'Elena Ferrante', 'the frozen river':'Ariel Lawhon',
+  'the lost bookshop':'Evie Woods', 'the god of the woods':'Liz Moore', 'this time tomorrow':'Emma Straub'
+};
+let _coverCache = {};
+try { _coverCache = JSON.parse(localStorage.getItem('hvr-covers-v2') || '{}'); } catch(e) {}
+const _coverPending = new Set();
+let _coverTimer = null;
+function coverUrlFor(title, author) {
+  const k = norm(title);
+  if (!k) return '';
+  if (k in _coverCache) return _coverCache[k];
+  if (!_coverPending.has(k)) {
+    _coverPending.add(k);
+    findCoverUrl(title, author || BOOK_AUTHORS[k]).then(url => {
+      _coverCache[k] = url || '';
+      _coverPending.delete(k);
+      try { localStorage.setItem('hvr-covers-v2', JSON.stringify(_coverCache)); } catch(e) {}
+      clearTimeout(_coverTimer); _coverTimer = setTimeout(mxRender, 200);
+    });
+  }
+  return '';
+}
+function mxCover(e, ribbon = '') {
+  const url = e.coverUrl || coverUrlFor(e.title, e.author);
+  const rib = ribbon ? `<span class="mx-ribbon">${ribbon}</span>` : '';
+  return url
+    ? `<div class="mx-cover" style="background-image:url('${escHtml(url)}')">${rib}</div>`
+    : `<div class="mx-cover mx-cover-blank">${rib}<span>${escHtml(e.title || '')}</span></div>`;
+}
+function mxMiniStars(score, size = '') {
+  return `<span class="stars-outer mx-mini-stars ${size}"><span class="stars-bg">★★★★★</span><span class="stars-fg" style="width:${score / 5 * 100}%">★★★★★</span></span>`;
+}
 
-// The current read (Next Meeting book), unless it's already in the books list
+// ── Books to score (current read first, then newest → oldest) ────
 function currentReadEntry() {
   const m = DATA.meeting || {};
   if (!m.book) return null;
+  const coverUrl = m.coverUrl || (m.isbn ? `https://covers.openlibrary.org/b/isbn/${m.isbn}-L.jpg` : '');
   const existing = (DATA.books || []).find(b => norm(b.title) === norm(m.book));
-  if (existing) return { ...existing, key: String(existing.id), isCurrent: true };
-  return { key: 'current', title: m.book, date: m.date, rating: null, scores: [], isCurrent: true };
+  if (existing) return { ...existing, key: String(existing.id), isCurrent: true, author: m.author, coverUrl };
+  return { key: 'current', title: m.book, author: m.author, date: m.date, rating: null, scores: [], isCurrent: true, coverUrl };
 }
-
 function scoreEntries() {
   const cur = currentReadEntry();
   const past = [...(DATA.books || [])].filter(b => b.id != null && (!cur || cur.key !== String(b.id)))
-    .sort((a,b) => bookDateRank(b.date) - bookDateRank(a.date))
+    .sort((a, b) => bookDateRank(b.date) - bookDateRank(a.date))
     .map(b => ({ ...b, key: String(b.id) }));
   return cur ? [cur, ...past] : past;
 }
+function mxMine(e) { const me = mxEmail(); return me ? (e.scores || []).find(v => norm(v.email) === me) : null; }
+function mxToScore() { return scoreEntries().filter(e => !mxMine(e)); }
 
-function renderAnyScore() {
-  const dd = document.getElementById('as-email');
-  if (!dd) return;
-  let name = dd.value;
-  if (!name) { try { name = localStorage.getItem(RSVP_NAME_KEY) || ''; } catch(e) {} }
-  const members = [...(DATA.members || [])].sort((a,b) => a.name.localeCompare(b.name));
-  dd.innerHTML = '<option value="">— Select your name —</option>' +
-    members.map(m => `<option value="${escHtml(m.email)}">${escHtml(m.name)}</option>`).join('');
-  if (name && members.some(m => m.email === name)) dd.value = name;
-  renderScoreList();
+// ── Render everything ───────────────────────────────────────────
+function mxRender() {
+  if (!memberUnlocked()) return;
+  const me = mxMe();
+  document.getElementById('mx-who').style.display = me ? 'none' : '';
+  document.getElementById('mx-app').style.display = me ? '' : 'none';
+  document.body.classList.toggle('mx-on', !!me);
+  if (!me) { mxRenderWho(); return; }
+  document.getElementById('mx-hello').textContent = `Hi, ${mxFirst(me)}`;
+  document.getElementById('mx-me').innerHTML = mxAvatar(me);
+  mxRenderHome(); mxRenderScore(); mxRenderPicks(); mxRenderPeople();
+  if (document.getElementById('mx-sheet-score').classList.contains('open')) mxFillSheet();
 }
 
-function onAnyScoreName() {
-  try { localStorage.setItem(RSVP_NAME_KEY, document.getElementById('as-email').value); } catch(e) {}
-  renderScoreList();
+function mxTab(tab) {
+  MX.tab = tab;
+  document.querySelectorAll('#mx-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('.mx-panel').forEach(p => p.classList.toggle('on', p.id === 'mx-panel-' + tab));
+  ['home','score','picks','people'].forEach(t => document.body.classList.toggle('mx-tab-' + t, t === tab));
+  document.getElementById('mx-app').scrollIntoView({ behavior:'smooth' });
 }
 
-function renderScoreList() {
-  const list = document.getElementById('as-list');
-  const prog = document.getElementById('as-progress');
-  if (!list) return;
-  const email = norm(document.getElementById('as-email').value);
-  const entries = scoreEntries();
-  if (!email) { list.innerHTML = ''; prog.textContent = '👆 Pick your name to see the books and your scores.'; return; }
-  const mineFor = e => (e.scores || []).find(v => norm(v.email) === email);
-  const done = entries.filter(e => mineFor(e)).length;
-  prog.innerHTML = `You've scored <strong>${done}</strong> of <strong>${entries.length}</strong> books${done === entries.length && entries.length ? ' — thank you! 🎉' : ''}`;
-  list.innerHTML = entries.map(e => {
-    const mine = mineFor(e);
-    const n = (e.scores || []).filter(v => !v.abandoned && v.score != null).length;
-    const group = e.rating != null ? `Group avg <strong>${e.rating.toFixed(2)}</strong> · ${n} score${n === 1 ? '' : 's'}` : 'No scores yet';
-    const myVal = mine && !mine.abandoned && mine.score != null ? mine.score : '';
-    const status = mine
-      ? (mine.abandoned ? `<span class="sc-mine">You didn't finish it</span>` : `<span class="sc-mine">Your score: <strong>${mine.score}</strong> ★</span>`)
-      : `<span class="sc-todo">Not scored yet</span>`;
-    return `
-      <div class="sc-row${mine ? ' scored' : ''}" id="sc-row-${e.key}">
-        <div class="sc-info">
-          ${e.isCurrent ? '<span class="sc-tag">Current read</span>' : ''}
-          <div class="sc-title">${escHtml(e.title)}</div>
-          <div class="sc-meta">${escHtml(e.date || '')} · ${group}</div>
-          <div class="sc-status">${status}</div>
-        </div>
-        <div class="sc-controls">
-          <div class="sc-stars" role="slider" aria-label="Score ${escHtml(e.title)}" aria-valuemin="1" aria-valuemax="5" aria-valuenow="${myVal || 0}"
-               onclick="tapStars(event,'${e.key}')" onmousemove="hoverStars(event,this)" onmouseleave="hoverStars(null,this)">
-            <span class="stars-bg">★★★★★</span>
-            <span class="stars-fg" style="width:${myVal ? myVal / 5 * 100 : 0}%">★★★★★</span>
-          </div>
-          <div class="sc-num" id="sc-num-${e.key}">${myVal ? Number(myVal).toFixed(1) : 'Tap'}</div>
-          <button class="sc-dnf" onclick="saveScoreFor('${e.key}', null, true)" title="I purposefully abandoned this book">Didn't finish</button>
-        </div>
-      </div>`;
-  }).join('');
+// ── HOME ────────────────────────────────────────────────────────
+function mxDaysUntil(iso) {
+  if (!/^\d{8}/.test(iso || '')) return null;
+  const d = new Date(+iso.slice(0,4), +iso.slice(4,6) - 1, +iso.slice(6,8));
+  const t = new Date(); t.setHours(0,0,0,0);
+  return Math.round((d - t) / 86400000);
+}
+function mxRenderHome() {
+  const me = mxMe(), m = DATA.meeting || {}, key = currentMeetingKey();
+  const st = key ? getRsvp(me.email) : 'p';
+  const days = mxDaysUntil(m.dateISO);
+  const when = days == null ? '' : days < 0 ? '' : days === 0 ? ' · today!' : days === 1 ? ' · tomorrow' : ` · in ${days} days`;
+  const going = (DATA.members || []).filter(x => getRsvp(x.email) === 'g');
+  const maybe = (DATA.members || []).filter(x => getRsvp(x.email) === 'm').length;
+  const btn = (s, label) => `<button class="${st === s ? 'on-' + s : ''}" onclick="mxRsvp('${s}')">${label}</button>`;
+  document.getElementById('mx-meeting').innerHTML = `
+    <div class="mx-label">Next meeting${when}</div>
+    <div class="mx-meet">
+      ${mxCover({ title: m.book || 'Book TBD', author: m.author, coverUrl: m.coverUrl || (m.isbn ? `https://covers.openlibrary.org/b/isbn/${m.isbn}-L.jpg` : '') })}
+      <div>
+        <h4>${escHtml(m.book || 'Book to be announced')}</h4>
+        <p>${m.author ? escHtml(m.author) + '<br>' : ''}${escHtml(m.date || 'Date TBD')}${m.time ? ' · ' + escHtml(m.time) : ''}${m.location ? '<br>📍 ' + escHtml(m.location) : ''}</p>
+      </div>
+    </div>
+    ${key ? `
+    <div class="mx-seg">${btn('g', '✓ Going')}${btn('m', 'Maybe')}${btn('d', "Can't make it")}</div>
+    <div class="mx-stack">${going.slice(0, 6).map(x => mxAvatar(x)).join('')}<small>${going.length ? `${going.length} going${maybe ? ' · ' + maybe + ' maybe' : ''}` : 'Be the first to RSVP!'}</small></div>` : ''}`;
+
+  // To-do list
+  const left = mxToScore().length;
+  const voted = MX.votes.some(v => norm(v.email) === mxEmail());
+  const suggested = MX.recs.some(r => norm(r.recommended_by) === norm(me.name));
+  const pollOn = document.getElementById('acc-poll') && document.getElementById('acc-poll').style.display !== 'none';
+  const row = (done, text, go, action) =>
+    `<button class="mx-todo-row${done ? ' done' : ''}" onclick="${action}"><span class="mx-chk">${done ? '✓' : ''}</span><span class="t">${text}</span>${done ? '' : `<span class="mx-go">${go} →</span>`}</button>`;
+  const rows = [];
+  if (key) rows.push(row(st !== 'p', st === 'p' ? `RSVP for ${escHtml(m.date || 'the next meeting')}` : `RSVP'd ${st === 'g' ? '— see you there!' : st === 'm' ? '— maybe' : "— can't make it"}`, 'RSVP', "document.getElementById('mx-meeting').scrollIntoView({behavior:'smooth',block:'center'})"));
+  rows.push(row(left === 0, left === 0 ? 'Scored every book — thank you!' : `Score ${left} book${left === 1 ? '' : 's'}`, 'Start', "mxTab('score')"));
+  if (pollOn) rows.push(row(false, 'Vote on the next meeting date', 'Vote', "openAccordion('acc-poll');document.getElementById('acc-poll').scrollIntoView({behavior:'smooth'})"));
+  if (MX.votesReady && MX.recs.length) rows.push(row(voted, voted ? '♥ Upvoted a pick' : 'Upvote a pick for next time', 'Picks', "mxTab('picks')"));
+  rows.push(row(suggested, suggested ? 'Suggested a book' : 'Suggest a book', 'Suggest', 'mxOpenSuggest()'));
+  document.getElementById('mx-todo').innerHTML = rows.join('');
+
+  // Still to score
+  const todo = mxToScore().slice(0, 4);
+  document.getElementById('mx-home-shelf').innerHTML = todo.length
+    ? todo.map(e => `<button class="mx-cell" onclick="mxOpenScore('${e.key}')">${mxCover(e, e.isCurrent ? 'Now' : '')}<span class="mx-tap">Tap to score</span></button>`).join('')
+    : `<div class="mx-empty">🎉 You've scored every book.</div>`;
+
+  // Top picks
+  const top = mxSortedRecs('votes').slice(0, 2);
+  document.getElementById('mx-home-picks-label').textContent = `Member picks · ${MX.recs.length}`;
+  document.getElementById('mx-home-picks').innerHTML = top.length ? top.map(r => mxPickCard(r, true)).join('')
+    : `<div class="mx-empty">No picks yet — <button class="mx-link" onclick="mxOpenSuggest()">suggest the first one</button></div>`;
 }
 
-// Star position → score in half-point steps (1–5)
+async function mxRsvp(status) {
+  const me = mxMe(), key = currentMeetingKey();
+  if (!me || !key) return;
+  const email = norm(me.email);
+  _siteRsvps[email] = status;
+  DATA.rsvp = Object.assign({}, DATA.rsvp || {}, { [email]: status });
+  mxRender(); renderHero();
+  const { error } = await db.from('member_rsvps').upsert(
+    { meeting_key: key, email, name: me.name, status, updated_at: new Date().toISOString() },
+    { onConflict: 'meeting_key,email' });
+  if (error) { toast('Could not save your RSVP — please try again.'); console.warn(error.message); loadSiteRsvps(); return; }
+  toast(status === 'g' ? "✓ You're going — see you there!" : status === 'm' ? '✓ Marked as maybe' : "✓ Got it — we'll miss you");
+}
+
+// ── SCORE ───────────────────────────────────────────────────────
+function mxScoreFilter(f) {
+  MX.scoreFilter = f;
+  document.querySelectorAll('#mx-score-chips button').forEach(b => b.classList.toggle('on', b.dataset.f === f));
+  mxRenderScore();
+}
+function mxRenderScore() {
+  const all = scoreEntries();
+  const done = all.filter(e => mxMine(e)).length;
+  document.getElementById('mx-score-count').textContent = `${done} of ${all.length} scored`;
+  document.getElementById('mx-progress-bar').style.width = all.length ? (done / all.length * 100) + '%' : '0';
+  document.getElementById('mx-dot-score').classList.toggle('on', done < all.length);
+  let list = all;
+  if (MX.scoreFilter === 'todo') list = all.filter(e => !mxMine(e));
+  if (MX.scoreFilter === 'top') list = [...all].sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1));
+  document.getElementById('mx-shelf').innerHTML = list.length ? list.map(e => {
+    const mine = mxMine(e);
+    const under = mine
+      ? (mine.abandoned ? `<span class="mx-dnf-tag">Didn't finish</span>` : mxMiniStars(mine.score))
+      : `<span class="mx-tap">Tap to score</span>`;
+    const avg = MX.scoreFilter === 'top' && e.rating != null ? `<span class="mx-cell-avg">Group ${e.rating.toFixed(2)}</span>` : '';
+    return `<button class="mx-cell" onclick="mxOpenScore('${e.key}')">${mxCover(e, e.isCurrent ? 'Now' : '')}${under}${avg}<span class="mx-cell-title">${escHtml(e.title)}</span></button>`;
+  }).join('') : `<div class="mx-empty">🎉 You've scored every book! <button class="mx-link" onclick="mxScoreFilter('all')">See them all</button></div>`;
+}
+
+// Bottom sheet with big stars
+function mxOpenScore(key) {
+  MX.sheetKey = String(key);
+  mxFillSheet();
+  document.getElementById('mx-sheet-score').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function mxFillSheet() {
+  const e = scoreEntries().find(x => x.key === MX.sheetKey);
+  if (!e) return mxCloseSheets();
+  const mine = mxMine(e);
+  const n = (e.scores || []).filter(v => !v.abandoned && v.score != null).length;
+  document.getElementById('mx-ss-book').innerHTML = `
+    <div class="mx-meet">${mxCover(e, e.isCurrent ? 'Now' : '')}
+      <div><h4>${escHtml(e.title)}</h4><p>${e.author ? escHtml(e.author) + ' · ' : ''}${escHtml(e.date || '')}<br>${e.rating != null ? `Group avg <b>${e.rating.toFixed(2)}</b> · ${n} score${n === 1 ? '' : 's'}` : 'No scores yet — be the first!'}</p></div>
+    </div>`;
+  const fill = document.getElementById('mx-ss-fill');
+  fill.style.width = mine && !mine.abandoned ? (mine.score / 5 * 100) + '%' : '0%';
+  delete fill.dataset.saved;
+  document.getElementById('mx-ss-num').innerHTML = !mine ? 'Tap the stars to score'
+    : mine.abandoned ? "You didn't finish this one" : `Your score <b>${mine.score}</b> · saved ✓`;
+  const next = mxToScore().find(x => x.key !== e.key);
+  document.getElementById('mx-ss-next').textContent = next ? 'Next book to score →' : 'Done';
+}
 function starValue(e, el) {
   const r = el.getBoundingClientRect();
   return Math.min(5, Math.max(1, Math.ceil(((e.clientX - r.left) / r.width) * 10) / 2));
 }
-function hoverStars(e, el) {
-  const fg = el.querySelector('.stars-fg');
-  if (!e) { fg.style.width = fg.dataset.saved || fg.style.width; delete fg.dataset.saved; return; }
-  if (!fg.dataset.saved) fg.dataset.saved = fg.style.width;
+function mxHoverBig(e) {
+  const el = document.getElementById('mx-ss-stars'), fg = document.getElementById('mx-ss-fill');
+  if (!e) { if (fg.dataset.saved != null) fg.style.width = fg.dataset.saved; delete fg.dataset.saved; return; }
+  if (fg.dataset.saved == null) fg.dataset.saved = fg.style.width;
   fg.style.width = (starValue(e, el) / 5 * 100) + '%';
 }
-function tapStars(e, key) {
-  if (!document.getElementById('as-email').value) { toast('Pick your name first 👆'); document.getElementById('as-email').focus(); return; }
+async function mxTapBigStars(e) {
   const v = starValue(e, e.currentTarget);
-  const fg = e.currentTarget.querySelector('.stars-fg');
+  const fg = document.getElementById('mx-ss-fill');
   fg.style.width = (v / 5 * 100) + '%'; delete fg.dataset.saved;
-  document.getElementById('sc-num-' + key).textContent = v.toFixed(1);
-  saveScoreFor(key, v);
+  document.getElementById('mx-ss-num').innerHTML = `Your score <b>${v}</b> · saving…`;
+  const id = await saveScoreFor(MX.sheetKey, v);
+  if (id) { MX.sheetKey = String(id); mxFillSheet(); }
+}
+async function mxDidntFinish() {
+  const id = await saveScoreFor(MX.sheetKey, null, true);
+  if (id) { MX.sheetKey = String(id); mxFillSheet(); }
+}
+function mxNextToScore() {
+  const next = mxToScore().find(x => x.key !== MX.sheetKey);
+  if (next) { MX.sheetKey = next.key; mxFillSheet(); } else mxCloseSheets();
+}
+function mxCloseSheets() {
+  document.querySelectorAll('.mx-sheet-wrap').forEach(w => w.classList.remove('open'));
+  document.body.style.overflow = '';
 }
 
+// Saves (or changes) this member's score on one book; returns the book id
 async function saveScoreFor(key, score, abandoned = false) {
-  const email = norm(document.getElementById('as-email').value);
-  if (!email) { toast('Please select your name first.'); return; }
-  if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return; }
-  const member = (DATA.members || []).find(m => norm(m.email) === email);
+  const me = mxMe();
+  if (!me) { toast('Pick your name first.'); return null; }
+  const email = norm(me.email);
+  if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return null; }
 
   // The current read gets its own row in Books We've Read the first time someone scores it
   let id = key;
@@ -1582,51 +1882,144 @@ async function saveScoreFor(key, score, abandoned = false) {
     const d = /^\d{8}/.test(m.dateISO || '') ? new Date(+m.dateISO.slice(0,4), +m.dateISO.slice(4,6) - 1, 1) : new Date();
     const dateRead = d.toLocaleDateString('en-US', { month:'long', year:'numeric' });
     const saved = await saveBookToSupabase(m.book, dateRead, null, []);
-    if (!saved) { toast('Could not save — please try again.'); return; }
+    if (!saved) { toast('Could not save — please try again.'); return null; }
     DATA.books.unshift({ id: saved.id, title: saved.title, date: saved.date_read, rating: null, scores: [] });
     id = String(saved.id);
   }
 
   // Re-read the latest scores right before saving so we don't overwrite someone else's
   const { data: row, error: readErr } = await db.from('books').select('scores').eq('id', id).single();
-  if (readErr) { toast('Could not save — please try again.'); console.warn(readErr.message); return; }
+  if (readErr) { toast('Could not save — please try again.'); console.warn(readErr.message); return null; }
   const scores = (row.scores || []).filter(v => norm(v.email) !== email);
-  scores.push({ name: member ? member.name : email, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
+  scores.push({ name: me.name, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
   const rated  = scores.filter(v => !v.abandoned && v.score != null);
   const rating = rated.length ? Math.round(rated.reduce((s, v) => s + v.score, 0) / rated.length * 100) / 100 : null;
   const { error } = await db.from('books').update({ scores, rating }).eq('id', id);
-  if (error) { toast('Could not save — please try again.'); console.warn(error.message); return; }
+  if (error) { toast('Could not save — please try again.'); console.warn(error.message); return null; }
 
   const book = DATA.books.find(b => String(b.id) === id);
   if (book) { book.scores = scores; book.rating = rating; }
   renderBooks();
   renderAdminBooksAll();
-  renderScoreList();
-  const rowEl = document.getElementById('sc-row-' + id);
-  if (rowEl) { rowEl.classList.add('flash'); setTimeout(() => rowEl.classList.remove('flash'), 1200); }
-  toast(abandoned ? '✓ Saved — marked as didn\'t finish' : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
+  mxRender();
+  toast(abandoned ? "✓ Saved — marked as didn't finish" : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
+  return id;
 }
 
-// From a book's popup: jump to the scoring list with that book highlighted
+// From a book's popup in Books We've Read
 function scoreThisBook(id) {
   closeBookModal();
-  const unlocked = document.getElementById('members-content').style.display === 'block';
-  if (!unlocked) {
+  if (!memberUnlocked() || !mxMe()) {
     document.getElementById('members').scrollIntoView({ behavior:'smooth' });
-    toast('Enter the member password to score books.');
+    toast(memberUnlocked() ? 'Tap your name first 👆' : 'Enter the member password to score books.');
     return;
   }
-  const acc = document.getElementById('acc-anyscore');
-  acc.classList.add('open');
-  const rowEl = document.getElementById('sc-row-' + id) || acc;
-  rowEl.scrollIntoView({ behavior:'smooth', block:'center' });
-  rowEl.classList.add('flash'); setTimeout(() => rowEl.classList.remove('flash'), 1600);
-  }
+  mxTab('score');
+  mxOpenScore(String(id));
+}
 
-// Keep scores fresh while the page is open (other members' scores appear within ~20s)
+// ── PICKS ───────────────────────────────────────────────────────
+async function loadRecommendations() {
+  try {
+    const { data, error } = await db.from('recommendations').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    MX.recs = data || [];
+  } catch(e) { console.warn('Could not load recommendations:', e.message); }
+  try {
+    const { data, error } = await db.from('rec_votes').select('rec_id,email');
+    if (error) throw error;
+    MX.votes = data || []; MX.votesReady = true;
+  } catch(e) { MX.votes = []; MX.votesReady = false; }
+  mxRender();
+}
+function mxVoteCount(id) { return MX.votes.filter(v => v.rec_id === id).length; }
+function mxIVoted(id) { const me = mxEmail(); return MX.votes.some(v => v.rec_id === id && norm(v.email) === me); }
+function mxSortedRecs(by) {
+  const list = [...MX.recs];
+  return by === 'votes'
+    ? list.sort((a, b) => mxVoteCount(b.id) - mxVoteCount(a.id) || new Date(b.created_at) - new Date(a.created_at))
+    : list.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+}
+function mxPickCard(r, compact) {
+  const by = (DATA.members || []).find(m => norm(m.name) === norm(r.recommended_by));
+  const on = mxIVoted(r.id);
+  return `
+    <div class="mx-pick">
+      ${mxCover({ title: r.title, author: r.author })}
+      <div class="mx-pick-body">
+        <h5>${escHtml(r.title)}</h5>
+        ${r.author ? `<p>${escHtml(r.author)}</p>` : ''}
+        ${r.recommended_by ? `<span class="mx-by">${by ? mxAvatar(by, 'xs') : ''}Suggested by ${escHtml(by ? mxFirst(by) : r.recommended_by)}</span>` : ''}
+        ${!compact && r.pitch ? `<q>${escHtml(r.pitch)}</q>` : ''}
+      </div>
+      ${MX.votesReady ? `<button class="mx-vote${on ? ' on' : ''}" onclick="mxVote(${r.id})" title="${on ? 'Remove your ♥' : 'I’d read this!'}"><i>♥</i><b>${mxVoteCount(r.id)}</b></button>` : ''}
+    </div>`;
+}
+function mxPickSort(by) {
+  MX.pickSort = by;
+  document.querySelectorAll('#mx-pick-chips button').forEach(b => b.classList.toggle('on', b.dataset.s === by));
+  mxRenderPicks();
+}
+function mxRenderPicks() {
+  document.getElementById('mx-picks-count').textContent = MX.recs.length ? `${MX.recs.length} suggested` : '';
+  const list = mxSortedRecs(MX.pickSort);
+  document.getElementById('mx-picks-list').innerHTML = list.length ? list.map(r => mxPickCard(r, false)).join('')
+    : `<div class="mx-empty">No suggestions yet — tap <b>+ Suggest a book</b> to add the first one.</div>`;
+}
+async function mxVote(id) {
+  const me = mxMe(); if (!me) return;
+  const email = norm(me.email);
+  const had = mxIVoted(id);
+  MX.votes = had ? MX.votes.filter(v => !(v.rec_id === id && norm(v.email) === email)) : [...MX.votes, { rec_id: id, email }];
+  mxRender();
+  const { error } = had
+    ? await db.from('rec_votes').delete().eq('rec_id', id).eq('email', email)
+    : await db.from('rec_votes').insert({ rec_id: id, email });
+  if (error) { toast('Could not save your ♥ — please try again.'); console.warn(error.message); loadRecommendations(); }
+}
+function mxOpenSuggest() {
+  if (!mxMe()) return;
+  document.getElementById('mx-sheet-suggest').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('mx-sg-title').focus(), 250);
+}
+async function mxSubmitSuggest(e) {
+  e.preventDefault();
+  const me = mxMe();
+  const title = document.getElementById('mx-sg-title').value.trim();
+  if (!title || !me) return;
+  const { error } = await db.from('recommendations').insert({
+    title, author: document.getElementById('mx-sg-author').value.trim(),
+    recommended_by: me.name, pitch: document.getElementById('mx-sg-pitch').value.trim()
+  });
+  if (error) { toast('Something went wrong — try again.'); console.warn(error.message); return; }
+  e.target.reset();
+  mxCloseSheets();
+  toast('✓ Thanks! Your suggestion is up.');
+  await loadRecommendations();
+  mxPickSort('new');
+  mxTab('picks');
+}
+
+// ── PEOPLE ──────────────────────────────────────────────────────
+function mxRenderPeople() {
+  const key = currentMeetingKey();
+  const icon = { g:'✓', m:'~', d:'✕', p:'' };
+  const list = (DATA.members || []).map((m, i) => ({ m, i })).sort((a, b) => a.m.name.localeCompare(b.m.name));
+  document.getElementById('mx-people-count').textContent = `${list.length} members`;
+  document.getElementById('mx-people').innerHTML = list.map(({ m, i }) => {
+    const st = key ? getRsvp(m.email) : 'p';
+    return `<button class="mx-person" onclick="openProfileModal(${i})">
+      <span class="mx-person-av">${mxAvatar(m, 'lg')}${key ? `<span class="mx-badge b-${st}">${icon[st]}</span>` : ''}</span>
+      <small>${escHtml(mxFirst(m))}</small></button>`;
+  }).join('');
+}
+
+// Keep things fresh while the page is open (others' scores, RSVPs and picks appear within ~20s)
 setInterval(async () => {
   if (document.visibilityState !== 'visible') return;
   await loadBooksFromSupabase();
+  if (memberUnlocked()) { loadSiteRsvps(); loadRecommendations(); }
 }, 20000);
 
 // ════════════════════════════════════════════════════════════════
@@ -1646,8 +2039,7 @@ async function loadBooksFromSupabase() {
       }));
       renderBooks();
       renderAdminBooksAll();
-      const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#as-list');
-      if (!typing && document.getElementById('members-content').style.display === 'block') renderScoreList();
+      mxRender();
     }
   } catch(e) {
     console.warn('Books table not ready (run the SQL setup first):', e.message);
@@ -2089,28 +2481,7 @@ const PALETTES = [
   ["#AA4A70","#DD8AAA"],["#5A7A2A","#8AB05A"],
 ];
 
-function renderPublicMembers() {
-  const lbl = { g:'✓ Going', m:'~ Maybe', d:'✗ Declined', p:'–' };
-  const cls = { g:'ms-g', m:'ms-m', d:'ms-d', p:'ms-p' };
-  const showRsvp = hasMeetingDate();
-  document.getElementById('members-grid').innerHTML = DATA.members.map((m,i) => {
-    const init = m.name.split(' ').map(w=>w[0]).slice(0,2).join('');
-    const pal  = PALETTES[i % PALETTES.length];
-    const st   = getRsvp(m.email);
-    const p    = m.profile || {};
-    const hasProfile = p.job || p.family || p.how_heard || p.fav_book || p.fav_genre || p.photo;
-    return `
-      <div class="member-card" onclick="openProfileModal(${i})" title="Click to learn more about ${m.name}">
-        ${p.photo
-          ? `<div class="m-avatar has-profile" style="background:linear-gradient(135deg,${pal[0]},${pal[1]});overflow:hidden;"><img src="${p.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none'" /></div>`
-          : `<div class="m-avatar ${hasProfile ? 'has-profile' : 'no-profile'}" style="background:linear-gradient(135deg,${pal[0]},${pal[1]})">${init}</div>`
-        }
-        <div class="m-name">${m.name}</div>
-        ${showRsvp ? `<span class="m-status ${cls[st]}">${lbl[st]}</span>` : ''}
-        <div class="m-tap-hint">${hasProfile ? '✓ Has profile' : '+ Add info'}</div>
-      </div>`;
-  }).join('');
-}
+function renderPublicMembers() { mxRender(); }
 
 // ════════════════════════════════════════════════════════════════
 //  PASSWORDS
@@ -2120,21 +2491,71 @@ async function checkMemberPw() {
     try { localStorage.setItem('hvr-member-pw', MEMBER_PW); } catch(e) {}  // stay unlocked on this device
     document.getElementById('members-gate').style.display = 'none';
     document.getElementById('members-content').style.display = 'block';
-    document.getElementById('members-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:0.88rem;">Loading members…</div>';
+    document.body.classList.add('mx-tab-home', 'mx-unlocked');
     await loadProfilesFromSupabase();
     await loadRecommendations();
     await loadPollFromSupabase();
     await loadScoringSession();
-    renderPublicMembers();
     renderPublicPoll();
     renderPublicScoring();
-    renderRsvpSection();
-    renderAnyScore();
+    mxRender();
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw-input').value = '';
     document.getElementById('pw-input').focus();
   }
+}
+
+// ── Organizer opens from the footer as a full-screen panel ──────
+function openOrganizer(e) {
+  if (e) e.preventDefault();
+  document.getElementById('admin-area').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderOrgOverview();
+  if (document.getElementById('admin-gate').style.display !== 'none') setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+}
+function closeOrganizer() {
+  document.getElementById('admin-area').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function orgGo(tab) {
+  const btn = document.querySelector(`.admin-tab[onclick*="'${tab}'"]`);
+  if (btn) showTab(tab, btn);
+}
+function renderOrgOverview() {
+  const k = document.getElementById('org-kpis');
+  if (!k) return;
+  const members = DATA.members || [], key = currentMeetingKey(), m = DATA.meeting || {};
+  const replied = key ? members.filter(x => getRsvp(x.email) !== 'p') : [];
+  const going = key ? members.filter(x => getRsvp(x.email) === 'g').length : 0;
+  const scores = (DATA.books || []).reduce((n, b) => n + (b.scores || []).filter(v => !v.abandoned && v.score != null).length, 0);
+  const top = mxSortedRecs('votes')[0];
+  k.innerHTML = `
+    <div class="org-kpi"><b>${key ? going : '—'}</b><span>Going${key ? ` · ${replied.length}/${members.length} replied` : ''}</span></div>
+    <div class="org-kpi"><b>${scores}</b><span>Scores given</span></div>
+    <div class="org-kpi"><b>${MX.recs.length}</b><span>Member picks</span></div>`;
+  const noReply = members.filter(x => key && getRsvp(x.email) === 'p');
+  const bcc = noReply.map(x => x.email).join(',');
+  const nudge = `mailto:?bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent('Are you coming? ' + (m.book || 'Book club'))}&body=${encodeURIComponent(`Hi! Quick reminder to RSVP for ${m.date || 'our next meeting'}${m.location ? ' at ' + m.location : ''}.
+
+Tap Going / Maybe / Can't make it here: https://www.huntingtonvillagereaders.com/#members
+
+Thanks!`)}`;
+  const rowsHtml = [];
+  rowsHtml.push(`<div class="org-row">📅 <span><b>${escHtml(m.date || 'No date set')}</b>${m.book ? ' · ' + escHtml(m.book) : ''}${m.location ? ' · ' + escHtml(m.location) : ''}</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-meeting')">Edit</button><button class="btn-act btn-act-blue btn-act-sm" onclick="sendCalendarInvite()">Send invite</button></div>`);
+  if (key && noReply.length) rowsHtml.push(`<div class="org-row">✉️ <span>${noReply.length} member${noReply.length === 1 ? " hasn't" : "s haven't"} RSVP'd</span><a class="btn-act btn-act-outline btn-act-sm" href="${nudge}">Nudge them</a></div>`);
+  if (top) rowsHtml.push(`<div class="org-row">📚 <span>Top pick: <b>${escHtml(top.title)}</b> · ♥ ${mxVoteCount(top.id)}</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgUsePick(${top.id})">Make it a meeting book</button></div>`);
+  rowsHtml.push(`<div class="org-row">🗓 <span>Plan future meetings</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-upcoming')">Upcoming</button></div>`);
+  rowsHtml.push(`<div class="org-row">👥 <span>${members.length} members</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-members')">Manage</button></div>`);
+  document.getElementById('org-actions').innerHTML = rowsHtml.join('');
+}
+function orgUsePick(id) {
+  const r = MX.recs.find(x => x.id === id);
+  if (!r) return;
+  orgGo('tab-upcoming');
+  document.getElementById('up-book').value = r.title || '';
+  document.getElementById('up-author').value = r.author || '';
+  toast('Pick a date and save — or edit an existing meeting.');
 }
 
 async function checkAdminPw() {
@@ -2149,6 +2570,8 @@ async function checkAdminPw() {
     await loadScoringSession();
     restoreAdminPollUI();
     renderAdminScoring();
+    if (!MX.recs.length) await loadRecommendations();
+    renderOrgOverview();
   } else {
     document.getElementById('admin-pw-err').style.display = 'block';
     document.getElementById('admin-pw').value = '';
@@ -2670,73 +3093,6 @@ function showTab(id, btn) {
 // ════════════════════════════════════════════════════════════════
 //  RECOMMENDATIONS
 // ════════════════════════════════════════════════════════════════
-async function loadRecommendations() {
-  try {
-    const { data, error } = await db.from('recommendations').select('*').order('created_at', { ascending: false });
-    if (error) throw error;
-    renderRecommendations(data || []);
-  } catch(e) {
-    console.warn('Could not load recommendations:', e.message);
-  }
-}
-
-function renderRecommendations(recs) {
-  const list  = document.getElementById('recs-list');
-  const badge = document.getElementById('recs-count-badge');
-  if (badge) {
-    if (recs.length) { badge.textContent = recs.length; badge.style.display = ''; }
-    else badge.style.display = 'none';
-  }
-  if (!recs.length) {
-    list.innerHTML = '<div class="recs-empty">No recommendations yet — be the first!</div>';
-    return;
-  }
-  list.innerHTML = recs.map(r => {
-    const date = new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    return `
-      <div class="rec-card">
-        <div class="rec-card-top">
-          <div>
-            <div class="rec-book-title">${r.title}</div>
-            ${r.author ? `<div class="rec-book-author">by ${r.author}</div>` : ''}
-          </div>
-          <div class="rec-date">${date}</div>
-        </div>
-        ${r.pitch ? `<div class="rec-pitch">"${r.pitch}"</div>` : ''}
-        ${r.recommended_by ? `<div class="rec-by">Recommended by <strong>${r.recommended_by}</strong></div>` : ''}
-      </div>`;
-  }).join('');
-}
-
-async function postRec(e) {
-  e.preventDefault();
-  const title  = document.getElementById('rec-title').value.trim();
-  const author = document.getElementById('rec-author').value.trim();
-  const name   = document.getElementById('rec-name').value.trim();
-  const pitch  = document.getElementById('rec-why').value.trim();
-  if (!title) return;
-  try {
-    const { error } = await db.from('recommendations').insert({
-      title, author, recommended_by: name, pitch
-    });
-    if (error) throw error;
-    document.getElementById('rec-form').reset();
-    toast('✓ Recommendation posted!');
-    await loadRecommendations();
-  } catch(e) {
-    toast('Something went wrong — try again.');
-    console.error(e);
-  }
-}
-
-function handleUnsub(e) {
-  e.preventDefault();
-  const name = prompt("What's your name? (So the organizer knows who to remove)");
-  if (!name) return;
-  emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", { member_name: name }) // see SETUP.md step 4
-    .then(() => toast("Done! The organizer has been notified and will remove you shortly."))
-    .catch(() => toast("Something went wrong — please try again."));
-}
 
 // ════════════════════════════════════════════════════════════════
 //  ACCORDION
@@ -3515,7 +3871,7 @@ function useWinnerDate(date) {
   document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-meeting').classList.add('active');
-  document.querySelectorAll('.admin-tab')[2].classList.add('active');
+  document.querySelector('.admin-tab[onclick*="tab-meeting"]').classList.add('active');
   document.getElementById('m-date').value = date;
   document.getElementById('m-time').value = '7:00 – 9:00 PM';
   // Pre-compute ISO dates so the calendar invite is ready to go
@@ -3643,11 +3999,16 @@ function renderAdminUpcoming() {
 async function findCoverUrl(book, author) {
   if (!book) return null;
   try {
-    const q = new URLSearchParams({ title: book, limit: '1', fields: 'cover_i' });
+    const q = new URLSearchParams({ title: book, limit: '10', fields: 'title,cover_i,edition_count' });
     if (author) q.set('author', author);
     const res  = await fetch('https://openlibrary.org/search.json?' + q);
     const json = await res.json();
-    const id   = json.docs && json.docs[0] && json.docs[0].cover_i;
+    const docs = (json.docs || []).filter(d => d.cover_i);
+    const bare = t => (t || '').toLowerCase().replace(/^the\s+/, '').replace(/[^a-z0-9]/g, '');
+    const exact = docs.filter(d => bare(d.title) === bare(book))
+                      .sort((a, b) => (b.edition_count || 0) - (a.edition_count || 0));
+    const pick = exact[0] || (author ? docs[0] : null);  // without an author, only trust an exact title match
+    const id   = pick && pick.cover_i;
     return id ? `https://covers.openlibrary.org/b/id/${id}-L.jpg` : null;
   } catch(e) { return null; }
 }
