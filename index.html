@@ -124,9 +124,9 @@
     .sc-status { font-size:0.76rem; margin-top:4px; }
     .sc-mine { color:#1E7A4A; font-weight:600; }
     .sc-todo { color:#9A5F3A; font-weight:600; }
-    .sc-controls { display:flex; align-items:center; gap:8px; flex-shrink:0; }
-    .sc-input { width:78px; margin:0; padding:9px 10px; text-align:center; }
-    .sc-save { padding:10px 16px; }
+    .sc-controls { display:flex; align-items:center; gap:8px 12px; flex-shrink:0; flex-wrap:wrap; }
+    .sc-stars { position:relative; display:inline-block; font-size:2.1rem; line-height:1; letter-spacing:2px; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+    .sc-num { min-width:34px; font-size:0.85rem; font-weight:600; color:var(--dark); }
     .sc-dnf { background:none; white-space:nowrap; border:none; color:var(--muted); font-size:0.7rem; text-decoration:underline; cursor:pointer; padding:4px; }
     .bm-score-it { margin-top:18px; width:100%; }
     @media (max-width:760px) {
@@ -628,8 +628,8 @@
     <ul>
       <li><a href="#meeting">Next Meeting</a></li>
       <li><a href="#upcoming">Upcoming</a></li>
-      <li><a href="#books">Our Books</a></li>
       <li><a href="#members">Members</a></li>
+      <li><a href="#books">Our Books</a></li>
       <li><a href="#members" onclick="setTimeout(()=>{const r=document.getElementById('acc-recs');if(r&&r.offsetParent)r.scrollIntoView({behavior:'smooth'});},50)">Recommend</a></li>
       <li><a href="#admin-area" style="color:var(--coral);">Organizer</a></li>
     </ul>
@@ -698,28 +698,6 @@
   </div>
 </div>
 
-<!-- ── BOOKS ── -->
-<div id="books">
-  <div class="section">
-    <div class="page">
-      <div class="section-head">
-        <div class="section-title">Books We've Read</div>
-        <div class="section-sub">Every pick, ranked by our group rating</div>
-        <div class="section-rule"></div>
-      </div>
-      <div class="stats-row" id="stats-row"></div>
-      <div class="sort-bar">
-        <span class="sort-label">Sort by</span>
-        <button class="sort-btn active" id="sort-btn-date-desc" onclick="setSort('date-desc')">📅 Recently read</button>
-        <button class="sort-btn" id="sort-btn-date-asc" onclick="setSort('date-asc')">📅 Oldest first</button>
-        <button class="sort-btn" id="sort-btn-score-desc" onclick="setSort('score-desc')">⭐ Highest rated</button>
-        <button class="sort-btn" id="sort-btn-score-asc" onclick="setSort('score-asc')">⭐ Lowest rated</button>
-      </div>
-      <div class="books-container" id="books-list"></div>
-    </div>
-  </div>
-</div>
-
 <!-- ── MEMBERS ── -->
 <div id="members">
   <div class="section">
@@ -764,37 +742,6 @@
           </div>
         </div>
 
-        <!-- ── ACCORDION: RECOMMENDATIONS (always visible, open by default) ── -->
-        <div class="accordion-wrap open" id="acc-recs">
-          <button class="accordion-header" onclick="toggleAccordion('acc-recs')">
-            <span class="acc-icon">📚</span>
-            <span class="acc-title">Recommend a Book</span>
-            <span class="acc-count" id="recs-count-badge" style="display:none;"></span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Have a book you'd love us to read? Add it below — and see what everyone else is suggesting.</p>
-              <div style="margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border);">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Your Recommendation</div>
-                <form id="rec-form" onsubmit="postRec(event)">
-                  <div class="form-row">
-                    <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
-                    <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="rec-author" placeholder="e.g. Matt Haig" /></div>
-                  </div>
-                  <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="rec-name" placeholder="Who's recommending?" /></div>
-                  <div class="fg"><label class="fl">Your Pitch</label><textarea class="fta" id="rec-why" placeholder="Why should we read it?"></textarea></div>
-                  <button type="submit" class="btn btn-pink">Post Recommendation ✚</button>
-                </form>
-              </div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:12px;">What Members Are Suggesting</div>
-              <div class="recs-list" id="recs-list">
-                <div class="recs-empty">No recommendations yet — be the first!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- ── ACCORDION: SCORE OUR BOOKS (anytime; always visible, open by default) ── -->
         <div class="accordion-wrap open" id="acc-anyscore">
           <button class="accordion-header" onclick="toggleAccordion('acc-anyscore')">
@@ -804,7 +751,7 @@
           </button>
           <div class="accordion-body">
             <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:14px;">Pick your name, then give any book a score from 1 to 5 (decimals OK). Change it anytime — the group average updates right away.</p>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:14px;">Pick your name, then <strong>tap the stars</strong> to score any book — it saves instantly. Tap the left half of a star for a half point. Tap again anytime to change it.</p>
               <label class="fl">Your Name</label>
               <select class="fi" id="as-email" onchange="onAnyScoreName()" style="max-width:320px;"></select>
               <div class="sc-progress" id="as-progress"></div>
@@ -851,6 +798,37 @@
                   <div style="font-size:0.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Current Standings</div>
                   <div class="poll-results-grid" id="poll-results-public"></div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ACCORDION: RECOMMENDATIONS (always visible, tap to open) ── -->
+        <div class="accordion-wrap" id="acc-recs">
+          <button class="accordion-header" onclick="toggleAccordion('acc-recs')">
+            <span class="acc-icon">📚</span>
+            <span class="acc-title">Recommend a Book</span>
+            <span class="acc-count" id="recs-count-badge" style="display:none;"></span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Have a book you'd love us to read? Add it below — and see what everyone else is suggesting.</p>
+              <div style="margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Your Recommendation</div>
+                <form id="rec-form" onsubmit="postRec(event)">
+                  <div class="form-row">
+                    <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
+                    <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="rec-author" placeholder="e.g. Matt Haig" /></div>
+                  </div>
+                  <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="rec-name" placeholder="Who's recommending?" /></div>
+                  <div class="fg"><label class="fl">Your Pitch</label><textarea class="fta" id="rec-why" placeholder="Why should we read it?"></textarea></div>
+                  <button type="submit" class="btn btn-pink">Post Recommendation ✚</button>
+                </form>
+              </div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:12px;">What Members Are Suggesting</div>
+              <div class="recs-list" id="recs-list">
+                <div class="recs-empty">No recommendations yet — be the first!</div>
               </div>
             </div>
           </div>
@@ -917,6 +895,28 @@
         </div>
 
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOOKS ── -->
+<div id="books">
+  <div class="section">
+    <div class="page">
+      <div class="section-head">
+        <div class="section-title">Books We've Read</div>
+        <div class="section-sub">Every pick, ranked by our group rating</div>
+        <div class="section-rule"></div>
+      </div>
+      <div class="stats-row" id="stats-row"></div>
+      <div class="sort-bar">
+        <span class="sort-label">Sort by</span>
+        <button class="sort-btn active" id="sort-btn-date-desc" onclick="setSort('date-desc')">📅 Recently read</button>
+        <button class="sort-btn" id="sort-btn-date-asc" onclick="setSort('date-asc')">📅 Oldest first</button>
+        <button class="sort-btn" id="sort-btn-score-desc" onclick="setSort('score-desc')">⭐ Highest rated</button>
+        <button class="sort-btn" id="sort-btn-score-asc" onclick="setSort('score-asc')">⭐ Lowest rated</button>
+      </div>
+      <div class="books-container" id="books-list"></div>
     </div>
   </div>
 </div>
@@ -1537,19 +1537,41 @@ function renderScoreList() {
           <div class="sc-status">${status}</div>
         </div>
         <div class="sc-controls">
-          <input type="number" class="fi sc-input" id="sc-in-${e.key}" min="1" max="5" step="0.01" placeholder="1–5" value="${myVal}"
-                 onkeydown="if(event.key==='Enter') saveScoreFor('${e.key}')" />
-          <button class="btn btn-pink sc-save" onclick="saveScoreFor('${e.key}')">${mine ? 'Update' : 'Save'}</button>
-          <button class="sc-dnf" onclick="saveScoreFor('${e.key}', true)" title="I purposefully abandoned this book">Didn't finish</button>
+          <div class="sc-stars" role="slider" aria-label="Score ${escHtml(e.title)}" aria-valuemin="1" aria-valuemax="5" aria-valuenow="${myVal || 0}"
+               onclick="tapStars(event,'${e.key}')" onmousemove="hoverStars(event,this)" onmouseleave="hoverStars(null,this)">
+            <span class="stars-bg">★★★★★</span>
+            <span class="stars-fg" style="width:${myVal ? myVal / 5 * 100 : 0}%">★★★★★</span>
+          </div>
+          <div class="sc-num" id="sc-num-${e.key}">${myVal ? Number(myVal).toFixed(1) : 'Tap'}</div>
+          <button class="sc-dnf" onclick="saveScoreFor('${e.key}', null, true)" title="I purposefully abandoned this book">Didn't finish</button>
         </div>
       </div>`;
   }).join('');
 }
 
-async function saveScoreFor(key, abandoned = false) {
+// Star position → score in half-point steps (1–5)
+function starValue(e, el) {
+  const r = el.getBoundingClientRect();
+  return Math.min(5, Math.max(1, Math.ceil(((e.clientX - r.left) / r.width) * 10) / 2));
+}
+function hoverStars(e, el) {
+  const fg = el.querySelector('.stars-fg');
+  if (!e) { fg.style.width = fg.dataset.saved || fg.style.width; delete fg.dataset.saved; return; }
+  if (!fg.dataset.saved) fg.dataset.saved = fg.style.width;
+  fg.style.width = (starValue(e, el) / 5 * 100) + '%';
+}
+function tapStars(e, key) {
+  if (!document.getElementById('as-email').value) { toast('Pick your name first 👆'); document.getElementById('as-email').focus(); return; }
+  const v = starValue(e, e.currentTarget);
+  const fg = e.currentTarget.querySelector('.stars-fg');
+  fg.style.width = (v / 5 * 100) + '%'; delete fg.dataset.saved;
+  document.getElementById('sc-num-' + key).textContent = v.toFixed(1);
+  saveScoreFor(key, v);
+}
+
+async function saveScoreFor(key, score, abandoned = false) {
   const email = norm(document.getElementById('as-email').value);
   if (!email) { toast('Please select your name first.'); return; }
-  const score = parseFloat(document.getElementById('sc-in-' + key).value);
   if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return; }
   const member = (DATA.members || []).find(m => norm(m.email) === email);
 
@@ -1599,9 +1621,7 @@ function scoreThisBook(id) {
   const rowEl = document.getElementById('sc-row-' + id) || acc;
   rowEl.scrollIntoView({ behavior:'smooth', block:'center' });
   rowEl.classList.add('flash'); setTimeout(() => rowEl.classList.remove('flash'), 1600);
-  const input = document.getElementById('sc-in-' + id);
-  if (input && document.getElementById('as-email').value) setTimeout(() => input.focus(), 400);
-}
+  }
 
 // Keep scores fresh while the page is open (other members' scores appear within ~20s)
 setInterval(async () => {
@@ -1691,6 +1711,7 @@ async function loadMembersFromSupabase() {
       renderPublicMembers();
       renderAdminMembers();
       renderHero();
+      if (document.getElementById('members-content').style.display === 'block') { renderRsvpSection(); renderAnyScore(); }
       populateScoringDropdown();
       populatePollDropdown();
     } else {
@@ -2096,6 +2117,7 @@ function renderPublicMembers() {
 // ════════════════════════════════════════════════════════════════
 async function checkMemberPw() {
   if (document.getElementById('pw-input').value === MEMBER_PW) {
+    try { localStorage.setItem('hvr-member-pw', MEMBER_PW); } catch(e) {}  // stay unlocked on this device
     document.getElementById('members-gate').style.display = 'none';
     document.getElementById('members-content').style.display = 'block';
     document.getElementById('members-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:0.88rem;">Loading members…</div>';
@@ -3690,6 +3712,13 @@ loadBooksFromSupabase();    // async: overrides defaults if Supabase table has d
 loadMeetingFromSupabase();  // async: pulls the current next-meeting details
 loadRsvpFromSupabase();     // async: pulls latest RSVP responses from Google Calendar sync
 loadUpcomingFromSupabase(); // async: upcoming meetings (homepage section + admin tab)
+// Returning members on this device skip the password (cleared automatically if the password changes)
+try {
+  if (localStorage.getItem('hvr-member-pw') === MEMBER_PW) {
+    document.getElementById('pw-input').value = MEMBER_PW;
+    setTimeout(checkMemberPw, 600);  // give members/books a moment to load first
+  }
+} catch(e) {}
 // Poll and Scoring only render after member login (they live inside the members area)
 </script>
 </body>
