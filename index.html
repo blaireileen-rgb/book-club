@@ -102,6 +102,18 @@
     .up-title.tbd { color:var(--muted); }
     .up-meta { font-size:0.78rem; color:var(--muted); line-height:1.5; }
     .up-empty { color:var(--muted); font-size:0.9rem; font-style:italic; }
+    .rsvp-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+    .rsvp-btn { font-family:'Inter',sans-serif; background:#fff; border:1.5px solid var(--border); color:var(--text); padding:11px 18px; font-size:0.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:all .15s; }
+    .rsvp-btn:hover { border-color:var(--dark); }
+    .rsvp-btn.on-g { background:#1E7A4A; border-color:#1E7A4A; color:#fff; }
+    .rsvp-btn.on-m { background:var(--coral); border-color:var(--coral); color:#fff; }
+    .rsvp-btn.on-d { background:var(--dark); border-color:var(--dark); color:#fff; }
+    .rsvp-btn:disabled { opacity:.45; cursor:not-allowed; }
+    .rsvp-meeting { font-size:0.9rem; color:var(--text); margin-bottom:16px; line-height:1.6; }
+    .rsvp-note { font-size:0.82rem; color:var(--muted); margin-top:12px; min-height:1.2em; }
+    .up-card.next { border-top:2px solid var(--coral); }
+    .up-next-tag { display:inline-block; font-size:0.6rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--coral); padding:4px 9px; position:absolute; top:10px; left:10px; }
+    .up-cover { position:relative; }
 
     /* ── BOOKS ── */
     .books-container { background:var(--warm-white); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
@@ -704,6 +716,28 @@
         </div>
       </div>
       <div id="members-content">
+        <!-- ── ACCORDION: RSVP (shown when a meeting date is set) ── -->
+        <div class="accordion-wrap open" id="acc-rsvp" style="display:none;">
+          <button class="accordion-header" onclick="toggleAccordion('acc-rsvp')">
+            <span class="acc-icon">✋</span>
+            <span class="acc-title">Are You Coming?</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <div class="rsvp-meeting" id="rsvp-meeting-line"></div>
+              <label class="fl">Your Name</label>
+              <select class="fi" id="rsvp-email" onchange="onRsvpMemberSelect()" style="max-width:320px;"></select>
+              <div class="rsvp-btns">
+                <button class="rsvp-btn" data-st="g" onclick="submitRsvp('g')">✓ Going</button>
+                <button class="rsvp-btn" data-st="m" onclick="submitRsvp('m')">Maybe</button>
+                <button class="rsvp-btn" data-st="d" onclick="submitRsvp('d')">Can't make it</button>
+              </div>
+              <div class="rsvp-note" id="rsvp-note"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── ACCORDION: DATE POLL (shown when poll active) ── -->
         <div class="accordion-wrap" id="acc-poll" style="display:none;">
           <button class="accordion-header" onclick="toggleAccordion('acc-poll')">
@@ -1307,7 +1341,7 @@ async function loadRsvpFromSupabase() {
     const { data, error } = await db.from('meeting_rsvp').select('*').eq('id','current').maybeSingle();
     if (error) throw error;
     if (data && data.rsvp) {
-      DATA.rsvp = data.rsvp;
+      DATA.rsvp = Object.assign({}, data.rsvp, _siteRsvps);
       renderHero();
       // Re-render member grid if already unlocked
       const grid = document.getElementById('members-grid');
@@ -1316,6 +1350,82 @@ async function loadRsvpFromSupabase() {
   } catch(e) {
     // Table doesn't exist yet — silently fall back to empty RSVP
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  RSVP ON THE SITE (members pick their name + Going / Maybe / Can't make it)
+//  Stored per meeting in member_rsvps; these answers override calendar-synced ones.
+// ════════════════════════════════════════════════════════════════
+const RSVP_NAME_KEY = 'hvr-rsvp-email';
+let _siteRsvps = {};
+
+function currentMeetingKey() {
+  const iso = (DATA.meeting && DATA.meeting.dateISO) || '';
+  return /^\d{8}/.test(iso) ? iso.slice(0, 8) : '';
+}
+
+async function loadSiteRsvps() {
+  const key = currentMeetingKey();
+  if (!key) return;
+  try {
+    const { data, error } = await db.from('member_rsvps').select('email,status').eq('meeting_key', key);
+    if (error) throw error;
+    _siteRsvps = {};
+    (data || []).forEach(r => { _siteRsvps[r.email.toLowerCase()] = r.status; });
+    DATA.rsvp = Object.assign({}, DATA.rsvp || {}, _siteRsvps);
+    renderHero();
+    const grid = document.getElementById('members-grid');
+    if (grid && grid.children.length > 0) renderPublicMembers();
+    renderRsvpSection();
+  } catch(e) {
+    console.warn('RSVP table not ready (run member-rsvps.sql):', e.message);
+  }
+}
+
+function renderRsvpSection() {
+  const wrap = document.getElementById('acc-rsvp');
+  if (!wrap) return;
+  const key = currentMeetingKey();
+  wrap.style.display = key ? '' : 'none';
+  if (!key) return;
+  const m = DATA.meeting;
+  document.getElementById('rsvp-meeting-line').innerHTML =
+    `<strong>${escHtml(m.date)}</strong>${m.time ? ' · ' + escHtml(m.time) : ''}${m.location ? ' · ' + escHtml(m.location) : ''}` +
+    (m.book ? `<br><em>${escHtml(m.book)}</em>${m.author ? ' by ' + escHtml(m.author) : ''}` : '');
+  const dd = document.getElementById('rsvp-email');
+  let current = dd.value;
+  if (!current) { try { current = localStorage.getItem(RSVP_NAME_KEY) || ''; } catch(e) {} }
+  const sorted = [...(DATA.members || [])].sort((a,b) => a.name.localeCompare(b.name));
+  dd.innerHTML = '<option value="">— Select your name —</option>' +
+    sorted.map(mm => `<option value="${escHtml(mm.email)}">${escHtml(mm.name)}</option>`).join('');
+  if (current && sorted.some(mm => mm.email === current)) dd.value = current;
+  onRsvpMemberSelect();
+}
+
+function onRsvpMemberSelect() {
+  const email = document.getElementById('rsvp-email').value;
+  const st = email ? getRsvp(email) : 'p';
+  document.querySelectorAll('#acc-rsvp .rsvp-btn').forEach(b => {
+    b.disabled = !email;
+    b.className = 'rsvp-btn' + (b.dataset.st === st ? ' on-' + st : '');
+  });
+  const lbl = { g:"You're going — see you there!", m:"You're a maybe.", d:"You can't make it this time." };
+  document.getElementById('rsvp-note').textContent = !email ? 'Pick your name first.' : (lbl[st] || "You haven't answered yet.");
+}
+
+async function submitRsvp(status) {
+  const dd = document.getElementById('rsvp-email');
+  const email = dd.value;
+  const key = currentMeetingKey();
+  if (!email || !key) return;
+  const member = (DATA.members || []).find(mm => mm.email === email);
+  const { error } = await db.from('member_rsvps').upsert(
+    { meeting_key: key, email: email.toLowerCase(), name: member ? member.name : null, status, updated_at: new Date().toISOString() },
+    { onConflict: 'meeting_key,email' });
+  if (error) { toast('Could not save your RSVP — please try again.'); console.warn(error.message); return; }
+  try { localStorage.setItem(RSVP_NAME_KEY, email); } catch(e) {}
+  toast('✓ RSVP saved');
+  await loadSiteRsvps();
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -1526,6 +1636,7 @@ async function loadMeetingFromSupabase() {
       };
       saveData();
       renderHero();
+      loadSiteRsvps();
       // Re-populate admin form if it's currently showing
       if (document.getElementById('m-title')) populateMeetingForm();
     }
@@ -1633,6 +1744,7 @@ function hasMeetingDate() {
 }
 
 function renderHero() {
+  if (typeof renderUpcoming === 'function') setTimeout(renderUpcoming);  // next meeting leads the Upcoming list
   const m = DATA.meeting;
   document.getElementById('meeting-book-title').textContent = m.book || 'Book to be announced';
   document.getElementById('meeting-book-author').textContent = m.author ? 'by ' + m.author : '';
@@ -1811,6 +1923,7 @@ async function checkMemberPw() {
     renderPublicMembers();
     renderPublicPoll();
     renderPublicScoring();
+    renderRsvpSection();
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw-input').value = '';
@@ -3277,14 +3390,24 @@ function renderUpcoming() {
   if (!wrap || !grid) return;
   const today = new Date().toISOString().slice(0, 10);
   const items = UPCOMING.filter(u => u.meeting_date >= today);
+  // Lead with the current Next Meeting (from the Next Meeting tab), unless it's already listed
+  const m = DATA.meeting || {};
+  const nextDate = /^\d{8}/.test(m.dateISO || '') ? `${m.dateISO.slice(0,4)}-${m.dateISO.slice(4,6)}-${m.dateISO.slice(6,8)}` : '';
+  if (nextDate && nextDate >= today && !items.some(u => u.meeting_date === nextDate)) {
+    items.unshift({
+      meeting_date: nextDate, book: m.book || null, author: m.author || null, location: m.location || null,
+      cover_url: m.coverUrl || (m.isbn ? `https://covers.openlibrary.org/b/isbn/${m.isbn}-L.jpg` : null),
+      isNext: true
+    });
+  }
   wrap.style.display = items.length ? '' : 'none';
   grid.innerHTML = items.map(u => {
     const cover = u.cover_url
       ? `<img src="${escHtml(u.cover_url)}" alt="${escHtml(u.book)} cover" onerror="this.parentNode.innerHTML='<div class=&quot;up-cover-tbd&quot;><span>Cover</span><strong>…</strong></div>'" />`
       : `<div class="up-cover-tbd"><span>Book</span><strong>TBD</strong></div>`;
     return `
-      <div class="up-card">
-        <div class="up-cover">${cover}</div>
+      <div class="up-card${u.isNext ? ' next' : ''}">
+        <div class="up-cover">${cover}${u.isNext ? '<div class="up-next-tag">Next up</div>' : ''}</div>
         <div>
           <div class="up-date">${escHtml(upcomingDateLabel(u.meeting_date))}</div>
           <div class="up-title${u.book ? '' : ' tbd'}">${u.book ? escHtml(u.book) : 'Book to be announced'}</div>
