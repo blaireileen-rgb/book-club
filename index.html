@@ -747,6 +747,29 @@
       .mx-seg button { padding:15px 2px; font-size:0.62rem; }
     }
 
+    .mx-pick-row { display:flex; gap:14px; overflow-x:auto; padding:2px 2px 12px; margin-bottom:6px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+    .mx-ptile { flex:0 0 104px; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; text-align:center; }
+    .mx-ptile-cover { background:none; border:none; padding:0; cursor:pointer; width:100%; }
+    .mx-ptile .mx-cover { width:100%; }
+    .mx-ptile-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--dark); line-height:1.15; margin-top:8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .mx-ptile-vote { margin-top:6px; background:#fff; border:1px solid var(--border); padding:4px 12px; font-family:'Inter',sans-serif; font-size:0.74rem; font-weight:700; color:var(--coral); cursor:pointer; }
+    .mx-ptile-vote.on { background:var(--coral); border-color:var(--coral); color:#fff; }
+    .mx-ptile-add .mx-cover-blank span { font-family:'Inter',sans-serif; font-style:normal; font-size:0.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); }
+    .mx-edit-link { display:inline-block; margin-top:8px; background:none; border:none; padding:0; color:var(--muted); font-family:'Inter',sans-serif; font-size:0.72rem; text-decoration:underline; cursor:pointer; }
+    .mx-danger { color:#A83030; }
+    .mx-sheet-alts { display:flex; justify-content:center; gap:22px; }
+    .mx-sheet-alts .mx-textbtn { margin:12px 0 0; }
+    .mx-sheet-wrap { z-index:600; }
+    .org-clean-row { display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.07); color:rgba(255,255,255,.85); font-size:0.86rem; }
+    .org-clean-row:last-child { border-bottom:none; }
+    .org-clean-main { flex:1; min-width:0; }
+    .org-clean-main b { color:#fff; font-weight:500; }
+    .org-clean-sub { font-size:0.74rem; color:rgba(255,255,255,.45); margin-top:3px; }
+    .org-dupe { color:#F2B48C; font-weight:700; }
+    .org-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .org-chip { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.85); font-size:0.76rem; padding:4px 4px 4px 10px; }
+    .org-chip button { background:none; border:none; color:#FF8888; cursor:pointer; font-size:0.8rem; padding:2px 6px; }
+
     /* ════ ORGANIZER — opens from the footer as a full-screen panel ════ */
     #admin-area { position:fixed; inset:0; z-index:500; overflow-y:auto; display:none; }
     #admin-area.open { display:block; }
@@ -1000,7 +1023,7 @@
                 <div class="mx-label">Still to score</div>
                 <div class="mx-mini-shelf" id="mx-home-shelf"></div>
                 <div class="mx-label" id="mx-home-picks-label">Member picks</div>
-                <div id="mx-home-picks"></div>
+                <div class="mx-pick-row" id="mx-home-picks"></div>
                 <button class="mx-link" onclick="mxTab('picks')">See all picks →</button>
               </div>
             </div>
@@ -1092,6 +1115,7 @@
     <div id="admin-content">
       <div class="admin-tabs">
         <button class="admin-tab active" onclick="showTab('tab-overview',this)">✨ Overview</button>
+        <button class="admin-tab" onclick="showTab('tab-cleanup',this)">🧹 Clean up</button>
         <button class="admin-tab" onclick="showTab('tab-members',this)">👥 Members</button>
         <button class="admin-tab" onclick="showTab('tab-email',this)">✉️ Email Group</button>
         <button class="admin-tab" onclick="showTab('tab-meeting',this)">📅 Next Meeting</button>
@@ -1105,6 +1129,24 @@
       <div id="tab-overview" class="admin-panel active">
         <div class="org-kpis" id="org-kpis"></div>
         <div class="admin-card" style="padding:8px 22px;" id="org-actions"></div>
+      </div>
+
+      <div id="tab-cleanup" class="admin-panel">
+        <div class="admin-card">
+          <h4>Member picks</h4>
+          <p class="admin-card-sub">Fix typos or remove duplicates. Possible duplicates are flagged. Deleting a pick also removes its ♥s.</p>
+          <div id="org-clean-picks"></div>
+        </div>
+        <div class="admin-card">
+          <h4>Scores</h4>
+          <p class="admin-card-sub">Remove a score someone entered by mistake — the group average updates right away. (Members can change their own score anytime on the Score tab.)</p>
+          <div id="org-clean-scores"></div>
+        </div>
+        <div class="admin-card">
+          <h4>RSVPs for the next meeting</h4>
+          <p class="admin-card-sub">Clear an RSVP so it goes back to "no reply". (Members can change their own RSVP anytime on Home.)</p>
+          <div id="org-clean-rsvps"></div>
+        </div>
       </div>
 
       <div id="tab-members" class="admin-panel">
@@ -1451,19 +1493,20 @@
     </div>
     <div class="mx-ss-num" id="mx-ss-num"></div>
     <button class="mx-btn" id="mx-ss-next" onclick="mxNextToScore()">Next book to score →</button>
-    <button class="mx-textbtn" onclick="mxDidntFinish()">I didn't finish this one</button>
+    <div class="mx-sheet-alts"><button class="mx-textbtn" onclick="mxDidntFinish()">I didn't finish it</button><button class="mx-textbtn" onclick="mxDidntRead()">I didn't read it</button></div>
   </div>
 </div>
 <div class="mx-sheet-wrap" id="mx-sheet-suggest" onclick="if(event.target===this) mxCloseSheets()">
   <div class="mx-sheet">
     <div class="mx-grab"></div>
-    <div class="mx-label">Suggest a book</div>
+    <div class="mx-label" id="mx-sg-head">Suggest a book</div>
     <form onsubmit="mxSubmitSuggest(event)">
       <div class="fg"><label class="fl">Book title *</label><input class="fi" type="text" id="mx-sg-title" required placeholder="e.g. James" /></div>
       <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="mx-sg-author" placeholder="e.g. Percival Everett" /></div>
       <div class="fg"><label class="fl">Why should we read it? (optional)</label><textarea class="fta" id="mx-sg-pitch" placeholder="A sentence or two"></textarea></div>
-      <button type="submit" class="mx-btn" style="margin-top:6px;">Post suggestion</button>
+      <button type="submit" class="mx-btn" id="mx-sg-submit" style="margin-top:6px;">Post suggestion</button>
     </form>
+    <button class="mx-textbtn mx-danger" id="mx-sg-delete" style="display:none;" onclick="mxDeleteRec(MX.editRecId)">Delete this suggestion</button>
     <button class="mx-textbtn" onclick="mxCloseSheets()">Cancel</button>
   </div>
 </div>
@@ -1767,10 +1810,11 @@ function mxRenderHome() {
     ? todo.map(e => `<button class="mx-cell" onclick="mxOpenScore('${e.key}')">${mxCover(e, e.isCurrent ? 'Now' : '')}<span class="mx-tap">Tap to score</span></button>`).join('')
     : `<div class="mx-empty">🎉 You've scored every book.</div>`;
 
-  // Top picks
-  const top = mxSortedRecs('votes').slice(0, 2);
+  // Member picks: a swipeable row of covers, most-wanted first
+  const top = mxSortedRecs('votes').slice(0, 12);
   document.getElementById('mx-home-picks-label').textContent = `Member picks · ${MX.recs.length}`;
-  document.getElementById('mx-home-picks').innerHTML = top.length ? top.map(r => mxPickCard(r, true)).join('')
+  document.getElementById('mx-home-picks').innerHTML = top.length
+    ? top.map(mxPickTile).join('') + `<div class="mx-ptile mx-ptile-add"><button class="mx-ptile-cover" onclick="mxOpenSuggest()"><div class="mx-cover mx-cover-blank"><span>+ Suggest<br>a book</span></div></button></div>`
     : `<div class="mx-empty">No picks yet — <button class="mx-link" onclick="mxOpenSuggest()">suggest the first one</button></div>`;
 }
 
@@ -1806,7 +1850,7 @@ function mxRenderScore() {
   document.getElementById('mx-shelf').innerHTML = list.length ? list.map(e => {
     const mine = mxMine(e);
     const under = mine
-      ? (mine.abandoned ? `<span class="mx-dnf-tag">Didn't finish</span>` : mxMiniStars(mine.score))
+      ? (mine.skipped ? `<span class="mx-dnf-tag">Didn't read</span>` : mine.abandoned ? `<span class="mx-dnf-tag">Didn't finish</span>` : mxMiniStars(mine.score))
       : `<span class="mx-tap">Tap to score</span>`;
     const avg = MX.scoreFilter === 'top' && e.rating != null ? `<span class="mx-cell-avg">Group ${e.rating.toFixed(2)}</span>` : '';
     return `<button class="mx-cell" onclick="mxOpenScore('${e.key}')">${mxCover(e, e.isCurrent ? 'Now' : '')}${under}${avg}<span class="mx-cell-title">${escHtml(e.title)}</span></button>`;
@@ -1824,16 +1868,16 @@ function mxFillSheet() {
   const e = scoreEntries().find(x => x.key === MX.sheetKey);
   if (!e) return mxCloseSheets();
   const mine = mxMine(e);
-  const n = (e.scores || []).filter(v => !v.abandoned && v.score != null).length;
+  const n = (e.scores || []).filter(v => !v.abandoned && !v.skipped && v.score != null).length;
   document.getElementById('mx-ss-book').innerHTML = `
     <div class="mx-meet">${mxCover(e, e.isCurrent ? 'Now' : '')}
       <div><h4>${escHtml(e.title)}</h4><p>${e.author ? escHtml(e.author) + ' · ' : ''}${escHtml(e.date || '')}<br>${e.rating != null ? `Group avg <b>${e.rating.toFixed(2)}</b> · ${n} score${n === 1 ? '' : 's'}` : 'No scores yet — be the first!'}</p></div>
     </div>`;
   const fill = document.getElementById('mx-ss-fill');
-  fill.style.width = mine && !mine.abandoned ? (mine.score / 5 * 100) + '%' : '0%';
+  fill.style.width = mine && !mine.abandoned && !mine.skipped ? (mine.score / 5 * 100) + '%' : '0%';
   delete fill.dataset.saved;
   document.getElementById('mx-ss-num').innerHTML = !mine ? 'Tap the stars to score'
-    : mine.abandoned ? "You didn't finish this one" : `Your score <b>${mine.score}</b> · saved ✓`;
+    : mine.skipped ? "You didn't read this one" : mine.abandoned ? "You didn't finish this one" : `Your score <b>${mine.score}</b> · saved ✓`;
   const next = mxToScore().find(x => x.key !== e.key);
   document.getElementById('mx-ss-next').textContent = next ? 'Next book to score →' : 'Done';
 }
@@ -1855,6 +1899,10 @@ async function mxTapBigStars(e) {
   const id = await saveScoreFor(MX.sheetKey, v);
   if (id) { MX.sheetKey = String(id); mxFillSheet(); }
 }
+async function mxDidntRead() {
+  const id = await saveScoreFor(MX.sheetKey, null, false, true);
+  if (id) { MX.sheetKey = String(id); mxFillSheet(); }
+}
 async function mxDidntFinish() {
   const id = await saveScoreFor(MX.sheetKey, null, true);
   if (id) { MX.sheetKey = String(id); mxFillSheet(); }
@@ -1865,15 +1913,17 @@ function mxNextToScore() {
 }
 function mxCloseSheets() {
   document.querySelectorAll('.mx-sheet-wrap').forEach(w => w.classList.remove('open'));
-  document.body.style.overflow = '';
+  MX.editRecId = null; MX.editAsOrganizer = false;
+  // keep the page locked if the Organizer panel is still open underneath
+  document.body.style.overflow = document.getElementById('admin-area').classList.contains('open') ? 'hidden' : '';
 }
 
 // Saves (or changes) this member's score on one book; returns the book id
-async function saveScoreFor(key, score, abandoned = false) {
+async function saveScoreFor(key, score, abandoned = false, skipped = false) {
   const me = mxMe();
   if (!me) { toast('Pick your name first.'); return null; }
   const email = norm(me.email);
-  if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return null; }
+  if (!abandoned && !skipped && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return null; }
 
   // The current read gets its own row in Books We've Read the first time someone scores it
   let id = key;
@@ -1891,8 +1941,9 @@ async function saveScoreFor(key, score, abandoned = false) {
   const { data: row, error: readErr } = await db.from('books').select('scores').eq('id', id).single();
   if (readErr) { toast('Could not save — please try again.'); console.warn(readErr.message); return null; }
   const scores = (row.scores || []).filter(v => norm(v.email) !== email);
-  scores.push({ name: me.name, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
-  const rated  = scores.filter(v => !v.abandoned && v.score != null);
+  scores.push(skipped ? { name: me.name, email, score: null, abandoned: false, skipped: true }
+                      : { name: me.name, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
+  const rated  = scores.filter(v => !v.abandoned && !v.skipped && v.score != null);
   const rating = rated.length ? Math.round(rated.reduce((s, v) => s + v.score, 0) / rated.length * 100) / 100 : null;
   const { error } = await db.from('books').update({ scores, rating }).eq('id', id);
   if (error) { toast('Could not save — please try again.'); console.warn(error.message); return null; }
@@ -1902,7 +1953,7 @@ async function saveScoreFor(key, score, abandoned = false) {
   renderBooks();
   renderAdminBooksAll();
   mxRender();
-  toast(abandoned ? "✓ Saved — marked as didn't finish" : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
+  toast(skipped ? "✓ Got it — marked as didn't read" : abandoned ? "✓ Saved — marked as didn't finish" : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
   return id;
 }
 
@@ -1940,8 +1991,31 @@ function mxSortedRecs(by) {
     ? list.sort((a, b) => mxVoteCount(b.id) - mxVoteCount(a.id) || new Date(b.created_at) - new Date(a.created_at))
     : list.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
+// Who posted a pick? Older picks only stored a first name, so match on that too (when it's unique)
+function mxRecAuthor(r) {
+  const n = norm(r.recommended_by);
+  if (!n) return null;
+  const members = DATA.members || [];
+  const full = members.find(m => norm(m.name) === n);
+  if (full) return full;
+  const firsts = members.filter(m => norm(mxFirst(m)) === n);
+  return firsts.length === 1 ? firsts[0] : null;
+}
+function mxOwnsRec(r) { const me = mxMe(); return !!me && mxRecAuthor(r) === me; }
+
+// Small cover tile for the Home row
+function mxPickTile(r) {
+  const on = mxIVoted(r.id);
+  return `
+    <div class="mx-ptile">
+      <button class="mx-ptile-cover" onclick="mxTab('picks')">${mxCover({ title: r.title, author: r.author })}</button>
+      <div class="mx-ptile-title">${escHtml(r.title)}</div>
+      ${MX.votesReady ? `<button class="mx-ptile-vote${on ? ' on' : ''}" onclick="mxVote(${r.id})">♥ ${mxVoteCount(r.id)}</button>` : ''}
+    </div>`;
+}
+
 function mxPickCard(r, compact) {
-  const by = (DATA.members || []).find(m => norm(m.name) === norm(r.recommended_by));
+  const by = mxRecAuthor(r);
   const on = mxIVoted(r.id);
   return `
     <div class="mx-pick">
@@ -1951,6 +2025,7 @@ function mxPickCard(r, compact) {
         ${r.author ? `<p>${escHtml(r.author)}</p>` : ''}
         ${r.recommended_by ? `<span class="mx-by">${by ? mxAvatar(by, 'xs') : ''}Suggested by ${escHtml(by ? mxFirst(by) : r.recommended_by)}</span>` : ''}
         ${!compact && r.pitch ? `<q>${escHtml(r.pitch)}</q>` : ''}
+        ${!compact && mxOwnsRec(r) ? `<button class="mx-edit-link" onclick="mxOpenSuggest(${r.id})">✎ Edit or delete</button>` : ''}
       </div>
       ${MX.votesReady ? `<button class="mx-vote${on ? ' on' : ''}" onclick="mxVote(${r.id})" title="${on ? 'Remove your ♥' : 'I’d read this!'}"><i>♥</i><b>${mxVoteCount(r.id)}</b></button>` : ''}
     </div>`;
@@ -1977,28 +2052,55 @@ async function mxVote(id) {
     : await db.from('rec_votes').insert({ rec_id: id, email });
   if (error) { toast('Could not save your ♥ — please try again.'); console.warn(error.message); loadRecommendations(); }
 }
-function mxOpenSuggest() {
-  if (!mxMe()) return;
+// Opens the suggest sheet — blank for a new pick, or filled in to edit one (asOrganizer skips the "is it yours" check)
+function mxOpenSuggest(editId = null, asOrganizer = false) {
+  const r = editId != null ? MX.recs.find(x => x.id === editId) : null;
+  if (!r && !mxMe()) return;
+  if (r && !asOrganizer && !mxOwnsRec(r)) return;
+  MX.editRecId = r ? r.id : null;
+  MX.editAsOrganizer = asOrganizer;
+  document.getElementById('mx-sg-head').textContent = r ? 'Edit suggestion' : 'Suggest a book';
+  document.getElementById('mx-sg-submit').textContent = r ? 'Save changes' : 'Post suggestion';
+  document.getElementById('mx-sg-delete').style.display = r ? '' : 'none';
+  document.getElementById('mx-sg-title').value  = r ? r.title || '' : '';
+  document.getElementById('mx-sg-author').value = r ? r.author || '' : '';
+  document.getElementById('mx-sg-pitch').value  = r ? r.pitch || '' : '';
   document.getElementById('mx-sheet-suggest').classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('mx-sg-title').focus(), 250);
 }
 async function mxSubmitSuggest(e) {
   e.preventDefault();
-  const me = mxMe();
   const title = document.getElementById('mx-sg-title').value.trim();
-  if (!title || !me) return;
-  const { error } = await db.from('recommendations').insert({
-    title, author: document.getElementById('mx-sg-author').value.trim(),
-    recommended_by: me.name, pitch: document.getElementById('mx-sg-pitch').value.trim()
-  });
+  if (!title) return;
+  const fields = { title, author: document.getElementById('mx-sg-author').value.trim(), pitch: document.getElementById('mx-sg-pitch').value.trim() };
+  const editing = MX.editRecId != null;
+  let error;
+  if (editing) {
+    ({ error } = await db.from('recommendations').update(fields).eq('id', MX.editRecId));
+  } else {
+    const me = mxMe(); if (!me) return;
+    ({ error } = await db.from('recommendations').insert({ ...fields, recommended_by: me.name }));
+  }
   if (error) { toast('Something went wrong — try again.'); console.warn(error.message); return; }
+  const asOrganizer = MX.editAsOrganizer;
   e.target.reset();
   mxCloseSheets();
-  toast('✓ Thanks! Your suggestion is up.');
+  toast(editing ? '✓ Suggestion updated' : '✓ Thanks! Your suggestion is up.');
   await loadRecommendations();
-  mxPickSort('new');
-  mxTab('picks');
+  if (asOrganizer) { renderOrgCleanup(); renderOrgOverview(); return; }
+  if (!editing) { mxPickSort('new'); mxTab('picks'); }
+}
+async function mxDeleteRec(id) {
+  const r = MX.recs.find(x => x.id === id);
+  if (!r || !confirm(`Delete "${r.title}"? This can't be undone.`)) return;
+  const { error } = await db.from('recommendations').delete().eq('id', id);
+  if (error) { toast('Could not delete — try again.'); console.warn(error.message); return; }
+  await db.from('rec_votes').delete().eq('rec_id', id);  // its ♥s go with it
+  mxCloseSheets();
+  toast('✓ Suggestion deleted');
+  await loadRecommendations();
+  renderOrgCleanup(); renderOrgOverview();
 }
 
 // ── PEOPLE ──────────────────────────────────────────────────────
@@ -2448,14 +2550,15 @@ function renderBooks() {
                  : (currentSort === 'score-asc')  ? (n-i)
                  : (currentSort === 'date-asc')   ? (i+1)
                  : (n-i); // date-desc default
-    const hasScores = b.scores && b.scores.length > 0;
+    const nScores = (b.scores || []).filter(v => !v.skipped).length;
+    const hasScores = nScores > 0;
     return `
       <div class="book-row" onclick="_openBookByIdx(${i})" title="${hasScores ? 'Click to see individual scores' : 'Click for details'}">
         <span class="book-num">${rowNum}</span>
         <div class="book-swatch sw-${tier}"></div>
         <div class="book-info">
           <div class="book-title">${b.title}</div>
-          <div class="book-meta">${b.date}${hasScores ? ` · <span style="color:var(--pink);font-size:0.68rem;">★ ${b.scores.length} scores</span>` : ''}</div>
+          <div class="book-meta">${b.date}${hasScores ? ` · <span style="color:var(--pink);font-size:0.68rem;">★ ${nScores} score${nScores === 1 ? '' : 's'}</span>` : ''}</div>
         </div>
         <div class="book-score-col">
           ${unscored ? `<span class="score-pending">Not yet scored</span>` : `
@@ -2544,11 +2647,73 @@ Thanks!`)}`;
   const rowsHtml = [];
   rowsHtml.push(`<div class="org-row">📅 <span><b>${escHtml(m.date || 'No date set')}</b>${m.book ? ' · ' + escHtml(m.book) : ''}${m.location ? ' · ' + escHtml(m.location) : ''}</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-meeting')">Edit</button><button class="btn-act btn-act-blue btn-act-sm" onclick="sendCalendarInvite()">Send invite</button></div>`);
   if (key && noReply.length) rowsHtml.push(`<div class="org-row">✉️ <span>${noReply.length} member${noReply.length === 1 ? " hasn't" : "s haven't"} RSVP'd</span><a class="btn-act btn-act-outline btn-act-sm" href="${nudge}">Nudge them</a></div>`);
+  const dupes = orgDuplicatePicks().size;
+  if (dupes) rowsHtml.push(`<div class="org-row">⚠️ <span>${dupes} picks look like duplicates</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-cleanup')">Clean up</button></div>`);
   if (top) rowsHtml.push(`<div class="org-row">📚 <span>Top pick: <b>${escHtml(top.title)}</b> · ♥ ${mxVoteCount(top.id)}</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgUsePick(${top.id})">Make it a meeting book</button></div>`);
   rowsHtml.push(`<div class="org-row">🗓 <span>Plan future meetings</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-upcoming')">Upcoming</button></div>`);
   rowsHtml.push(`<div class="org-row">👥 <span>${members.length} members</span><button class="btn-act btn-act-outline btn-act-sm" onclick="orgGo('tab-members')">Manage</button></div>`);
   document.getElementById('org-actions').innerHTML = rowsHtml.join('');
 }
+function bareTitle(t) { return (t || '').toLowerCase().replace(/^the\s+/, '').replace(/[^a-z0-9]/g, ''); }
+function orgDuplicatePicks() {
+  const seen = {}, dupes = new Set();
+  MX.recs.forEach(r => { const k = bareTitle(r.title); if (seen[k]) { dupes.add(seen[k]); dupes.add(r.id); } else seen[k] = r.id; });
+  return dupes;
+}
+function renderOrgCleanup() {
+  const el = document.getElementById('org-clean-picks');
+  if (!el) return;
+  const dupes = orgDuplicatePicks();
+  const recs = [...MX.recs].sort((a, b) => bareTitle(a.title).localeCompare(bareTitle(b.title)) || a.id - b.id);
+  el.innerHTML = recs.length ? recs.map(r => `
+    <div class="org-clean-row">
+      <div class="org-clean-main"><b><i>${escHtml(r.title)}</i></b>${r.author ? ' · ' + escHtml(r.author) : ''}
+        <div class="org-clean-sub">by ${escHtml(r.recommended_by || '—')} · ${new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric' })} · ♥ ${mxVoteCount(r.id)}${dupes.has(r.id) ? ' · <span class="org-dupe">Possible duplicate</span>' : ''}</div></div>
+      <button class="btn-act btn-act-outline btn-act-sm" onclick="mxOpenSuggest(${r.id}, true)">Edit</button>
+      <button class="btn-act btn-act-danger btn-act-sm" onclick="mxDeleteRec(${r.id})">Delete</button>
+    </div>`).join('') : '<div class="org-clean-sub">No picks yet.</div>';
+
+  const scored = [...(DATA.books || [])].filter(b => (b.scores || []).length).sort((a, b) => bookDateRank(b.date) - bookDateRank(a.date));
+  document.getElementById('org-clean-scores').innerHTML = scored.length ? scored.map(b => `
+    <div class="org-clean-row" style="align-items:flex-start;">
+      <div class="org-clean-main"><b><i>${escHtml(b.title)}</i></b> <span class="org-clean-sub">${escHtml(b.date)} · avg ${b.rating != null ? b.rating.toFixed(2) : '—'}</span>
+        <div class="org-chips">${(b.scores || []).map(v => `<span class="org-chip">${escHtml((v.name || v.email).split(' ')[0])} ${v.skipped ? "didn't read" : v.abandoned ? 'DNF' : v.score}<button title="Remove this score" onclick="orgRemoveScore(${b.id}, '${escHtml(v.email)}')">✕</button></span>`).join('')}</div></div>
+    </div>`).join('') : '<div class="org-clean-sub">No scores yet.</div>';
+
+  const key = currentMeetingKey();
+  const answered = key ? (DATA.members || []).filter(m => getRsvp(m.email) !== 'p') : [];
+  const lbl = { g:'Going', m:'Maybe', d:"Can't" };
+  document.getElementById('org-clean-rsvps').innerHTML = !key ? '<div class="org-clean-sub">No meeting date set.</div>'
+    : answered.length ? `<div class="org-chips">${answered.map(m => `<span class="org-chip">${escHtml(m.name)} · ${lbl[getRsvp(m.email)]}<button title="Clear this RSVP" onclick="orgClearRsvp('${escHtml(m.email)}')">✕</button></span>`).join('')}</div>`
+    : '<div class="org-clean-sub">No RSVPs yet.</div>';
+}
+async function orgRemoveScore(bookId, email) {
+  const book = (DATA.books || []).find(b => b.id === bookId);
+  if (!book) return;
+  const who = ((book.scores || []).find(v => norm(v.email) === norm(email)) || {}).name || email;
+  if (!confirm(`Remove ${who}'s score for "${book.title}"?`)) return;
+  const { data: row, error: readErr } = await db.from('books').select('scores').eq('id', bookId).single();
+  if (readErr) { toast('Could not remove — try again.'); return; }
+  const scores = (row.scores || []).filter(v => norm(v.email) !== norm(email));
+  const rated  = scores.filter(v => !v.abandoned && !v.skipped && v.score != null);
+  const rating = rated.length ? Math.round(rated.reduce((s, v) => s + v.score, 0) / rated.length * 100) / 100 : null;
+  const { error } = await db.from('books').update({ scores, rating }).eq('id', bookId);
+  if (error) { toast('Could not remove — try again.'); console.warn(error.message); return; }
+  book.scores = scores; book.rating = rating;
+  renderBooks(); renderAdminBooksAll(); mxRender(); renderOrgCleanup();
+  toast('✓ Score removed');
+}
+async function orgClearRsvp(email) {
+  const key = currentMeetingKey();
+  if (!key || !confirm('Clear this RSVP?')) return;
+  const { error } = await db.from('member_rsvps').delete().eq('meeting_key', key).eq('email', norm(email));
+  if (error) { toast('Could not clear — try again.'); console.warn(error.message); return; }
+  delete _siteRsvps[norm(email)];
+  if (DATA.rsvp) delete DATA.rsvp[norm(email)];
+  renderHero(); mxRender(); renderOrgCleanup(); renderOrgOverview();
+  toast('✓ RSVP cleared');
+}
+
 function orgUsePick(id) {
   const r = MX.recs.find(x => x.id === id);
   if (!r) return;
@@ -2623,7 +2788,7 @@ function openProfileModal(idx) {
   const myEmail  = (m.email || '').toLowerCase();
   (DATA.books || []).forEach(b => {
     (b.scores || []).forEach(v => {
-      if (v.email && v.email.toLowerCase() === myEmail) {
+      if (v.email && v.email.toLowerCase() === myEmail && !v.skipped) {
         myScores.push({
           title: b.title,
           date: b.date,
@@ -3083,6 +3248,8 @@ function renderAdminBooks() { renderAdminBooksAll(); }
 //  TABS
 // ════════════════════════════════════════════════════════════════
 function showTab(id, btn) {
+  if (id === 'tab-cleanup') renderOrgCleanup();
+  if (id === 'tab-overview') renderOrgOverview();
   document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -3460,7 +3627,7 @@ function openBookModal(book) {
   if (starsEl) starsEl.innerHTML = unscored ? '' : starsHtml(book.rating, '1.4rem');
 
   const scoresList = document.getElementById('bm-scores-list');
-  const scores     = book.scores || [];
+  const scores     = (book.scores || []).filter(v => !v.skipped);  // "didn't read" isn't a score
 
   if (scores.length) {
     const sorted = [...scores].sort((a,b) => (b.abandoned?-1:b.score) - (a.abandoned?-1:a.score));
