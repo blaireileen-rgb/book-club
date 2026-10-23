@@ -111,6 +111,28 @@
     .rsvp-btn:disabled { opacity:.45; cursor:not-allowed; }
     .rsvp-meeting { font-size:0.9rem; color:var(--text); margin-bottom:16px; line-height:1.6; }
     .rsvp-note { font-size:0.82rem; color:var(--muted); margin-top:12px; min-height:1.2em; }
+    .sc-progress { font-size:0.85rem; color:var(--text); margin:16px 0 12px; }
+    .sc-list { display:flex; flex-direction:column; border:1px solid var(--border); background:#fff; }
+    .sc-list:empty { display:none; }
+    .sc-row { display:flex; align-items:center; gap:16px; padding:14px 16px; border-bottom:1px solid var(--border); transition:background .4s; }
+    .sc-row:last-child { border-bottom:none; }
+    .sc-row.flash { background:var(--coral-lt); }
+    .sc-info { flex:1; min-width:0; }
+    .sc-tag { display:inline-block; font-size:0.58rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--coral); padding:3px 8px; margin-bottom:6px; }
+    .sc-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:1.15rem; color:var(--dark); line-height:1.2; }
+    .sc-meta { font-size:0.72rem; color:var(--muted); margin-top:2px; }
+    .sc-status { font-size:0.76rem; margin-top:4px; }
+    .sc-mine { color:#1E7A4A; font-weight:600; }
+    .sc-todo { color:#9A5F3A; font-weight:600; }
+    .sc-controls { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .sc-input { width:78px; margin:0; padding:9px 10px; text-align:center; }
+    .sc-save { padding:10px 16px; }
+    .sc-dnf { background:none; white-space:nowrap; border:none; color:var(--muted); font-size:0.7rem; text-decoration:underline; cursor:pointer; padding:4px; }
+    .bm-score-it { margin-top:18px; width:100%; }
+    @media (max-width:760px) {
+      .sc-row { flex-direction:column; align-items:stretch; gap:10px; }
+      .sc-controls { justify-content:flex-start; }
+    }
     .up-card.next { border-top:2px solid var(--coral); }
     .up-next-tag { display:inline-block; font-size:0.6rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--coral); padding:4px 9px; position:absolute; top:10px; left:10px; }
     .up-cover { position:relative; }
@@ -574,6 +596,8 @@
     .hero-desc { color:var(--text); }
     .hero-pill { background:#fff; border:none; border-radius:0; text-transform:uppercase; letter-spacing:.1em; font-size:0.68rem; padding:10px 18px; box-shadow:0 1px 2px rgba(26,42,64,.06); }
     .hero-pill strong { color:var(--dark); }
+    .hero-cta { display:inline-block; margin-top:22px; background:var(--dark); color:#fff; text-decoration:none; text-transform:uppercase; letter-spacing:.14em; font-size:0.7rem; font-weight:600; padding:14px 24px; }
+    .hero-cta:hover { background:var(--coral); }
     .hero-book-card { border:none; border-radius:2px; box-shadow:0 18px 50px rgba(26,42,64,.12); }
     .section-title { font-size:2.5rem; letter-spacing:0; }
     .section-rule { background:var(--coral); width:32px; height:1.5px; }
@@ -624,6 +648,7 @@
         <div class="hero-pill">avg <strong id="pill-avg">–</strong> / 5</div>
         <div class="hero-pill"><strong id="pill-members">0</strong> members</div>
       </div>
+      <a href="#members" class="hero-cta">RSVP &amp; score our books →</a>
     </div>
     <div class="hero-book">
       <div class="hero-book-card">
@@ -708,7 +733,7 @@
         <div class="gate-card">
           <span class="gate-icon">🔐</span>
           <h3>Members Only</h3>
-          <p>Enter the password to RSVP, recommend a book, and see the member list.</p>
+          <p>Enter the password to RSVP, score our books, recommend a book, and see the member list.</p>
           <div class="gate-form">
             <input class="gate-input" type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter') checkMemberPw()" />
             <button class="gate-btn" onclick="checkMemberPw()">Enter</button>
@@ -770,43 +795,27 @@
           </div>
         </div>
 
-        <!-- ── ACCORDION: SCORE A BOOK (anytime; always visible, open by default) ── -->
+        <!-- ── ACCORDION: SCORE OUR BOOKS (anytime; always visible, open by default) ── -->
         <div class="accordion-wrap open" id="acc-anyscore">
           <button class="accordion-header" onclick="toggleAccordion('acc-anyscore')">
             <span class="acc-icon">⭐</span>
-            <span class="acc-title">Score a Book</span>
+            <span class="acc-title">Score Our Books</span>
             <span class="acc-chevron">▾</span>
           </button>
           <div class="accordion-body">
             <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Score any book we've read, whenever you like. You can change your score anytime.</p>
-              <div class="form-row">
-                <div class="fg"><label class="fl">Your Name</label><select class="fi" id="as-email" onchange="onAnyScoreSelect()"></select></div>
-                <div class="fg"><label class="fl">Book</label><select class="fi" id="as-book" onchange="onAnyScoreSelect()"></select></div>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:14px;">Pick your name, then give any book a score from 1 to 5 (decimals OK). Change it anytime — the group average updates right away.</p>
+              <label class="fl">Your Name</label>
+              <select class="fi" id="as-email" onchange="onAnyScoreName()" style="max-width:320px;"></select>
+              <div class="sc-progress" id="as-progress"></div>
+              <div class="sc-list" id="as-list"></div>
+              <div class="score-guide" style="margin-top:14px;">
+                <span>5 — Best book you've ever read</span>
+                <span>4 — Great book</span>
+                <span>3 — Good book</span>
+                <span>2 — Not great</span>
+                <span>1 — Terrible</span>
               </div>
-              <div class="fg" id="as-score-fg">
-                <label class="fl">Your Score (1–5, decimals OK)</label>
-                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px;">
-                  <input type="number" class="fi" id="as-score" min="1" max="5" step="0.01" placeholder="e.g. 3.75" style="max-width:130px;" oninput="updateAnyScoreStars(this.value)" />
-                  <div class="stars-outer" style="font-size:2rem;">
-                    <span class="stars-bg">★★★★★</span>
-                    <span class="stars-fg" id="as-stars-fill" style="width:0%">★★★★★</span>
-                  </div>
-                </div>
-                <div class="score-guide">
-                  <span>5 — Best book you've ever read</span>
-                  <span>4 — Great book</span>
-                  <span>3 — Good book</span>
-                  <span>2 — Not great</span>
-                  <span>1 — Terrible</span>
-                </div>
-              </div>
-              <div class="score-abandon-row">
-                <input type="checkbox" id="as-abandoned" onchange="document.getElementById('as-score-fg').style.opacity = this.checked ? .4 : 1" />
-                <label for="as-abandoned">I purposefully abandoned this book — didn't finish, didn't want to</label>
-              </div>
-              <button class="btn btn-pink" onclick="submitAnyScore()" style="margin-top:8px;">Save My Score</button>
-              <div class="rsvp-note" id="as-note"></div>
             </div>
           </div>
         </div>
@@ -1176,6 +1185,7 @@
     </div>
     <div class="bm-section-label">Individual Scores</div>
     <div class="bm-scores-list" id="bm-scores-list"></div>
+    <button class="btn btn-pink bm-score-it" id="bm-score-it">⭐ Add or change my score</button>
   </div>
 </div>
 
@@ -1462,75 +1472,142 @@ async function submitRsvp(status) {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  SCORE A BOOK ANYTIME (members add/update their own score on any book)
+//  SCORE OUR BOOKS (members score past books + the current read, anytime)
 // ════════════════════════════════════════════════════════════════
+const norm = t => (t || '').trim().toLowerCase();
+
+// The current read (Next Meeting book), unless it's already in the books list
+function currentReadEntry() {
+  const m = DATA.meeting || {};
+  if (!m.book) return null;
+  const existing = (DATA.books || []).find(b => norm(b.title) === norm(m.book));
+  if (existing) return { ...existing, key: String(existing.id), isCurrent: true };
+  return { key: 'current', title: m.book, date: m.date, rating: null, scores: [], isCurrent: true };
+}
+
+function scoreEntries() {
+  const cur = currentReadEntry();
+  const past = [...(DATA.books || [])].filter(b => b.id != null && (!cur || cur.key !== String(b.id)))
+    .sort((a,b) => bookDateRank(b.date) - bookDateRank(a.date))
+    .map(b => ({ ...b, key: String(b.id) }));
+  return cur ? [cur, ...past] : past;
+}
+
 function renderAnyScore() {
-  const ddName = document.getElementById('as-email');
-  const ddBook = document.getElementById('as-book');
-  if (!ddName || !ddBook) return;
-  let name = ddName.value;
+  const dd = document.getElementById('as-email');
+  if (!dd) return;
+  let name = dd.value;
   if (!name) { try { name = localStorage.getItem(RSVP_NAME_KEY) || ''; } catch(e) {} }
   const members = [...(DATA.members || [])].sort((a,b) => a.name.localeCompare(b.name));
-  ddName.innerHTML = '<option value="">— Select your name —</option>' +
+  dd.innerHTML = '<option value="">— Select your name —</option>' +
     members.map(m => `<option value="${escHtml(m.email)}">${escHtml(m.name)}</option>`).join('');
-  if (name && members.some(m => m.email === name)) ddName.value = name;
-
-  const book = ddBook.value;
-  const books = [...(DATA.books || [])].filter(b => b.id != null).sort((a,b) => bookDateRank(b.date) - bookDateRank(a.date));
-  ddBook.innerHTML = '<option value="">— Pick a book —</option>' +
-    books.map(b => `<option value="${b.id}">${escHtml(b.title)} (${escHtml(b.date)})</option>`).join('');
-  if (book && books.some(b => String(b.id) === book)) ddBook.value = book;
-  onAnyScoreSelect();
+  if (name && members.some(m => m.email === name)) dd.value = name;
+  renderScoreList();
 }
 
-function updateAnyScoreStars(v) {
-  const n = Math.max(0, Math.min(5, parseFloat(v) || 0));
-  document.getElementById('as-stars-fill').style.width = (n / 5 * 100) + '%';
+function onAnyScoreName() {
+  try { localStorage.setItem(RSVP_NAME_KEY, document.getElementById('as-email').value); } catch(e) {}
+  renderScoreList();
 }
 
-// Show the member's existing score for the chosen book, if any
-function onAnyScoreSelect() {
-  const email = (document.getElementById('as-email').value || '').toLowerCase();
-  const id    = document.getElementById('as-book').value;
-  const book  = (DATA.books || []).find(b => String(b.id) === id);
-  const mine  = book && email ? (book.scores || []).find(v => (v.email || '').toLowerCase() === email) : null;
-  document.getElementById('as-score').value = mine && !mine.abandoned && mine.score != null ? mine.score : '';
-  document.getElementById('as-abandoned').checked = !!(mine && mine.abandoned);
-  document.getElementById('as-score-fg').style.opacity = mine && mine.abandoned ? .4 : 1;
-  updateAnyScoreStars(document.getElementById('as-score').value);
-  document.getElementById('as-note').textContent =
-    !email || !book ? '' : mine ? `You've already scored this one — change it below and save.` : `You haven't scored this one yet.`;
+function renderScoreList() {
+  const list = document.getElementById('as-list');
+  const prog = document.getElementById('as-progress');
+  if (!list) return;
+  const email = norm(document.getElementById('as-email').value);
+  const entries = scoreEntries();
+  if (!email) { list.innerHTML = ''; prog.textContent = '👆 Pick your name to see the books and your scores.'; return; }
+  const mineFor = e => (e.scores || []).find(v => norm(v.email) === email);
+  const done = entries.filter(e => mineFor(e)).length;
+  prog.innerHTML = `You've scored <strong>${done}</strong> of <strong>${entries.length}</strong> books${done === entries.length && entries.length ? ' — thank you! 🎉' : ''}`;
+  list.innerHTML = entries.map(e => {
+    const mine = mineFor(e);
+    const n = (e.scores || []).filter(v => !v.abandoned && v.score != null).length;
+    const group = e.rating != null ? `Group avg <strong>${e.rating.toFixed(2)}</strong> · ${n} score${n === 1 ? '' : 's'}` : 'No scores yet';
+    const myVal = mine && !mine.abandoned && mine.score != null ? mine.score : '';
+    const status = mine
+      ? (mine.abandoned ? `<span class="sc-mine">You didn't finish it</span>` : `<span class="sc-mine">Your score: <strong>${mine.score}</strong> ★</span>`)
+      : `<span class="sc-todo">Not scored yet</span>`;
+    return `
+      <div class="sc-row${mine ? ' scored' : ''}" id="sc-row-${e.key}">
+        <div class="sc-info">
+          ${e.isCurrent ? '<span class="sc-tag">Current read</span>' : ''}
+          <div class="sc-title">${escHtml(e.title)}</div>
+          <div class="sc-meta">${escHtml(e.date || '')} · ${group}</div>
+          <div class="sc-status">${status}</div>
+        </div>
+        <div class="sc-controls">
+          <input type="number" class="fi sc-input" id="sc-in-${e.key}" min="1" max="5" step="0.01" placeholder="1–5" value="${myVal}"
+                 onkeydown="if(event.key==='Enter') saveScoreFor('${e.key}')" />
+          <button class="btn btn-pink sc-save" onclick="saveScoreFor('${e.key}')">${mine ? 'Update' : 'Save'}</button>
+          <button class="sc-dnf" onclick="saveScoreFor('${e.key}', true)" title="I purposefully abandoned this book">Didn't finish</button>
+        </div>
+      </div>`;
+  }).join('');
 }
 
-async function submitAnyScore() {
-  const email = (document.getElementById('as-email').value || '').toLowerCase();
-  const id    = document.getElementById('as-book').value;
-  const abandoned = document.getElementById('as-abandoned').checked;
-  const score = parseFloat(document.getElementById('as-score').value);
-  if (!email) { toast('Please select your name.'); return; }
-  if (!id)    { toast('Please pick a book.'); return; }
+async function saveScoreFor(key, abandoned = false) {
+  const email = norm(document.getElementById('as-email').value);
+  if (!email) { toast('Please select your name first.'); return; }
+  const score = parseFloat(document.getElementById('sc-in-' + key).value);
   if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return; }
-  const member = (DATA.members || []).find(m => (m.email || '').toLowerCase() === email);
+  const member = (DATA.members || []).find(m => norm(m.email) === email);
+
+  // The current read gets its own row in Books We've Read the first time someone scores it
+  let id = key;
+  if (key === 'current') {
+    const m = DATA.meeting || {};
+    const d = /^\d{8}/.test(m.dateISO || '') ? new Date(+m.dateISO.slice(0,4), +m.dateISO.slice(4,6) - 1, 1) : new Date();
+    const dateRead = d.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+    const saved = await saveBookToSupabase(m.book, dateRead, null, []);
+    if (!saved) { toast('Could not save — please try again.'); return; }
+    DATA.books.unshift({ id: saved.id, title: saved.title, date: saved.date_read, rating: null, scores: [] });
+    id = String(saved.id);
+  }
 
   // Re-read the latest scores right before saving so we don't overwrite someone else's
   const { data: row, error: readErr } = await db.from('books').select('scores').eq('id', id).single();
   if (readErr) { toast('Could not save — please try again.'); console.warn(readErr.message); return; }
-  const scores = (row.scores || []).filter(v => (v.email || '').toLowerCase() !== email);
+  const scores = (row.scores || []).filter(v => norm(v.email) !== email);
   scores.push({ name: member ? member.name : email, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
   const rated  = scores.filter(v => !v.abandoned && v.score != null);
   const rating = rated.length ? Math.round(rated.reduce((s, v) => s + v.score, 0) / rated.length * 100) / 100 : null;
-
   const { error } = await db.from('books').update({ scores, rating }).eq('id', id);
   if (error) { toast('Could not save — please try again.'); console.warn(error.message); return; }
-  try { localStorage.setItem(RSVP_NAME_KEY, document.getElementById('as-email').value); } catch(e) {}
 
   const book = DATA.books.find(b => String(b.id) === id);
   if (book) { book.scores = scores; book.rating = rating; }
   renderBooks();
   renderAdminBooksAll();
-  onAnyScoreSelect();
-  toast(abandoned ? '✓ Saved — marked as abandoned' : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
+  renderScoreList();
+  const rowEl = document.getElementById('sc-row-' + id);
+  if (rowEl) { rowEl.classList.add('flash'); setTimeout(() => rowEl.classList.remove('flash'), 1200); }
+  toast(abandoned ? '✓ Saved — marked as didn\'t finish' : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
 }
+
+// From a book's popup: jump to the scoring list with that book highlighted
+function scoreThisBook(id) {
+  closeBookModal();
+  const unlocked = document.getElementById('members-content').style.display === 'block';
+  if (!unlocked) {
+    document.getElementById('members').scrollIntoView({ behavior:'smooth' });
+    toast('Enter the member password to score books.');
+    return;
+  }
+  const acc = document.getElementById('acc-anyscore');
+  acc.classList.add('open');
+  const rowEl = document.getElementById('sc-row-' + id) || acc;
+  rowEl.scrollIntoView({ behavior:'smooth', block:'center' });
+  rowEl.classList.add('flash'); setTimeout(() => rowEl.classList.remove('flash'), 1600);
+  const input = document.getElementById('sc-in-' + id);
+  if (input && document.getElementById('as-email').value) setTimeout(() => input.focus(), 400);
+}
+
+// Keep scores fresh while the page is open (other members' scores appear within ~20s)
+setInterval(async () => {
+  if (document.visibilityState !== 'visible') return;
+  await loadBooksFromSupabase();
+}, 20000);
 
 // ════════════════════════════════════════════════════════════════
 //  SUPABASE: BOOKS TABLE
@@ -1549,6 +1626,8 @@ async function loadBooksFromSupabase() {
       }));
       renderBooks();
       renderAdminBooksAll();
+      const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#as-list');
+      if (!typing && document.getElementById('members-content').style.display === 'block') renderScoreList();
     }
   } catch(e) {
     console.warn('Books table not ready (run the SQL setup first):', e.message);
@@ -2994,6 +3073,7 @@ function renderAdminScoring() {
 let _sortedBooksForModal = [];
 
 function openBookModal(book) {
+  document.getElementById('bm-score-it').onclick = () => scoreThisBook(book.id);
   document.getElementById('bm-title').textContent  = book.title;
   document.getElementById('bm-meta').textContent   = book.date;
   const unscored = book.rating == null;
