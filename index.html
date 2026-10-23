@@ -109,6 +109,8 @@
     .sbf-mid  { background:linear-gradient(90deg,#C87830,#E8A860); }
     .sbf-low  { background:linear-gradient(90deg,var(--pink),#9DB0CC); }
     .score-val { font-size:0.9rem; font-weight:600; color:var(--text); width:30px; text-align:right; }
+    .sw-none { background:var(--border); }
+    .score-pending { font-size:0.72rem; font-weight:600; letter-spacing:.04em; color:var(--muted); background:var(--blush); border:1px solid var(--border); padding:3px 10px; border-radius:20px; white-space:nowrap; }
 
     /* ── WHATSAPP ── */
     .community-card { background:var(--warm-white); border:1px solid var(--border); border-radius:20px; padding:48px 40px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; box-shadow:0 2px 20px rgba(28,20,16,.06); }
@@ -881,7 +883,7 @@
             <div class="fg"><label class="afl">Book Title</label><input class="afi" type="text" id="b-title" placeholder="e.g. The Covenant of Water" /></div>
             <div class="fg"><label class="afl">Date Read (e.g. Apr 2026)</label><input class="afi" type="text" id="b-date" placeholder="Apr 2026" /></div>
           </div>
-          <div class="fg" style="max-width:200px;"><label class="afl">Average Rating (0–5)</label><input class="afi" type="number" id="b-rating" min="0" max="5" step="0.01" placeholder="3.85" /></div>
+          <div class="fg" style="max-width:200px;"><label class="afl">Average Rating (0–5, leave blank if not scored yet)</label><input class="afi" type="number" id="b-rating" min="0" max="5" step="0.01" placeholder="3.85" /></div>
           <button class="btn-act btn-act-blue" onclick="addBook()">+ Add to Reading List</button>
         </div>
 
@@ -1237,7 +1239,7 @@ async function loadBooksFromSupabase() {
         id:     b.id,
         title:  b.title,
         date:   b.date_read,
-        rating: parseFloat(b.rating),
+        rating: b.rating == null ? null : parseFloat(b.rating),  // null = not yet scored
         scores: b.scores || []
       }));
       renderBooks();
@@ -1252,7 +1254,7 @@ async function saveBookToSupabase(title, dateRead, rating, scores) {
   try {
     const { data, error } = await db.from('books').insert({
       title, date_read: dateRead,
-      rating: parseFloat(rating),
+      rating: rating == null ? null : parseFloat(rating),
       scores: scores || []
     }).select().single();
     if (error) throw error;
@@ -1260,6 +1262,17 @@ async function saveBookToSupabase(title, dateRead, rating, scores) {
   } catch(e) {
     console.warn('Could not save book to Supabase:', e.message);
     return null;
+  }
+}
+
+async function updateBookScoresInSupabase(id, rating, scores) {
+  try {
+    const { error } = await db.from('books').update({ rating, scores: scores || [] }).eq('id', id);
+    if (error) throw error;
+    return true;
+  } catch(e) {
+    console.warn('Could not update book scores:', e.message);
+    return false;
   }
 }
 
@@ -1603,17 +1616,19 @@ function getSortedBooks() {
   const books = [...DATA.books]; // copy so we don't mutate original order
   if (currentSort === 'date-desc')  return books.sort((a,b) => bookDateRank(b.date) - bookDateRank(a.date));
   if (currentSort === 'date-asc')   return books.sort((a,b) => bookDateRank(a.date) - bookDateRank(b.date));
-  if (currentSort === 'score-desc') return books.sort((a,b) => b.rating - a.rating);
-  if (currentSort === 'score-asc')  return books.sort((a,b) => a.rating - b.rating);
+  const r = (b, dflt) => b.rating == null ? dflt : b.rating;  // unscored books sort last
+  if (currentSort === 'score-desc') return books.sort((a,b) => r(b,-1) - r(a,-1));
+  if (currentSort === 'score-asc')  return books.sort((a,b) => r(a,99) - r(b,99));
   return books;
 }
 
 function renderBooks() {
   const books = DATA.books;
   const n     = books.length;
-  const avg   = n ? (books.reduce((s,b)=>s+b.rating,0)/n).toFixed(2) : '—';
-  const hi    = n ? Math.max(...books.map(b=>b.rating)) : '—';
-  const lo    = n ? Math.min(...books.map(b=>b.rating)) : '—';
+  const rated = books.filter(b => b.rating != null).map(b => b.rating);
+  const avg   = rated.length ? (rated.reduce((s,r)=>s+r,0)/rated.length).toFixed(2) : '—';
+  const hi    = rated.length ? Math.max(...rated) : '—';
+  const lo    = rated.length ? Math.min(...rated) : '—';
 
   document.getElementById('stats-row').innerHTML = `
     <div class="stat-card"><div class="stat-num">${n}</div><div class="stat-lbl">Books Read</div></div>
@@ -1626,8 +1641,9 @@ function renderBooks() {
   const sorted = getSortedBooks();
   _sortedBooksForModal = sorted;
   document.getElementById('books-list').innerHTML = sorted.map((b,i) => {
-    const pct  = (b.rating/5*100).toFixed(1);
-    const tier = b.rating>=3.5?'high':b.rating>=2.5?'mid':'low';
+    const unscored = b.rating == null;
+    const pct  = unscored ? 0 : (b.rating/5*100).toFixed(1);
+    const tier = unscored ? 'none' : b.rating>=3.5?'high':b.rating>=2.5?'mid':'low';
     // Show rank number for score sorts, chronological number for date sorts
     const rowNum = (currentSort === 'score-desc') ? (i+1)
                  : (currentSort === 'score-asc')  ? (n-i)
@@ -1643,8 +1659,9 @@ function renderBooks() {
           <div class="book-meta">${b.date}${hasScores ? ` · <span style="color:var(--pink);font-size:0.68rem;">★ ${b.scores.length} scores</span>` : ''}</div>
         </div>
         <div class="book-score-col">
+          ${unscored ? `<span class="score-pending">Not yet scored</span>` : `
           <div class="score-bar-bg"><div class="score-bar-fill sbf-${tier}" style="width:${pct}%"></div></div>
-          <span class="score-val">${b.rating.toFixed(2)}</span>
+          <span class="score-val">${b.rating.toFixed(2)}</span>`}
         </div>
       </div>`;
   }).join('');
@@ -2196,11 +2213,12 @@ function sendCalendarInvite() {
 async function addBook() {
   const title  = (document.getElementById('b-title')?.value  || '').trim();
   const date   = (document.getElementById('b-date')?.value   || '').trim();
-  const rating = parseFloat(document.getElementById('b-rating')?.value || '');
-  if (!title || !date || isNaN(rating) || rating<0 || rating>5) {
-    toast('Please fill in all fields. Rating must be 0–5.'); return;
+  const ratingRaw = (document.getElementById('b-rating')?.value || '').trim();
+  const rating = ratingRaw === '' ? null : parseFloat(ratingRaw);  // blank = not yet scored
+  if (!title || !date || (rating != null && (isNaN(rating) || rating<0 || rating>5))) {
+    toast('Please add a title and date. Rating (optional) must be 0–5.'); return;
   }
-  const rounded = Math.round(rating*100)/100;
+  const rounded = rating == null ? null : Math.round(rating*100)/100;
   const newBook = { date, title, rating: rounded, scores: [] };
   const saved   = await saveBookToSupabase(title, date, rounded, []);
   if (saved) newBook.id = saved.id;
@@ -2569,15 +2587,23 @@ async function finalizeScoringSession() {
   if (stats.avg == null) { toast('Everyone abandoned this book — no average to compute. Cancel the session and log it manually instead.'); return; }
   const roundedAvg = Math.round(stats.avg * 100) / 100;
 
-  const saved  = await saveBookToSupabase(s.bookTitle, s.dateRead, roundedAvg, s.scores);
-  const newBook = {
-    id:     saved ? saved.id : null,
-    title:  s.bookTitle,
-    date:   s.dateRead,
-    rating: roundedAvg,
-    scores: s.scores
-  };
-  DATA.books.unshift(newBook);
+  const norm = t => (t || '').trim().toLowerCase();
+  const existing = DATA.books.find(b => b.rating == null && b.id != null && norm(b.title) === norm(s.bookTitle));
+  if (existing) {
+    await updateBookScoresInSupabase(existing.id, roundedAvg, s.scores);
+    existing.rating = roundedAvg;
+    existing.scores = s.scores;
+  } else {
+    const saved  = await saveBookToSupabase(s.bookTitle, s.dateRead, roundedAvg, s.scores);
+    const newBook = {
+      id:     saved ? saved.id : null,
+      title:  s.bookTitle,
+      date:   s.dateRead,
+      rating: roundedAvg,
+      scores: s.scores
+    };
+    DATA.books.unshift(newBook);
+  }
   saveData();
 
   // Clear votes from the atomic table now that they're saved to books
@@ -2661,9 +2687,10 @@ let _sortedBooksForModal = [];
 function openBookModal(book) {
   document.getElementById('bm-title').textContent  = book.title;
   document.getElementById('bm-meta').textContent   = book.date;
-  document.getElementById('bm-score').textContent  = book.rating.toFixed(2);
+  const unscored = book.rating == null;
+  document.getElementById('bm-score').textContent  = unscored ? '—' : book.rating.toFixed(2);
   const starsEl = document.getElementById('bm-stars');
-  if (starsEl) starsEl.innerHTML = starsHtml(book.rating, '1.4rem');
+  if (starsEl) starsEl.innerHTML = unscored ? '' : starsHtml(book.rating, '1.4rem');
 
   const scoresList = document.getElementById('bm-scores-list');
   const scores     = book.scores || [];
@@ -2680,6 +2707,8 @@ function openBookModal(book) {
         <span class="bm-score-stars">${starsHtml(v.score)}</span>
         <span class="bm-score-num">${v.score}/5</span>
       </div>`).join('');
+  } else if (unscored) {
+    scoresList.innerHTML = `<div class="bm-no-scores">Not scored yet.<br>Scores will show up here once the club rates this book.</div>`;
   } else {
     scoresList.innerHTML = `<div class="bm-no-scores">No individual scores on record for this book.<br>Individual scores are captured going forward via Live Scoring.<br><br><em>Historical books only have the group average.</em></div>`;
   }
@@ -2705,7 +2734,7 @@ function renderAdminBooksAll() {
           <div style="color:#fff;font-size:0.88rem;font-style:italic;font-family:'DM Serif Display',serif;">${b.title}</div>
           <div style="color:rgba(255,255,255,.35);font-size:0.72rem;">${b.date}${b.scores&&b.scores.length?` · ${b.scores.length} individual score${b.scores.length>1?'s':''}`:''}</div>
         </div>
-        <div style="color:rgba(255,255,255,.6);font-size:0.9rem;font-weight:600;min-width:32px;text-align:right;">${b.rating.toFixed(2)}</div>
+        <div style="color:rgba(255,255,255,.6);font-size:0.9rem;font-weight:600;min-width:32px;text-align:right;">${b.rating == null ? 'Not scored' : b.rating.toFixed(2)}</div>
         <button class="btn-act btn-act-danger btn-act-sm" onclick="removeBook(${i})">✕</button>
       </div>`).join('');
   });
