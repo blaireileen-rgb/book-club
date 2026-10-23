@@ -1690,6 +1690,11 @@ const BOOK_AUTHORS = {
   'the blue sisters':'Coco Mellors', 'my brilliant friend':'Elena Ferrante', 'the frozen river':'Ariel Lawhon',
   'the lost bookshop':'Evie Woods', 'the god of the woods':'Liz Moore', 'this time tomorrow':'Emma Straub'
 };
+// Covers Open Library doesn't have — keyed by title with spaces/punctuation stripped (see bareTitle)
+const COVER_OVERRIDES = {
+  'dogsboysandotherthingsivecriedabout': 'https://images-us.bookshop.org/ingram/9780063451070.jpg',
+  'dogsboysandotherthingivecriedabout':  'https://images-us.bookshop.org/ingram/9780063451070.jpg'
+};
 let _coverCache = {};
 try { _coverCache = JSON.parse(localStorage.getItem('hvr-covers-v2') || '{}'); } catch(e) {}
 const _coverPending = new Set();
@@ -1697,6 +1702,7 @@ let _coverTimer = null;
 function coverUrlFor(title, author) {
   const k = norm(title);
   if (!k) return '';
+  if (COVER_OVERRIDES[bareTitle(title)]) return COVER_OVERRIDES[bareTitle(title)];
   if (k in _coverCache) return _coverCache[k];
   if (!_coverPending.has(k)) {
     _coverPending.add(k);
