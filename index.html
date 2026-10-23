@@ -6,28 +6,28 @@
   <title>The Huntington Village Readers</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");</script> <!-- see SETUP.md step 4 -->
   <style>
     :root {
-      --pink:      #24426B;  /* harbor navy (accent) */
-      --pink-dk:   #182F4F;
-      --pink-lt:   #E5EBF3;
-      --coral:     #B08442;  /* brass */
-      --coral-lt:  #F5EDDD;
+      --pink:      #2E4A6B;  /* slate navy (primary) */
+      --pink-dk:   #1F3550;
+      --pink-lt:   #E4EDF6;
+      --coral:     #C98A62;  /* apricot (accent) */
+      --coral-lt:  #F8EBE2;
       --green:     #1E7A4A;
       --green-lt:  #EDFBF4;
       --amber:     #C87830;
       --amber-lt:  #FEF8EC;
-      --cream:     #F8F4EB;
-      --blush:     #F0E9DA;
-      --warm-white:#FFFCF5;
-      --dark:      #13203A;
-      --text:      #222C40;
-      --muted:     #6B7184;
-      --border:    #E3DACA;
+      --cream:     #F5F8FB;
+      --blush:     #EAF1F7;
+      --warm-white:#FFFFFF;
+      --dark:      #1A2A40;
+      --text:      #2A3646;
+      --muted:     #6C7A8B;
+      --border:    #DCE5EE;
       --admin-bg:  #0F1923;
       --admin-acc: #3B8ECA;
     }
@@ -38,7 +38,7 @@
     /* ── NAV ── */
     nav { background:var(--warm-white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:200; }
     .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 32px; }
-    .nav-logo { font-family:'DM Serif Display',serif; font-size:1.3rem; color:var(--dark); text-decoration:none; padding:18px 0; }
+    .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--dark); text-decoration:none; padding:18px 0; }
     .nav-logo span { color:var(--pink); font-style:italic; }
     nav ul { display:flex; list-style:none; gap:2px; }
     nav ul li a { display:block; color:var(--muted); text-decoration:none; padding:8px 14px; font-size:0.82rem; font-weight:500; border-radius:6px; transition:all .15s; }
@@ -49,7 +49,7 @@
     .hero-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
     .hero-eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--pink); margin-bottom:18px; }
     .hero-eyebrow::before { content:''; width:20px; height:1.5px; background:var(--pink); }
-    .hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(2.8rem,4.5vw,4.2rem); color:var(--dark); line-height:1.05; letter-spacing:-.02em; margin-bottom:18px; }
+    .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.8rem,4.5vw,4.2rem); color:var(--dark); line-height:1.05; letter-spacing:-.02em; margin-bottom:18px; }
     .hero h1 em { color:var(--pink); font-style:italic; }
     .hero-desc { color:var(--muted); font-size:1rem; max-width:420px; margin-bottom:36px; line-height:1.7; }
     .hero-pills { display:flex; gap:10px; flex-wrap:wrap; }
@@ -59,10 +59,10 @@
     .hero-book-card { background:var(--warm-white); border:1px solid var(--border); border-radius:20px; padding:28px; box-shadow:0 8px 40px rgba(28,20,16,.09); width:100%; display:flex; gap:24px; align-items:flex-start; }
     .cover-img-wrap { flex-shrink:0; width:110px; }
     .cover-img-wrap img { width:110px; border-radius:6px; box-shadow:4px 6px 20px rgba(28,20,16,.2); display:block; }
-    .cover-fallback { width:110px; height:165px; border-radius:6px; background:linear-gradient(160deg,var(--pink) 0%,var(--coral) 100%); display:none; align-items:center; justify-content:center; color:#fff; font-family:'DM Serif Display',serif; font-style:italic; font-size:0.8rem; text-align:center; padding:12px; line-height:1.4; box-shadow:4px 6px 20px rgba(28,20,16,.2); }
+    .cover-fallback { width:110px; height:165px; border-radius:6px; background:linear-gradient(160deg,var(--pink) 0%,var(--coral) 100%); display:none; align-items:center; justify-content:center; color:#fff; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.8rem; text-align:center; padding:12px; line-height:1.4; box-shadow:4px 6px 20px rgba(28,20,16,.2); }
     .hero-book-info { flex:1; min-width:0; }
     .hero-book-label { font-size:0.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pink); margin-bottom:6px; }
-    .hero-book-title { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.3rem; color:var(--dark); line-height:1.2; margin-bottom:4px; }
+    .hero-book-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.3rem; color:var(--dark); line-height:1.2; margin-bottom:4px; }
     .hero-book-author { font-size:0.82rem; color:var(--muted); margin-bottom:16px; }
     .mdl-list { display:flex; flex-direction:column; gap:6px; }
     .mdl-item { display:flex; align-items:center; gap:8px; font-size:0.83rem; color:var(--text); }
@@ -79,15 +79,29 @@
     .section { padding:72px 0; }
     .section.tinted { background:var(--blush); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
     .section-head { margin-bottom:36px; }
-    .section-title { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--dark); letter-spacing:-.02em; margin-bottom:6px; }
+    .section-title { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--dark); letter-spacing:-.02em; margin-bottom:6px; }
     .section-sub { font-size:0.9rem; color:var(--muted); }
     .section-rule { width:40px; height:2px; background:var(--pink); margin-top:10px; }
 
     /* ── STATS ── */
     .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:40px; }
     .stat-card { background:var(--warm-white); border:1px solid var(--border); border-radius:12px; padding:22px 20px; }
-    .stat-num { font-family:'DM Serif Display',serif; font-size:2.2rem; color:var(--pink); line-height:1; letter-spacing:-.02em; }
+    .stat-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; color:var(--pink); line-height:1; letter-spacing:-.02em; }
     .stat-lbl { font-size:0.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+    /* ── UPCOMING MEETINGS ── */
+    .upcoming-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; }
+    .up-card { background:var(--warm-white); border:1px solid var(--border); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px; }
+    .up-cover { width:100%; aspect-ratio:2/3; border-radius:8px; overflow:hidden; box-shadow:4px 6px 20px rgba(19,32,58,.15); }
+    .up-cover img { width:100%; height:100%; object-fit:cover; display:block; }
+    .up-cover-tbd { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:linear-gradient(160deg,var(--pink) 0%,#3A5A85 55%,var(--coral) 100%); color:#fff; font-family:'Cormorant Garamond',serif; }
+    .up-cover-tbd strong { font-size:2.4rem; font-weight:400; letter-spacing:.04em; line-height:1; }
+    .up-cover-tbd span { font-family:'Inter',sans-serif; font-size:0.66rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; opacity:.75; }
+    .up-date { font-size:0.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--pink); }
+    .up-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.08rem; color:var(--dark); line-height:1.25; }
+    .up-title.tbd { color:var(--muted); }
+    .up-meta { font-size:0.78rem; color:var(--muted); line-height:1.5; }
+    .up-empty { color:var(--muted); font-size:0.9rem; font-style:italic; }
 
     /* ── BOOKS ── */
     .books-container { background:var(--warm-white); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
@@ -100,7 +114,7 @@
     .sw-mid  { background:linear-gradient(#C87830,#E8A860); }
     .sw-low  { background:linear-gradient(var(--pink),#9DB0CC); }
     .book-info { flex:1; min-width:0; }
-    .book-title { font-family:'DM Serif Display',serif; font-style:italic; font-size:1rem; color:var(--dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .book-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .book-meta { font-size:0.72rem; color:var(--muted); font-weight:500; }
     .book-score-col { display:flex; align-items:center; gap:12px; flex-shrink:0; }
     .score-bar-bg { width:80px; height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
@@ -114,7 +128,7 @@
 
     /* ── WHATSAPP ── */
     .community-card { background:var(--warm-white); border:1px solid var(--border); border-radius:20px; padding:48px 40px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; box-shadow:0 2px 20px rgba(28,20,16,.06); }
-    .community-card h3 { font-family:'DM Serif Display',serif; font-size:1.7rem; color:var(--dark); margin-bottom:8px; letter-spacing:-.02em; }
+    .community-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--dark); margin-bottom:8px; letter-spacing:-.02em; }
     .community-card p { color:var(--muted); font-size:0.95rem; }
     .wa-btn { display:inline-flex; align-items:center; gap:10px; background:#25D366; color:#fff; text-decoration:none; padding:14px 26px; border-radius:50px; font-size:0.9rem; font-weight:600; box-shadow:0 4px 20px rgba(37,211,102,.3); transition:transform .15s,box-shadow .15s; white-space:nowrap; }
     .wa-btn:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(37,211,102,.4); }
@@ -124,7 +138,7 @@
     .gate-outer { display:flex; justify-content:center; padding:12px 0; }
     .gate-card { background:var(--warm-white); border:1px solid var(--border); border-radius:20px; padding:52px 44px; width:100%; max-width:460px; text-align:center; box-shadow:0 4px 28px rgba(28,20,16,.08); }
     .gate-icon { font-size:2.6rem; margin-bottom:16px; display:block; }
-    .gate-card h3 { font-family:'DM Serif Display',serif; font-size:1.6rem; color:var(--dark); margin-bottom:8px; }
+    .gate-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--dark); margin-bottom:8px; }
     .gate-card p { font-size:0.88rem; color:var(--muted); margin-bottom:28px; }
     .gate-form { display:flex; gap:8px; }
     .gate-input { flex:1; font-family:'Inter',sans-serif; padding:11px 16px; border:1.5px solid var(--border); border-radius:10px; font-size:0.9rem; background:var(--cream); color:var(--text); outline:none; transition:border-color .2s; }
@@ -138,7 +152,7 @@
     .members-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; margin-bottom:44px; }
     .member-card { background:var(--warm-white); border:1px solid var(--border); border-radius:16px; padding:22px 14px; text-align:center; transition:transform .14s,box-shadow .14s; }
     .member-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(28,20,16,.1); }
-    .m-avatar { width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'DM Serif Display',serif; font-size:1.15rem; color:#fff; margin:0 auto 10px; }
+    .m-avatar { width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#fff; margin:0 auto 10px; }
     .m-name { font-size:0.85rem; font-weight:500; color:var(--dark); line-height:1.3; }
     .m-status { display:inline-block; margin-top:6px; font-size:0.67rem; font-weight:600; padding:3px 9px; border-radius:6px; }
     .ms-g { background:#F0FBF6; color:#1A7A4A; }
@@ -148,7 +162,7 @@
 
     /* ── FORMS ── */
     .form-card { background:var(--warm-white); border:1px solid var(--border); border-radius:16px; padding:32px; margin-bottom:20px; }
-    .form-card h3 { font-family:'DM Serif Display',serif; font-size:1.35rem; color:var(--dark); margin-bottom:4px; }
+    .form-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--dark); margin-bottom:4px; }
     .form-sub { font-size:0.84rem; color:var(--muted); margin-bottom:24px; }
     .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
     .form-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
@@ -170,12 +184,12 @@
 
     /* ── RECOMMENDATIONS ── */
     .recs-section { margin-bottom:24px; }
-    .recs-section h3 { font-family:'DM Serif Display',serif; font-size:1.35rem; color:var(--dark); margin-bottom:4px; }
+    .recs-section h3 { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--dark); margin-bottom:4px; }
     .recs-sub { font-size:0.84rem; color:var(--muted); margin-bottom:20px; }
     .recs-list { display:flex; flex-direction:column; gap:12px; }
     .rec-card { background:var(--warm-white); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
     .rec-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:6px; }
-    .rec-book-title { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.05rem; color:var(--dark); }
+    .rec-book-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--dark); }
     .rec-book-author { font-size:0.78rem; color:var(--muted); margin-top:1px; }
     .rec-date { font-size:0.7rem; color:var(--muted); white-space:nowrap; flex-shrink:0; }
     .rec-pitch { font-size:0.85rem; color:var(--text); line-height:1.55; margin-top:8px; font-style:italic; }
@@ -194,13 +208,13 @@
     .admin-inner { max-width:1100px; margin:0 auto; padding:72px 32px; }
     .admin-header { margin-bottom:48px; }
     .admin-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(59,142,202,.15); border:1px solid rgba(59,142,202,.3); color:var(--admin-acc); font-size:0.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:14px; }
-    .admin-title { font-family:'DM Serif Display',serif; font-size:2.2rem; color:#fff; letter-spacing:-.02em; margin-bottom:8px; }
+    .admin-title { font-family:'Cormorant Garamond',serif; font-size:2.2rem; color:#fff; letter-spacing:-.02em; margin-bottom:8px; }
     .admin-sub { color:rgba(255,255,255,.45); font-size:0.9rem; }
 
     /* admin gate */
     #admin-gate { display:flex; justify-content:center; }
     .admin-gate-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:52px 44px; width:100%; max-width:440px; text-align:center; }
-    .admin-gate-card h3 { font-family:'DM Serif Display',serif; font-size:1.5rem; color:#fff; margin-bottom:8px; }
+    .admin-gate-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:#fff; margin-bottom:8px; }
     .admin-gate-card p { font-size:0.86rem; color:rgba(255,255,255,.5); margin-bottom:26px; }
     .admin-input { flex:1; font-family:'Inter',sans-serif; padding:11px 16px; border:1.5px solid rgba(255,255,255,.15); border-radius:10px; font-size:0.9rem; background:rgba(255,255,255,.07); color:#fff; outline:none; transition:border-color .2s; }
     .admin-input:focus { border-color:var(--admin-acc); }
@@ -219,7 +233,7 @@
     .admin-panel.active { display:block; }
 
     .admin-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:28px; margin-bottom:20px; }
-    .admin-card h4 { font-family:'DM Serif Display',serif; font-size:1.2rem; color:#fff; margin-bottom:4px; }
+    .admin-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:#fff; margin-bottom:4px; }
     .admin-card-sub { font-size:0.82rem; color:rgba(255,255,255,.4); margin-bottom:22px; }
 
     /* admin form fields */
@@ -285,7 +299,7 @@
     .poll-form-row { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; }
     .poll-name-wrap { flex:1; min-width:180px; }
     .poll-submitted { background:var(--green-lt); border:1px solid #A8DEC0; border-radius:14px; padding:22px 24px; text-align:center; display:none; }
-    .poll-submitted h4 { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; }
+    .poll-submitted h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; }
     .poll-submitted p { font-size:0.85rem; color:#2A6A4A; }
 
     /* poll results (public, optional) */
@@ -359,12 +373,12 @@
     .profile-photo-lg {
       width:72px; height:72px; border-radius:50%; flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      font-family:'DM Serif Display',serif; font-size:1.6rem; color:#fff;
+      font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:#fff;
       overflow:hidden;
     }
     .profile-photo-lg img { width:100%; height:100%; object-fit:cover; }
     .profile-name-block { flex:1; min-width:0; }
-    .profile-modal-name { font-family:'DM Serif Display',serif; font-size:1.4rem; color:var(--dark); line-height:1.2; margin-bottom:6px; }
+    .profile-modal-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--dark); line-height:1.2; margin-bottom:6px; }
     .profile-modal-status { display:inline-block; font-size:0.7rem; font-weight:600; padding:3px 10px; border-radius:6px; margin-bottom:6px; }
     .profile-modal-joined { font-size:0.76rem; color:var(--muted); }
     .profile-fields { display:flex; flex-direction:column; gap:16px; }
@@ -395,7 +409,7 @@
     }
     .admin-modal-close:hover { background:rgba(255,255,255,.15); color:#fff; }
     #apm-photo-preview img { width:100%; height:100%; object-fit:cover; }
-    .admin-modal-title { font-family:'DM Serif Display',serif; font-size:1.3rem; color:#fff; margin-bottom:4px; }
+    .admin-modal-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:#fff; margin-bottom:4px; }
     .admin-modal-sub { font-size:0.82rem; color:rgba(255,255,255,.4); margin-bottom:24px; }
 
     /* ── PHOTO CROP OVERLAY ── */
@@ -409,7 +423,7 @@
       background:#1A2535; border:1px solid rgba(255,255,255,.15); border-radius:20px;
       padding:28px; width:100%; max-width:320px; text-align:center;
     }
-    .crop-card h4 { font-family:'DM Serif Display',serif; font-size:1.2rem; color:#fff; margin-bottom:4px; }
+    .crop-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:#fff; margin-bottom:4px; }
     .crop-card p  { font-size:0.78rem; color:rgba(255,255,255,.4); margin-bottom:20px; }
     #crop-canvas  {
       border-radius:50%; display:block; margin:0 auto 18px; cursor:grab;
@@ -440,6 +454,8 @@
       .profile-top { flex-direction:column; text-align:center; }
       .book-title { white-space:normal; overflow:visible; text-overflow:unset; }
       .book-row { align-items:flex-start; }
+      .upcoming-grid { grid-template-columns:1fr 1fr; gap:12px; }
+      .up-card { padding:12px; }
     }
 
     /* ── PULSE ANIMATION ── */
@@ -468,7 +484,7 @@
     .score-abandon-row label { font-size:0.82rem; color:var(--muted); cursor:pointer; }
     .score-abandoned-tag { display:inline-flex; align-items:center; gap:4px; background:var(--coral-lt); color:var(--coral); font-size:0.78rem; font-weight:700; padding:3px 10px; border-radius:12px; }
     .scoring-submitted { background:var(--green-lt); border:1px solid #A8DEC0; border-radius:14px; padding:22px 24px; text-align:center; display:none; }
-    .scoring-submitted h4 { font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; }
+    .scoring-submitted h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; }
     .scoring-submitted p { font-size:0.85rem; color:#2A6A4A; }
 
     /* ── ACCORDION SECTIONS ── */
@@ -483,7 +499,7 @@
     }
     .accordion-header:hover { background:var(--cream); }
     .acc-icon { font-size:1.05rem; flex-shrink:0; }
-    .acc-title { font-family:'DM Serif Display',serif; font-size:1.05rem; color:var(--dark); flex:1; line-height:1.3; }
+    .acc-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--dark); flex:1; line-height:1.3; }
     .acc-badge { font-size:0.68rem; font-weight:700; padding:3px 9px; border-radius:20px; background:var(--pink-lt); color:var(--pink); flex-shrink:0; }
     .acc-badge.live { background:#FDE8E8; color:#C03030; }
     .acc-count { font-size:0.72rem; font-weight:600; color:var(--muted); background:var(--border); padding:2px 9px; border-radius:10px; flex-shrink:0; }
@@ -515,10 +531,10 @@
     }
     .book-modal-close:hover { background:var(--pink-lt); color:var(--pink); }
     .book-modal-eyebrow { font-size:0.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pink); margin-bottom:8px; }
-    .book-modal-title { font-family:'DM Serif Display',serif; font-style:italic; font-size:1.7rem; color:var(--dark); line-height:1.15; margin-bottom:4px; }
+    .book-modal-title { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.7rem; color:var(--dark); line-height:1.15; margin-bottom:4px; }
     .book-modal-meta { font-size:0.82rem; color:var(--muted); margin-bottom:20px; }
     .book-modal-score-row { display:flex; align-items:baseline; gap:10px; padding:16px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:20px; }
-    .book-modal-score-big { font-family:'DM Serif Display',serif; font-size:3rem; color:var(--pink); line-height:1; }
+    .book-modal-score-big { font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--pink); line-height:1; }
     .book-modal-score-label { font-size:0.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
     .bm-section-label { font-size:0.72rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
     .bm-scores-list { display:flex; flex-direction:column; gap:8px; }
@@ -529,6 +545,42 @@
     .bm-no-scores { text-align:center; padding:24px 0 8px; color:var(--muted); font-size:0.85rem; font-style:italic; line-height:1.6; }
     .book-row { cursor:pointer; }
     .book-row:hover .book-title { color:var(--pink); }
+
+    /* ════ LIGHT-BLUE EDITORIAL THEME (overrides) ════ */
+    :root { --sky:#DCE9F5; --sky-dk:#C9DCEE; }
+    h1, .section-title, .nav-logo, .hero-book-title, .book-title, .up-title, .stat-num, .bm-title, .gate-card h3 { font-weight:500; }
+    nav { background:var(--sky); border-bottom:none; }
+    .nav-logo { font-size:1.55rem; letter-spacing:.01em; }
+    .nav-logo span { color:var(--dark); }
+    nav ul li a { text-transform:uppercase; letter-spacing:.14em; font-size:0.68rem; font-weight:500; color:var(--dark); border-radius:0; }
+    nav ul li a:hover { background:transparent; color:var(--coral); }
+    .hero { background:var(--sky); border-bottom:none; padding:64px 32px 96px; }
+    .hero h1 { font-size:clamp(3rem,5.2vw,4.8rem); line-height:1.02; letter-spacing:-.01em; }
+    .hero h1 em { color:var(--pink); font-weight:400; }
+    .hero-eyebrow, .hero-book-label, .up-date { color:var(--coral); }
+    .hero-eyebrow::before { background:var(--coral); }
+    .hero-desc { color:var(--text); }
+    .hero-pill { background:#fff; border:none; border-radius:0; text-transform:uppercase; letter-spacing:.1em; font-size:0.68rem; padding:10px 18px; box-shadow:0 1px 2px rgba(26,42,64,.06); }
+    .hero-pill strong { color:var(--dark); }
+    .hero-book-card { border:none; border-radius:2px; box-shadow:0 18px 50px rgba(26,42,64,.12); }
+    .section-title { font-size:2.5rem; letter-spacing:0; }
+    .section-rule { background:var(--coral); width:32px; height:1.5px; }
+    .stat-card, .books-container, .up-card, .member-card, .form-card, .gate-card, .community-card,
+    #scoring-section .score-form-card, .profile-field { border-radius:2px; }
+    .stat-num { color:var(--pink); font-size:2.6rem; }
+    .book-title { font-size:1.15rem; }
+    .up-title { font-size:1.25rem; }
+    .btn, .sort-btn { border-radius:0; text-transform:uppercase; letter-spacing:.12em; font-size:0.7rem; padding:11px 22px; }
+    .sort-btn { padding:8px 16px; }
+    .sort-btn:hover { border-color:var(--dark); color:var(--dark); }
+    .sort-btn.active, .btn-pink { background:var(--dark); border-color:var(--dark); }
+    .score-pending { border-radius:0; text-transform:uppercase; letter-spacing:.1em; font-size:0.62rem; background:var(--coral-lt); color:#9A5F3A; border-color:#EED7C8; }
+    .up-cover, .cover-img-wrap img, .cover-fallback { border-radius:1px; }
+    .up-cover-tbd, .cover-fallback { background:linear-gradient(165deg,#BFD4EA 0%,#DCE9F5 55%,#F1D9C8 100%); color:var(--dark); }
+    .up-cover-tbd span { opacity:.6; }
+    .up-cover-tbd strong { font-size:2.8rem; font-weight:500; }
+    footer { background:var(--sky); color:var(--muted); }
+    footer strong { color:var(--dark); font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:500; }
   </style>
 </head>
 <body>
@@ -539,9 +591,10 @@
     <a href="#" class="nav-logo">Huntington Village <span>Readers</span></a>
     <ul>
       <li><a href="#meeting">Next Meeting</a></li>
+      <li><a href="#upcoming">Upcoming</a></li>
       <li><a href="#books">Our Books</a></li>
       <li><a href="#members">Members</a></li>
-      <li><a href="#admin-area" style="color:#6AAADD;">⚙ Organizer</a></li>
+      <li><a href="#admin-area" style="color:var(--coral);">Organizer</a></li>
     </ul>
   </div>
 </nav>
@@ -589,6 +642,20 @@
           <div class="rsvp-mini" id="rsvp-row"></div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── UPCOMING MEETINGS ── -->
+<div id="upcoming" style="display:none;">
+  <div class="section">
+    <div class="page">
+      <div class="section-head">
+        <div class="section-title">Upcoming Meetings</div>
+        <div class="section-sub">What's next on the calendar</div>
+        <div class="section-rule"></div>
+      </div>
+      <div class="upcoming-grid" id="upcoming-grid"></div>
     </div>
   </div>
 </div>
@@ -748,7 +815,7 @@
                 <div class="recs-empty">No recommendations yet — be the first!</div>
               </div>
               <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-                <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Recommend a Book</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Recommend a Book</div>
                 <form id="rec-form" onsubmit="postRec(event)">
                   <div class="form-row">
                     <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
@@ -810,6 +877,7 @@
         <button class="admin-tab" onclick="showTab('tab-books',this)">📚 Add Book</button>
         <button class="admin-tab" onclick="showTab('tab-poll',this)">📊 Date Poll</button>
         <button class="admin-tab" onclick="showTab('tab-scoring',this)">🌟 Live Scoring</button>
+        <button class="admin-tab" onclick="showTab('tab-upcoming',this)">🗓 Upcoming</button>
       </div>
 
       <!-- TAB: MEMBERS -->
@@ -891,6 +959,29 @@
           <h4>Reading History</h4>
           <p class="admin-card-sub">All logged books — most recent first. You can remove any entry.</p>
           <div id="admin-books-list" style="display:flex;flex-direction:column;gap:0;"></div>
+        </div>
+      </div>
+
+      <!-- TAB: UPCOMING MEETINGS -->
+      <div id="tab-upcoming" class="admin-panel">
+        <div class="admin-card">
+          <h4>Add an Upcoming Meeting</h4>
+          <p class="admin-card-sub">Shows on the homepage under "Upcoming Meetings". Leave the book blank and it shows a "TBD" cover. Past dates drop off automatically.</p>
+          <div class="form-row">
+            <div class="fg"><label class="afl">Date</label><input class="afi" type="date" id="up-date" /></div>
+            <div class="fg"><label class="afl">Location (optional)</label><input class="afi" type="text" id="up-location" placeholder="e.g. Published" /></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label class="afl">Book Title (optional)</label><input class="afi" type="text" id="up-book" placeholder="Leave blank for TBD" /></div>
+            <div class="fg"><label class="afl">Author (optional)</label><input class="afi" type="text" id="up-author" /></div>
+          </div>
+          <button class="btn-act btn-act-blue" id="up-save-btn" onclick="saveUpcoming()">+ Add Meeting</button>
+          <button class="btn-act btn-act-outline" id="up-cancel-btn" style="display:none;" onclick="resetUpcomingForm()">Cancel</button>
+        </div>
+        <div class="admin-card">
+          <h4>Scheduled</h4>
+          <p class="admin-card-sub">Click Edit to add the book once it's picked — the cover is found automatically.</p>
+          <div id="admin-upcoming-list"></div>
         </div>
       </div>
 
@@ -1827,7 +1918,7 @@ function openProfileModal(idx) {
         return `
           <div style="display:flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:8px 12px;">
             <div style="flex:1;min-width:0;">
-              <div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:0.92rem;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.title}</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.92rem;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.title}</div>
               <div style="font-size:0.68rem;color:var(--muted);">${v.date}${diffLbl}</div>
             </div>
             ${v.abandoned ? `<span class="score-abandoned-tag">🚫 Abandoned</span>` : `
@@ -2731,7 +2822,7 @@ function renderAdminBooksAll() {
     el.innerHTML = DATA.books.map((b,i) => `
       <div style="display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06);">
         <div style="flex:1;min-width:0;">
-          <div style="color:#fff;font-size:0.88rem;font-style:italic;font-family:'DM Serif Display',serif;">${b.title}</div>
+          <div style="color:#fff;font-size:0.88rem;font-style:italic;font-family:'Cormorant Garamond',serif;">${b.title}</div>
           <div style="color:rgba(255,255,255,.35);font-size:0.72rem;">${b.date}${b.scores&&b.scores.length?` · ${b.scores.length} individual score${b.scores.length>1?'s':''}`:''}</div>
         </div>
         <div style="color:rgba(255,255,255,.6);font-size:0.9rem;font-weight:600;min-width:32px;text-align:right;">${b.rating == null ? 'Not scored' : b.rating.toFixed(2)}</div>
@@ -3156,6 +3247,129 @@ function restoreAdminPollUI() {
 }
 
 // ════════════════════════════════════════════════════════════════
+//  UPCOMING MEETINGS
+// ════════════════════════════════════════════════════════════════
+let UPCOMING = [];
+let _editingUpcomingId = null;
+const escHtml = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function upcomingDateLabel(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric', year:'numeric' });
+}
+
+async function loadUpcomingFromSupabase() {
+  try {
+    const { data, error } = await db.from('upcoming_meetings').select('*').order('meeting_date', { ascending: true });
+    if (error) throw error;
+    UPCOMING = data || [];
+  } catch(e) {
+    console.warn('Upcoming meetings table not ready (run upcoming-meetings.sql):', e.message);
+    UPCOMING = [];
+  }
+  renderUpcoming();
+  renderAdminUpcoming();
+}
+
+function renderUpcoming() {
+  const wrap = document.getElementById('upcoming');
+  const grid = document.getElementById('upcoming-grid');
+  if (!wrap || !grid) return;
+  const today = new Date().toISOString().slice(0, 10);
+  const items = UPCOMING.filter(u => u.meeting_date >= today);
+  wrap.style.display = items.length ? '' : 'none';
+  grid.innerHTML = items.map(u => {
+    const cover = u.cover_url
+      ? `<img src="${escHtml(u.cover_url)}" alt="${escHtml(u.book)} cover" onerror="this.parentNode.innerHTML='<div class=&quot;up-cover-tbd&quot;><span>Cover</span><strong>…</strong></div>'" />`
+      : `<div class="up-cover-tbd"><span>Book</span><strong>TBD</strong></div>`;
+    return `
+      <div class="up-card">
+        <div class="up-cover">${cover}</div>
+        <div>
+          <div class="up-date">${escHtml(upcomingDateLabel(u.meeting_date))}</div>
+          <div class="up-title${u.book ? '' : ' tbd'}">${u.book ? escHtml(u.book) : 'Book to be announced'}</div>
+          <div class="up-meta">${u.author ? 'by ' + escHtml(u.author) : ''}${u.author && u.location ? '<br>' : ''}${u.location ? '📍 ' + escHtml(u.location) : ''}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderAdminUpcoming() {
+  const el = document.getElementById('admin-upcoming-list');
+  if (!el) return;
+  if (!UPCOMING.length) { el.innerHTML = `<div style="color:rgba(255,255,255,.4);font-size:0.85rem;">Nothing scheduled yet.</div>`; return; }
+  el.innerHTML = UPCOMING.map(u => `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06);">
+      <div style="flex:1;min-width:0;">
+        <div style="color:#fff;font-size:0.88rem;font-style:italic;font-family:'Cormorant Garamond',serif;">${u.book ? escHtml(u.book) : 'Book TBD'}</div>
+        <div style="color:rgba(255,255,255,.35);font-size:0.72rem;">${escHtml(upcomingDateLabel(u.meeting_date))}${u.location ? ' · ' + escHtml(u.location) : ''}</div>
+      </div>
+      <button class="btn-act btn-act-outline btn-act-sm" onclick="editUpcoming(${u.id})">Edit</button>
+      <button class="btn-act btn-act-danger btn-act-sm" onclick="removeUpcoming(${u.id})">✕</button>
+    </div>`).join('');
+}
+
+// Looks up a cover on Open Library from the title (and author, if given)
+async function findCoverUrl(book, author) {
+  if (!book) return null;
+  try {
+    const q = new URLSearchParams({ title: book, limit: '1', fields: 'cover_i' });
+    if (author) q.set('author', author);
+    const res  = await fetch('https://openlibrary.org/search.json?' + q);
+    const json = await res.json();
+    const id   = json.docs && json.docs[0] && json.docs[0].cover_i;
+    return id ? `https://covers.openlibrary.org/b/id/${id}-L.jpg` : null;
+  } catch(e) { return null; }
+}
+
+async function saveUpcoming() {
+  const meeting_date = document.getElementById('up-date').value;
+  const book     = document.getElementById('up-book').value.trim() || null;
+  const author   = document.getElementById('up-author').value.trim() || null;
+  const location = document.getElementById('up-location').value.trim() || null;
+  if (!meeting_date) { toast('Please pick a date.'); return; }
+  const existing = UPCOMING.find(u => u.id === _editingUpcomingId);
+  const sameBook = existing && existing.book === book && existing.author === author;
+  const cover_url = sameBook ? existing.cover_url : await findCoverUrl(book, author);
+  const row = { meeting_date, book, author, location, cover_url };
+  const q = _editingUpcomingId
+    ? db.from('upcoming_meetings').update(row).eq('id', _editingUpcomingId)
+    : db.from('upcoming_meetings').insert(row);
+  const { error } = await q;
+  if (error) { toast('Could not save — did you run upcoming-meetings.sql in Supabase?'); console.warn(error.message); return; }
+  toast(_editingUpcomingId ? '✓ Meeting updated' : '✓ Meeting added');
+  resetUpcomingForm();
+  loadUpcomingFromSupabase();
+}
+
+function editUpcoming(id) {
+  const u = UPCOMING.find(x => x.id === id);
+  if (!u) return;
+  _editingUpcomingId = id;
+  document.getElementById('up-date').value     = u.meeting_date;
+  document.getElementById('up-book').value     = u.book || '';
+  document.getElementById('up-author').value   = u.author || '';
+  document.getElementById('up-location').value = u.location || '';
+  document.getElementById('up-save-btn').textContent = 'Save Changes';
+  document.getElementById('up-cancel-btn').style.display = '';
+  document.getElementById('up-date').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function resetUpcomingForm() {
+  _editingUpcomingId = null;
+  ['up-date','up-book','up-author','up-location'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('up-save-btn').textContent = '+ Add Meeting';
+  document.getElementById('up-cancel-btn').style.display = 'none';
+}
+
+async function removeUpcoming(id) {
+  if (!confirm('Remove this upcoming meeting?')) return;
+  const { error } = await db.from('upcoming_meetings').delete().eq('id', id);
+  if (error) { toast('Could not remove it.'); return; }
+  loadUpcomingFromSupabase();
+}
+
+// ════════════════════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════════════════════
 if (!DATA.scoring) {
@@ -3167,6 +3381,7 @@ loadMembersFromSupabase();  // async: overrides defaults if Supabase table has d
 loadBooksFromSupabase();    // async: overrides defaults if Supabase table has data
 loadMeetingFromSupabase();  // async: pulls the current next-meeting details
 loadRsvpFromSupabase();     // async: pulls latest RSVP responses from Google Calendar sync
+loadUpcomingFromSupabase(); // async: upcoming meetings (homepage section + admin tab)
 // Poll and Scoring only render after member login (they live inside the members area)
 </script>
 </body>
