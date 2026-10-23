@@ -770,6 +770,47 @@
           </div>
         </div>
 
+        <!-- ── ACCORDION: SCORE A BOOK (anytime; always visible, open by default) ── -->
+        <div class="accordion-wrap open" id="acc-anyscore">
+          <button class="accordion-header" onclick="toggleAccordion('acc-anyscore')">
+            <span class="acc-icon">⭐</span>
+            <span class="acc-title">Score a Book</span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Score any book we've read, whenever you like. You can change your score anytime.</p>
+              <div class="form-row">
+                <div class="fg"><label class="fl">Your Name</label><select class="fi" id="as-email" onchange="onAnyScoreSelect()"></select></div>
+                <div class="fg"><label class="fl">Book</label><select class="fi" id="as-book" onchange="onAnyScoreSelect()"></select></div>
+              </div>
+              <div class="fg" id="as-score-fg">
+                <label class="fl">Your Score (1–5, decimals OK)</label>
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px;">
+                  <input type="number" class="fi" id="as-score" min="1" max="5" step="0.01" placeholder="e.g. 3.75" style="max-width:130px;" oninput="updateAnyScoreStars(this.value)" />
+                  <div class="stars-outer" style="font-size:2rem;">
+                    <span class="stars-bg">★★★★★</span>
+                    <span class="stars-fg" id="as-stars-fill" style="width:0%">★★★★★</span>
+                  </div>
+                </div>
+                <div class="score-guide">
+                  <span>5 — Best book you've ever read</span>
+                  <span>4 — Great book</span>
+                  <span>3 — Good book</span>
+                  <span>2 — Not great</span>
+                  <span>1 — Terrible</span>
+                </div>
+              </div>
+              <div class="score-abandon-row">
+                <input type="checkbox" id="as-abandoned" onchange="document.getElementById('as-score-fg').style.opacity = this.checked ? .4 : 1" />
+                <label for="as-abandoned">I purposefully abandoned this book — didn't finish, didn't want to</label>
+              </div>
+              <button class="btn btn-pink" onclick="submitAnyScore()" style="margin-top:8px;">Save My Score</button>
+              <div class="rsvp-note" id="as-note"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── ACCORDION: DATE POLL (shown when poll active) ── -->
         <div class="accordion-wrap" id="acc-poll" style="display:none;">
           <button class="accordion-header" onclick="toggleAccordion('acc-poll')">
@@ -864,11 +905,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Bottom utility bar — Unsubscribe -->
-        <div class="members-footer-bar">
-          <a id="unsub-link" href="#" class="unsub-link" onclick="handleUnsub(event)">Unsubscribe</a>
         </div>
 
       </div>
@@ -1426,6 +1462,77 @@ async function submitRsvp(status) {
 }
 
 // ════════════════════════════════════════════════════════════════
+//  SCORE A BOOK ANYTIME (members add/update their own score on any book)
+// ════════════════════════════════════════════════════════════════
+function renderAnyScore() {
+  const ddName = document.getElementById('as-email');
+  const ddBook = document.getElementById('as-book');
+  if (!ddName || !ddBook) return;
+  let name = ddName.value;
+  if (!name) { try { name = localStorage.getItem(RSVP_NAME_KEY) || ''; } catch(e) {} }
+  const members = [...(DATA.members || [])].sort((a,b) => a.name.localeCompare(b.name));
+  ddName.innerHTML = '<option value="">— Select your name —</option>' +
+    members.map(m => `<option value="${escHtml(m.email)}">${escHtml(m.name)}</option>`).join('');
+  if (name && members.some(m => m.email === name)) ddName.value = name;
+
+  const book = ddBook.value;
+  const books = [...(DATA.books || [])].filter(b => b.id != null).sort((a,b) => bookDateRank(b.date) - bookDateRank(a.date));
+  ddBook.innerHTML = '<option value="">— Pick a book —</option>' +
+    books.map(b => `<option value="${b.id}">${escHtml(b.title)} (${escHtml(b.date)})</option>`).join('');
+  if (book && books.some(b => String(b.id) === book)) ddBook.value = book;
+  onAnyScoreSelect();
+}
+
+function updateAnyScoreStars(v) {
+  const n = Math.max(0, Math.min(5, parseFloat(v) || 0));
+  document.getElementById('as-stars-fill').style.width = (n / 5 * 100) + '%';
+}
+
+// Show the member's existing score for the chosen book, if any
+function onAnyScoreSelect() {
+  const email = (document.getElementById('as-email').value || '').toLowerCase();
+  const id    = document.getElementById('as-book').value;
+  const book  = (DATA.books || []).find(b => String(b.id) === id);
+  const mine  = book && email ? (book.scores || []).find(v => (v.email || '').toLowerCase() === email) : null;
+  document.getElementById('as-score').value = mine && !mine.abandoned && mine.score != null ? mine.score : '';
+  document.getElementById('as-abandoned').checked = !!(mine && mine.abandoned);
+  document.getElementById('as-score-fg').style.opacity = mine && mine.abandoned ? .4 : 1;
+  updateAnyScoreStars(document.getElementById('as-score').value);
+  document.getElementById('as-note').textContent =
+    !email || !book ? '' : mine ? `You've already scored this one — change it below and save.` : `You haven't scored this one yet.`;
+}
+
+async function submitAnyScore() {
+  const email = (document.getElementById('as-email').value || '').toLowerCase();
+  const id    = document.getElementById('as-book').value;
+  const abandoned = document.getElementById('as-abandoned').checked;
+  const score = parseFloat(document.getElementById('as-score').value);
+  if (!email) { toast('Please select your name.'); return; }
+  if (!id)    { toast('Please pick a book.'); return; }
+  if (!abandoned && (isNaN(score) || score < 1 || score > 5)) { toast('Score must be between 1 and 5.'); return; }
+  const member = (DATA.members || []).find(m => (m.email || '').toLowerCase() === email);
+
+  // Re-read the latest scores right before saving so we don't overwrite someone else's
+  const { data: row, error: readErr } = await db.from('books').select('scores').eq('id', id).single();
+  if (readErr) { toast('Could not save — please try again.'); console.warn(readErr.message); return; }
+  const scores = (row.scores || []).filter(v => (v.email || '').toLowerCase() !== email);
+  scores.push({ name: member ? member.name : email, email, score: abandoned ? null : Math.round(score * 100) / 100, abandoned });
+  const rated  = scores.filter(v => !v.abandoned && v.score != null);
+  const rating = rated.length ? Math.round(rated.reduce((s, v) => s + v.score, 0) / rated.length * 100) / 100 : null;
+
+  const { error } = await db.from('books').update({ scores, rating }).eq('id', id);
+  if (error) { toast('Could not save — please try again.'); console.warn(error.message); return; }
+  try { localStorage.setItem(RSVP_NAME_KEY, document.getElementById('as-email').value); } catch(e) {}
+
+  const book = DATA.books.find(b => String(b.id) === id);
+  if (book) { book.scores = scores; book.rating = rating; }
+  renderBooks();
+  renderAdminBooksAll();
+  onAnyScoreSelect();
+  toast(abandoned ? '✓ Saved — marked as abandoned' : `✓ Saved your ${Math.round(score * 100) / 100} for "${book ? book.title : 'this book'}"`);
+}
+
+// ════════════════════════════════════════════════════════════════
 //  SUPABASE: BOOKS TABLE
 // ════════════════════════════════════════════════════════════════
 async function loadBooksFromSupabase() {
@@ -1921,6 +2028,7 @@ async function checkMemberPw() {
     renderPublicPoll();
     renderPublicScoring();
     renderRsvpSection();
+    renderAnyScore();
   } else {
     document.getElementById('pw-err').style.display = 'block';
     document.getElementById('pw-input').value = '';
