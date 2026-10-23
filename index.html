@@ -606,6 +606,7 @@
       <li><a href="#upcoming">Upcoming</a></li>
       <li><a href="#books">Our Books</a></li>
       <li><a href="#members">Members</a></li>
+      <li><a href="#members" onclick="setTimeout(()=>{const r=document.getElementById('acc-recs');if(r&&r.offsetParent)r.scrollIntoView({behavior:'smooth'});},50)">Recommend</a></li>
       <li><a href="#admin-area" style="color:var(--coral);">Organizer</a></li>
     </ul>
   </div>
@@ -707,7 +708,7 @@
         <div class="gate-card">
           <span class="gate-icon">🔐</span>
           <h3>Members Only</h3>
-          <p>Enter the password to view the member list, recommend a book, or unsubscribe.</p>
+          <p>Enter the password to RSVP, recommend a book, and see the member list.</p>
           <div class="gate-form">
             <input class="gate-input" type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter') checkMemberPw()" />
             <button class="gate-btn" onclick="checkMemberPw()">Enter</button>
@@ -734,6 +735,37 @@
                 <button class="rsvp-btn" data-st="d" onclick="submitRsvp('d')">Can't make it</button>
               </div>
               <div class="rsvp-note" id="rsvp-note"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ACCORDION: RECOMMENDATIONS (always visible, open by default) ── -->
+        <div class="accordion-wrap open" id="acc-recs">
+          <button class="accordion-header" onclick="toggleAccordion('acc-recs')">
+            <span class="acc-icon">📚</span>
+            <span class="acc-title">Recommend a Book</span>
+            <span class="acc-count" id="recs-count-badge" style="display:none;"></span>
+            <span class="acc-chevron">▾</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Have a book you'd love us to read? Add it below — and see what everyone else is suggesting.</p>
+              <div style="margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Your Recommendation</div>
+                <form id="rec-form" onsubmit="postRec(event)">
+                  <div class="form-row">
+                    <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
+                    <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="rec-author" placeholder="e.g. Matt Haig" /></div>
+                  </div>
+                  <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="rec-name" placeholder="Who's recommending?" /></div>
+                  <div class="fg"><label class="fl">Your Pitch</label><textarea class="fta" id="rec-why" placeholder="Why should we read it?"></textarea></div>
+                  <button type="submit" class="btn btn-pink">Post Recommendation ✚</button>
+                </form>
+              </div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:12px;">What Members Are Suggesting</div>
+              <div class="recs-list" id="recs-list">
+                <div class="recs-empty">No recommendations yet — be the first!</div>
+              </div>
             </div>
           </div>
         </div>
@@ -834,43 +866,8 @@
           </div>
         </div>
 
-        <!-- ── ACCORDION: RECOMMENDATIONS (always visible, default closed) ── -->
-        <div class="accordion-wrap" id="acc-recs">
-          <button class="accordion-header" onclick="toggleAccordion('acc-recs')">
-            <span class="acc-icon">📚</span>
-            <span class="acc-title">Member Recommendations</span>
-            <span class="acc-count" id="recs-count-badge" style="display:none;"></span>
-            <span class="acc-chevron">▾</span>
-          </button>
-          <div class="accordion-body">
-            <div class="accordion-body-inner">
-              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:16px;">Books the group wants to read next.</p>
-              <div class="recs-list" id="recs-list">
-                <div class="recs-empty">No recommendations yet — be the first!</div>
-              </div>
-              <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-                <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--dark);margin-bottom:14px;">✚ Recommend a Book</div>
-                <form id="rec-form" onsubmit="postRec(event)">
-                  <div class="form-row">
-                    <div class="fg"><label class="fl">Book Title *</label><input class="fi" type="text" id="rec-title" placeholder="e.g. The Midnight Library" required /></div>
-                    <div class="fg"><label class="fl">Author</label><input class="fi" type="text" id="rec-author" placeholder="e.g. Matt Haig" /></div>
-                  </div>
-                  <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="rec-name" placeholder="Who's recommending?" /></div>
-                  <div class="fg"><label class="fl">Your Pitch</label><textarea class="fta" id="rec-why" placeholder="Why should we read it?"></textarea></div>
-                  <button type="submit" class="btn btn-pink">Post Recommendation ✚</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom utility bar — WhatsApp + Unsubscribe -->
-        <!-- 👇 PASTE YOUR GROUP CHAT INVITE LINK BELOW (replace the URL), then delete the word "hidden" -->
+        <!-- Bottom utility bar — Unsubscribe -->
         <div class="members-footer-bar">
-          <a hidden href="YOUR_WHATSAPP_INVITE_LINK" class="wa-text-link" target="_blank" rel="noopener">
-            <svg style="width:16px;height:16px;fill:#25D366;flex-shrink:0;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.533 5.856L.057 23.776a.5.5 0 00.608.637l6.109-1.599A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.796 9.796 0 01-4.997-1.369l-.358-.213-3.712.972.988-3.612-.233-.37A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
-            Join our WhatsApp group
-          </a>
           <a id="unsub-link" href="#" class="unsub-link" onclick="handleUnsub(event)">Unsubscribe</a>
         </div>
 
